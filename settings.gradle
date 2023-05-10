@@ -1,3 +1,4 @@
 rootProject.name = 'Metaphorix'
 include 'client'
+include 'server'
 
