@@ -1,13 +1,16 @@
 package server.api;
 
-import commons.ChatUser;
+import org.springframework.http.ResponseEntity;
+import server.commons.ChatUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import server.database.ChatUserRepository;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class ChatUserController {
     private final ChatUserRepository repo;
@@ -17,13 +20,14 @@ public class ChatUserController {
     }
 
     @PostMapping("/{name}")
-    public void storeUser(@PathVariable("name") String name){
+    public ResponseEntity<ChatUser> storeUser(@PathVariable("name") String name){
         ChatUser u = new ChatUser(name);
         repo.save(u);
+
+        return ResponseEntity.ok(u);
     }
 
-    @GetMapping("/all")
-    @ResponseBody
+    @GetMapping("/")
     public List<ChatUser> getAll(){
         return repo.findAll();
     }
