@@ -15,6 +15,7 @@ public class ChatUser {
     String name;
 
     public ChatUser(){
+        //for object mapper
     }
 
     public ChatUser(String name){
