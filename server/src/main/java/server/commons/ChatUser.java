@@ -11,10 +11,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class ChatUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
     private String name;
+
+    private String password;
 
     private ChatUser(){
         //for object mapper
@@ -44,12 +43,8 @@ public class ChatUser {
         this.name = name;
     }
 
-    /**
-     * Gets user's id
-     * @return user's id
-     */
-    public long getId(){
-        return id;
+    public boolean validatePassword(String password){
+        return this.password.equals(password);
     }
 
     /**
@@ -69,7 +64,6 @@ public class ChatUser {
     public String toString(){
         return "ChatUser{" +
                 "Name = " + name +
-                ", ID = " + id +
                 "}";
     }
 

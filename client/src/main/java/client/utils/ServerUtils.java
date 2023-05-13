@@ -4,14 +4,13 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Configuration;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.glassfish.jersey.client.ClientConfig;
 import server.commons.ChatUser;
 
 import java.util.List;
 
 public class ServerUtils {
     private static final String SERVER = "http://localhost:8080";
-    private static final Configuration defaultConfiguration = ClientBuilder.newClient()
-                                                                .getConfiguration();
 
     /**
      * Stores a user in the database
@@ -19,7 +18,7 @@ public class ServerUtils {
      * @return Response type
      */
     public Response storeUser(String name){
-        return ClientBuilder.newClient(defaultConfiguration).target(SERVER)
+        return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path(SERVER + "/" + name)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get();
@@ -30,11 +29,36 @@ public class ServerUtils {
      * @return List of all users in the database
      */
     public List<ChatUser> getUsers(){
-        return ClientBuilder.newClient(defaultConfiguration)
-                .target(SERVER).path("/user/")
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("/users/")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .get(new MyGenericType());
+    }
+
+    public ChatUser getUserById(String name){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("/users/user")
+                .queryParam("id", name)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(ChatUser.class);
+    }
+
+    public Boolean existsUser(String id){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("/users/user/" + id)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Boolean.class);
+    }
+
+    public Boolean validatePassword(String name, String password){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("/users/password")
+                .queryParam("user", name)
+                .queryParam("password", password)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(Boolean.class);
     }
 
 }

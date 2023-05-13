@@ -24,7 +24,7 @@ public class MyApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/welcome.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/sign-in.fxml"));
         Scene scene = new Scene(loader.load());
         SignInCtrl ctrl = loader.getController();
 
