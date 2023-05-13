@@ -2,7 +2,7 @@ package client;
 
 import client.scenes.ChatOverviewCtrl;
 import client.scenes.MainCtrl;
-import client.scenes.WelcomeCtrl;
+import client.scenes.SignInCtrl;
 import client.utils.ServerUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -26,13 +26,13 @@ public class MyApplication extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/welcome.fxml"));
         Scene scene = new Scene(loader.load());
-        WelcomeCtrl ctrl = loader.getController();
+        SignInCtrl ctrl = loader.getController();
 
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("scenes/chatOverview.fxml"));
         Scene scene2 = new Scene(loader2.load());
         ChatOverviewCtrl ctrl2 = loader2.getController();
 
-        Pair<WelcomeCtrl, Scene> pair = new Pair<>(ctrl, scene);
+        Pair<SignInCtrl, Scene> pair = new Pair<>(ctrl, scene);
         Pair<ChatOverviewCtrl, Scene> pair2 = new Pair<>(ctrl2, scene2);
 
         mainCtrl.init(stage, pair, pair2);

@@ -7,8 +7,8 @@ import javafx.util.Pair;
 public class MainCtrl {
     private Stage primaryStage;
 
-    private WelcomeCtrl welcomeCtrl;
-    private Scene welcomeScene;
+    private SignInCtrl signInCtrl;
+    private Scene signInScene;
 
     private ChatOverviewCtrl chatOverviewCtrl;
     private Scene chatOverview;
@@ -16,20 +16,20 @@ public class MainCtrl {
     /**
      * Initialises controller
      * @param stage primary stage
-     * @param welcome welcome pair
+     * @param signIn signIn pair
      * @param chatOverview chatOverview pair
      */
-    public void init(Stage stage, Pair<WelcomeCtrl, Scene> welcome,
+    public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
                      Pair<ChatOverviewCtrl, Scene> chatOverview){
         this.primaryStage = stage;
 
-        this.welcomeCtrl = welcome.getKey();
-        this.welcomeScene = welcome.getValue();
+        this.signInCtrl = signIn.getKey();
+        this.signInScene = signIn.getValue();
 
         this.chatOverviewCtrl = chatOverview.getKey();
         this.chatOverview = chatOverview.getValue();
 
-        showWelcome();
+        showSignIn();
         stage.show();
     }
 
@@ -44,9 +44,9 @@ public class MainCtrl {
     /**
      * Shows welcome scene.
      */
-    public void showWelcome(){
+    public void showSignIn(){
         primaryStage.setTitle("Metaphorix");
-        primaryStage.setScene(welcomeScene);
+        primaryStage.setScene(signInScene);
     }
 
 }

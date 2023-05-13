@@ -4,7 +4,7 @@ import client.MyApplication;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 
-public class WelcomeCtrl {
+public class SignInCtrl {
     private MainCtrl mainCtrl;
     private ServerUtils server;
 
