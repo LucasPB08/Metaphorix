@@ -26,28 +26,51 @@ public class ChatUser {
         this.name = name;
     }
 
+    /**
+     * Gets user's name
+     * @return name
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Sets name
+     * @param name new name
+     */
     public void setName(String name){
         this.name = name;
     }
-
+    /**
+     * Gets user's id.
+     */
     public long getId(){
         return id;
     }
 
+    /**
+     * Creates an int from this object
+     * @return int
+     */
     @Override
     public int hashCode(){
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    /**
+     * Makes a string representation from this user
+     * @return a string representation
+     */
     @Override
     public String toString(){
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
+    /**
+     * Checks for equality between this and other
+     * @param other other object to check equality with
+     * @return true if this and other are equals, false otherwise.
+     */
     @Override
     public boolean equals(Object other){
         return EqualsBuilder.reflectionEquals(this, other);

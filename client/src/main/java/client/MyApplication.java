@@ -5,7 +5,6 @@ import client.scenes.MainCtrl;
 import client.scenes.WelcomeCtrl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -14,6 +13,14 @@ import javafx.util.Pair;
 public class MyApplication extends Application {
     private static final MainCtrl mainCtrl = new MainCtrl();
 
+    /**
+     * Starts application
+     * @param stage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/welcome.fxml"));
@@ -30,10 +37,18 @@ public class MyApplication extends Application {
         mainCtrl.init(stage, pair, pair2);
     }
 
+    /**
+     * Main function
+     * @param args run time arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Getter for main controller
+     * @return main controller
+     */
     public static MainCtrl getMainCtrl(){
         return mainCtrl;
     }
