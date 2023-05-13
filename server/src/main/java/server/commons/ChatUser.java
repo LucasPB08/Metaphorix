@@ -6,8 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Entity
 public class ChatUser {
@@ -22,6 +20,10 @@ public class ChatUser {
         //for object mapper
     }
 
+    /**
+     * Constructor for chat user
+     * @param name name of user
+     */
     public ChatUser(String name){
         this.name = name;
     }
@@ -41,8 +43,10 @@ public class ChatUser {
     public void setName(String name){
         this.name = name;
     }
+
     /**
-     * Gets user's id.
+     * Gets user's id
+     * @return user's id
      */
     public long getId(){
         return id;
@@ -63,7 +67,10 @@ public class ChatUser {
      */
     @Override
     public String toString(){
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+        return "ChatUser{" +
+                "Name = " + name +
+                ", ID = " + id +
+                "}";
     }
 
     /**

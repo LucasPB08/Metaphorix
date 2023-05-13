@@ -4,9 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
 **/*.mv.db
-
 **/*.swp
 
 ### STS ###
@@ -39,3 +37,6 @@ out/
 
 ### VS Code ###
 .vscode/
+/client/build/
+/client/build/
+/client/build/
