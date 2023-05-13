@@ -11,7 +11,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class ChatUser {
 
     @Id
-    private String name;
+    private String userName;
+
+    private String fullName;
 
     private String password;
 
@@ -23,24 +25,25 @@ public class ChatUser {
      * Constructor for chat user
      * @param name name of user
      */
-    public ChatUser(String name){
-        this.name = name;
+    public ChatUser(String name, String fullName){
+        this.userName = name;
+        this.fullName = fullName;
     }
 
     /**
      * Gets user's name
      * @return name
      */
-    public String getName(){
-        return name;
+    public String getUserName(){
+        return userName;
     }
 
     /**
      * Sets name
      * @param name new name
      */
-    public void setName(String name){
-        this.name = name;
+    public void setUserName(String name){
+        this.userName = name;
     }
 
     public boolean validatePassword(String password){
@@ -63,7 +66,8 @@ public class ChatUser {
     @Override
     public String toString(){
         return "ChatUser{" +
-                "Name = " + name +
+                "User Name = " + userName + "\n" +
+                "Full name = " + fullName +
                 "}";
     }
 
