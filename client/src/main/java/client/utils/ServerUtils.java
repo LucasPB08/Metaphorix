@@ -2,7 +2,6 @@ package client.utils;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Configuration;
-import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import server.commons.ChatUser;
@@ -10,8 +9,9 @@ import server.commons.ChatUser;
 import java.util.List;
 
 public class ServerUtils {
-    private static String SERVER = "http://localhost:8080";
-    private static Configuration defaultConfiguration = ClientBuilder.newClient().getConfiguration();
+    private static final String SERVER = "http://localhost:8080";
+    private static final Configuration defaultConfiguration = ClientBuilder.newClient()
+                                                                .getConfiguration();
 
     /**
      * Stores a user in the database
