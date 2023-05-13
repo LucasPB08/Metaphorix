@@ -3,6 +3,7 @@ package client;
 import client.scenes.ChatOverviewCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.WelcomeCtrl;
+import client.utils.ServerUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +13,7 @@ import javafx.util.Pair;
 
 public class MyApplication extends Application {
     private static final MainCtrl mainCtrl = new MainCtrl();
-
+    private static final ServerUtils server = new ServerUtils();
     /**
      * Starts application
      * @param stage the primary stage for this application, onto which
@@ -51,5 +52,13 @@ public class MyApplication extends Application {
      */
     public static MainCtrl getMainCtrl(){
         return mainCtrl;
+    }
+
+    /**
+     * Getter for server
+     * @return server
+     */
+    public static ServerUtils getServer(){
+        return server;
     }
 }

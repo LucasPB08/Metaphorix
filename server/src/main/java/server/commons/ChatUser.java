@@ -63,7 +63,10 @@ public class ChatUser {
      */
     @Override
     public String toString(){
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+        return "ChatUser{" +
+                "Name = " + name +
+                ", ID = " + id +
+                "}";
     }
 
     /**

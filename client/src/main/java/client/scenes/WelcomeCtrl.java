@@ -1,10 +1,12 @@
 package client.scenes;
 
 import client.MyApplication;
+import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 
 public class WelcomeCtrl {
     private MainCtrl mainCtrl;
+    private ServerUtils server;
 
     /**
      * Initialises controller
@@ -12,12 +14,14 @@ public class WelcomeCtrl {
     @FXML
     public void initialize(){
         mainCtrl = MyApplication.getMainCtrl();
+        server = MyApplication.getServer();
     }
 
     /**
      * Shows chat scene.
      */
     public void showChats(){
-        mainCtrl.showChatOverview();
+        System.out.println(server.getUsers());
+        //mainCtrl.showChatOverview();
     }
 }

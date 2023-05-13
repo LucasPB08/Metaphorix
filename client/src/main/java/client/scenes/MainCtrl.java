@@ -29,8 +29,8 @@ public class MainCtrl {
         this.chatOverviewCtrl = chatOverview.getKey();
         this.chatOverview = chatOverview.getValue();
 
-        stage.show();
         showWelcome();
+        stage.show();
     }
 
     /**
