@@ -13,14 +13,19 @@ public class MainCtrl {
     private ChatOverviewCtrl chatOverviewCtrl;
     private Scene chatOverview;
 
+    private SignUpCtrl signUpCtrl;
+    private Scene signUpScene;
+
     /**
      * Initialises controller
      * @param stage primary stage
      * @param signIn signIn pair
      * @param chatOverview chatOverview pair
+     * @param signUp signUp pair
      */
     public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
-                     Pair<ChatOverviewCtrl, Scene> chatOverview){
+                     Pair<ChatOverviewCtrl, Scene> chatOverview,
+                     Pair<SignUpCtrl, Scene> signUp){
         this.primaryStage = stage;
 
         this.signInCtrl = signIn.getKey();
@@ -28,6 +33,9 @@ public class MainCtrl {
 
         this.chatOverviewCtrl = chatOverview.getKey();
         this.chatOverview = chatOverview.getValue();
+
+        this.signUpCtrl = signUp.getKey();
+        this.signUpScene = signUp.getValue();
 
         showSignIn();
         stage.show();
@@ -45,8 +53,13 @@ public class MainCtrl {
      * Shows welcome scene.
      */
     public void showSignIn(){
-        primaryStage.setTitle("Metaphorix");
+        primaryStage.setTitle("Sign in");
         primaryStage.setScene(signInScene);
+    }
+
+    public void showSignUp(){
+        primaryStage.setTitle("Sign up");
+        primaryStage.setScene(signUpScene);
     }
 
 }

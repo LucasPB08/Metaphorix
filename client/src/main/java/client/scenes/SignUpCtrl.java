@@ -32,16 +32,16 @@ public class SignUpCtrl {
     private Text errorMessages;
 
     @FXML
-    public void initialise(){
+    public void initialize(){
         mainCtrl = MyApplication.getMainCtrl();
         server = MyApplication.getServer();
     }
 
-    private void back(){
+    public void back(){
         mainCtrl.showSignIn();
     }
 
-    private void signUp(){
+    public void signUp(){
         if(firstName.getText().isBlank() || lastName.getText().isBlank() || userName.getText().isBlank()){
             showNameErrors();
             return;

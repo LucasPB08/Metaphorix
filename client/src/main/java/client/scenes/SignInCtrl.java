@@ -55,6 +55,9 @@ public class SignInCtrl {
         return !(userName.getText().isBlank() | !server.existsUser(userName.getText()));
     }
 
+    public void showSignUp(){
+        mainCtrl.showSignUp();
+    }
 
     /**
      * Shows chat scene.

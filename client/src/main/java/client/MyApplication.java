@@ -3,6 +3,7 @@ package client;
 import client.scenes.ChatOverviewCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.SignInCtrl;
+import client.scenes.SignUpCtrl;
 import client.utils.ServerUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -26,10 +27,11 @@ public class MyApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        Pair<SignInCtrl, Scene> pair = createPair("scenes/sign-in.fxml", SignInCtrl.class);
-        Pair<ChatOverviewCtrl, Scene> pair2 = createPair("scenes/chatOverview.fxml", ChatOverviewCtrl.class);
+        Pair<SignInCtrl, Scene> signInPair = createPair("scenes/sign-in.fxml", SignInCtrl.class);
+        Pair<ChatOverviewCtrl, Scene> chatOverviewPair = createPair("scenes/chatOverview.fxml", ChatOverviewCtrl.class);
+        Pair<SignUpCtrl, Scene> signUpPair =createPair("scenes/sign-up.fxml", SignUpCtrl.class);
 
-        mainCtrl.init(stage, pair, pair2);
+        mainCtrl.init(stage, signInPair, chatOverviewPair, signUpPair);
     }
 
     private <T> Pair<T, Scene> createPair(String resource, Class<T> type) throws IOException {

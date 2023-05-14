@@ -17,7 +17,7 @@
             <Button layoutX="49.0" layoutY="166.0" mnemonicParsing="false" onAction="#login" text="Log In" />
             <TextField fx:id="userName" layoutX="49.0" layoutY="37.0" promptText="User name" />
             <TextField fx:id="password" layoutX="49.0" layoutY="85.0" promptText="Password" />
-            <Button layoutX="146.0" layoutY="166.0" mnemonicParsing="false" text="Sign up" />
+            <Button layoutX="146.0" layoutY="166.0" mnemonicParsing="false" onAction="#showSignUp" text="Sign up" />
             <Text fx:id="errorMessage" fill="#dc1212" layoutX="49.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
       </Pane>

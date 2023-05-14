@@ -7,18 +7,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SignUpCtrl">
    <children>
       <Pane layoutX="150.0" layoutY="43.0" prefHeight="314.0" prefWidth="299.0">
          <children>
-            <TextField fx:id="firstName" layoutX="75.0" layoutY="38.0" promptText="First Name" />
-            <TextField fx:id="lastName" layoutX="75.0" layoutY="76.0" promptText="Last Name" />
-            <TextField fx:id="userName" layoutX="75.0" layoutY="115.0" promptText="User Name" />
-            <TextField fx:id="password" layoutX="75.0" layoutY="157.0" promptText="Password" />
-            <TextField fx:id="rePassword" layoutX="75.0" layoutY="198.0" promptText="Re-enter password" />
-            <Button layoutX="121.0" layoutY="264.0" mnemonicParsing="false" text="Sign up" />
+            <TextField fx:id="firstName" layoutX="75.0" layoutY="27.0" promptText="First Name" />
+            <TextField fx:id="lastName" layoutX="75.0" layoutY="64.0" promptText="Last Name" />
+            <TextField fx:id="userName" layoutX="75.0" layoutY="101.0" promptText="User Name" />
+            <TextField fx:id="password" layoutX="75.0" layoutY="138.0" promptText="Password" />
+            <TextField fx:id="rePassword" layoutX="75.0" layoutY="175.0" promptText="Re-enter password" />
+            <Button layoutX="46.0" layoutY="264.0" mnemonicParsing="false" onAction="#signUp" text="Sign up" />
             <Text fx:id="errorMessages" fill="#c90e0e" layoutX="138.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Button layoutX="198.0" layoutY="264.0" mnemonicParsing="false" onAction="#back" text="Back" />
          </children>
       </Pane>
       <Text layoutX="269.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign up">
