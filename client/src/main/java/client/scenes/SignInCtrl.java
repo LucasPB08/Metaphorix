@@ -32,7 +32,8 @@ public class SignInCtrl {
     }
 
     public void login(){
-        if(!validateUserName() | !validatePassword()) {
+        errorMessage.setText("");
+        if(!validateUserName() || !validatePassword()) {
             setErrorMessage();
             return;
         }
@@ -52,7 +53,7 @@ public class SignInCtrl {
     }
 
     private boolean validateUserName(){
-        return !(userName.getText().isBlank() | !server.existsUser(userName.getText()));
+        return !(userName.getText().isBlank() || !server.existsUser(userName.getText()));
     }
 
     public void showSignUp(){

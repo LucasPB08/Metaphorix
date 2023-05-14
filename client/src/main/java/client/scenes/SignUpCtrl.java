@@ -39,6 +39,7 @@ public class SignUpCtrl {
     }
 
     public void back(){
+        clearFields();
         mainCtrl.showSignIn();
     }
 
@@ -47,7 +48,6 @@ public class SignUpCtrl {
             showNameErrors();
             return;
         }
-
 
         if(password.getText().isBlank()) {
             errorMessages.setText("Please fill in a password.");
@@ -77,6 +77,8 @@ public class SignUpCtrl {
             System.err.println(e.getMessage());
             errorMessages.setText("Something went wrong");
         }
+
+        back();
     }
 
     private void showNameErrors(){
@@ -93,4 +95,13 @@ public class SignUpCtrl {
 
         errorMessages.setText(errorMessage);
     }
+
+    private void clearFields() {
+        firstName.clear();
+        lastName.clear();
+        userName.clear();
+        password.clear();
+        rePassword.clear();
+    }
+
 }

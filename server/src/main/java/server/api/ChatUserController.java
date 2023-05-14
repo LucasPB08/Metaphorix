@@ -36,8 +36,8 @@ public class ChatUserController {
         return ResponseEntity.ok(u);
     }
 
-    @GetMapping("/user/{id}")
-    public Boolean existsUser(@PathVariable("id") String id){
+    @GetMapping("/exists")
+    public Boolean existsUser(String id){
         return repo.existsById(id);
     }
 

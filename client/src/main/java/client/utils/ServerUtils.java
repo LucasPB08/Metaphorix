@@ -64,7 +64,8 @@ public class ServerUtils {
 
     public Boolean existsUser(String id){
         return ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("/users/user/" + id)
+                .target(SERVER).path("/users/exists")
+                .queryParam("id", id)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Boolean.class);
     }
