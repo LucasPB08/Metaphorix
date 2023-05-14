@@ -1,6 +1,7 @@
 package client.utils;
 
 import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.Configuration;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class ServerUtils {
     private static final String SERVER = "http://localhost:8080";
+    private static int OK_STATUS = 200;
 
     /**
      * Stores a new user in the database
@@ -19,14 +21,24 @@ public class ServerUtils {
      * @param password password of user
      * @return Response from server
      */
-    public Response storeUser(String fullName, String userName, String password){
-        return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
-                .path("/store")
+    public Response storeUser(String fullName, String userName, String password) throws HTTPException, EntityAlreadyExistsException{
+        if(existsUser(userName)) throw new EntityAlreadyExistsException("This user already exists");
+
+        Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/users/store")
                 .queryParam("fullName", fullName)
                 .queryParam("userName", userName)
                 .queryParam("password", password)
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .get();
+                .post(Entity.json(null));
+
+        if(response.getStatus() != OK_STATUS) {
+           throw new HTTPException("HTTP status: " + response.getStatus());
+        }
+
+        System.out.println(response);
+
+        return response;
     }
 
     /**

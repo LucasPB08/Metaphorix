@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.MyApplication;
+import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -47,10 +48,6 @@ public class SignUpCtrl {
             return;
         }
 
-        if(server.existsUser(userName.getText())){
-            errorMessages.setText("This username is already in use.");
-            return;
-        }
 
         if(password.getText().isBlank()) {
             errorMessages.setText("Please fill in a password.");
@@ -67,9 +64,19 @@ public class SignUpCtrl {
             return;
         }
 
+        if(server.existsUser(userName.getText())){
+            errorMessages.setText("This username is already in use.");
+            return;
+        }
+
         String fullName = firstName.getText() + " " + lastName.getText();
 
-        server.storeUser(fullName, userName.getText(), password.getText());
+        try {
+            server.storeUser(fullName, userName.getText(), password.getText());
+        } catch(Exception e){
+            System.err.println(e.getMessage());
+            errorMessages.setText("Something went wrong");
+        }
     }
 
     private void showNameErrors(){

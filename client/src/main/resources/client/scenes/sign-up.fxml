@@ -17,7 +17,7 @@
             <TextField fx:id="password" layoutX="75.0" layoutY="138.0" promptText="Password" />
             <TextField fx:id="rePassword" layoutX="75.0" layoutY="175.0" promptText="Re-enter password" />
             <Button layoutX="46.0" layoutY="264.0" mnemonicParsing="false" onAction="#signUp" text="Sign up" />
-            <Text fx:id="errorMessages" fill="#c90e0e" layoutX="138.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Text fx:id="errorMessages" fill="#c90e0e" layoutX="75.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" />
             <Button layoutX="198.0" layoutY="264.0" mnemonicParsing="false" onAction="#back" text="Back" />
          </children>
       </Pane>
