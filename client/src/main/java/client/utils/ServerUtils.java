@@ -13,13 +13,18 @@ public class ServerUtils {
     private static final String SERVER = "http://localhost:8080";
 
     /**
-     * Stores a user in the database
-     * @param name name of user
-     * @return Response type
+     * Stores a new user in the database
+     * @param fullName full name of user
+     * @param userName user name
+     * @param password password of user
+     * @return Response from server
      */
-    public Response storeUser(String name){
+    public Response storeUser(String fullName, String userName, String password){
         return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
-                .path(SERVER + "/" + name)
+                .path("/store")
+                .queryParam("fullName", fullName)
+                .queryParam("userName", userName)
+                .queryParam("password", password)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get();
     }

@@ -22,13 +22,15 @@ public class ChatUserController {
     }
 
     /**
-     * Stores a user in the database.
-     * @param name name of user
-     * @return OK response
+     * Stores a new user in the database
+     * @param fullName full name of user
+     * @param userName user name
+     * @param password password of user
+     * @return OK status
      */
-    @PostMapping("/{name}")
-    public ResponseEntity<ChatUser> storeUser(@PathVariable("name") String name){
-        ChatUser u = new ChatUser(name);
+    @PostMapping("/store")
+    public ResponseEntity<ChatUser> storeUser(String fullName, String userName, String password){
+        ChatUser u = new ChatUser(userName, fullName, password);
         repo.save(u);
 
         return ResponseEntity.ok(u);

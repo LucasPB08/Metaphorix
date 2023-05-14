@@ -25,9 +25,10 @@ public class ChatUser {
      * Constructor for chat user
      * @param name name of user
      */
-    public ChatUser(String name, String fullName){
+    public ChatUser(String name, String fullName, String password){
         this.userName = name;
         this.fullName = fullName;
+        this.password = password;
     }
 
     /**
@@ -36,6 +37,10 @@ public class ChatUser {
      */
     public String getUserName(){
         return userName;
+    }
+
+    public String getFullName(){
+        return fullName;
     }
 
     /**
