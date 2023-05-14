@@ -1,7 +1,6 @@
 package client.scenes;
 
 import client.MyApplication;
-import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -32,19 +31,30 @@ public class SignUpCtrl {
     @FXML
     private Text errorMessages;
 
+    /**
+     * Initialises controller
+     */
     @FXML
     public void initialize(){
         mainCtrl = MyApplication.getMainCtrl();
         server = MyApplication.getServer();
     }
 
+    /**
+     * Goes back to log in scene
+     */
     public void back(){
         clearFields();
         mainCtrl.showSignIn();
     }
 
+    /**
+     * Checks user input. If input is valid, a new user is created
+     * and stored in the database.
+     */
     public void signUp(){
-        if(firstName.getText().isBlank() || lastName.getText().isBlank() || userName.getText().isBlank()){
+        if(firstName.getText().isBlank() || lastName.getText().isBlank()
+                || userName.getText().isBlank()){
             showNameErrors();
             return;
         }

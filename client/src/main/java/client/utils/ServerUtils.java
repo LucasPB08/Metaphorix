@@ -2,7 +2,6 @@ package client.utils;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.core.Configuration;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
@@ -12,6 +11,7 @@ import java.util.List;
 
 public class ServerUtils {
     private static final String SERVER = "http://localhost:8080";
+    @SuppressWarnings("checkstyle:StaticVariableName")
     private static int OK_STATUS = 200;
 
     /**
@@ -21,7 +21,8 @@ public class ServerUtils {
      * @param password password of user
      * @return Response from server
      */
-    public Response storeUser(String fullName, String userName, String password) throws HTTPException, EntityAlreadyExistsException{
+    public Response storeUser(String fullName, String userName, String password)
+            throws HTTPException, EntityAlreadyExistsException{
         if(existsUser(userName)) throw new EntityAlreadyExistsException("This user already exists");
 
         Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
@@ -33,7 +34,7 @@ public class ServerUtils {
                 .post(Entity.json(null));
 
         if(response.getStatus() != OK_STATUS) {
-           throw new HTTPException("HTTP status: " + response.getStatus());
+            throw new HTTPException("HTTP status: " + response.getStatus());
         }
 
         System.out.println(response);
@@ -53,6 +54,11 @@ public class ServerUtils {
                 .get(new MyGenericType());
     }
 
+    /**
+     * Gets user by username
+     * @param name username
+     * @return user
+     */
     public ChatUser getUserById(String name){
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/users/user")
@@ -62,6 +68,11 @@ public class ServerUtils {
                 .get(ChatUser.class);
     }
 
+    /**
+     * Checks if the user exists
+     * @param id username to check
+     * @return true if user exists, false otherwise.
+     */
     public Boolean existsUser(String id){
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/users/exists")
@@ -70,6 +81,12 @@ public class ServerUtils {
                 .get(Boolean.class);
     }
 
+    /**
+     * Checks if the password matches with the user's password
+     * @param name username
+     * @param password password
+     * @return true if passwords match, false otherwise.
+     */
     public Boolean validatePassword(String name, String password){
         return ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/users/password")

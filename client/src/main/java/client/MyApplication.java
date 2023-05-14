@@ -28,7 +28,8 @@ public class MyApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Pair<SignInCtrl, Scene> signInPair = createPair("scenes/sign-in.fxml", SignInCtrl.class);
-        Pair<ChatOverviewCtrl, Scene> chatOverviewPair = createPair("scenes/chatOverview.fxml", ChatOverviewCtrl.class);
+        Pair<ChatOverviewCtrl, Scene> chatOverviewPair = createPair("scenes/chatOverview.fxml",
+                                                                            ChatOverviewCtrl.class);
         Pair<SignUpCtrl, Scene> signUpPair =createPair("scenes/sign-up.fxml", SignUpCtrl.class);
 
         mainCtrl.init(stage, signInPair, chatOverviewPair, signUpPair);

@@ -50,13 +50,16 @@ public class MainCtrl {
     }
 
     /**
-     * Shows welcome scene.
+     * Shows sign in scene.
      */
     public void showSignIn(){
         primaryStage.setTitle("Sign in");
         primaryStage.setScene(signInScene);
     }
 
+    /**
+     * Shows sign up scene.
+     */
     public void showSignUp(){
         primaryStage.setTitle("Sign up");
         primaryStage.setScene(signUpScene);

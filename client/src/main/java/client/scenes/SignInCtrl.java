@@ -31,6 +31,10 @@ public class SignInCtrl {
         server = MyApplication.getServer();
     }
 
+    /**
+     * Checks user input, if username and password are correct,
+     * the user gets logged in.
+     */
     public void login(){
         errorMessage.setText("");
         if(!validateUserName() || !validatePassword()) {
@@ -56,6 +60,9 @@ public class SignInCtrl {
         return !(userName.getText().isBlank() || !server.existsUser(userName.getText()));
     }
 
+    /**
+     * Shows sign up scene.
+     */
     public void showSignUp(){
         mainCtrl.showSignUp();
     }

@@ -1,8 +1,6 @@
 package server.commons;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -22,8 +20,10 @@ public class ChatUser {
     }
 
     /**
-     * Constructor for chat user
-     * @param name name of user
+     * Constructor for a new user
+     * @param name username of user
+     * @param fullName full name of user
+     * @param password password of user
      */
     public ChatUser(String name, String fullName, String password){
         this.userName = name;
@@ -39,6 +39,10 @@ public class ChatUser {
         return userName;
     }
 
+    /**
+     * Gets full name of user
+     * @return full name
+     */
     public String getFullName(){
         return fullName;
     }
@@ -51,6 +55,11 @@ public class ChatUser {
         this.userName = name;
     }
 
+    /**
+     * Checks whether the password used is this user's password
+     * @param password password input
+     * @return true if the password corresponds to the user's password, false otherwise.
+     */
     public boolean validatePassword(String password){
         return this.password.equals(password);
     }

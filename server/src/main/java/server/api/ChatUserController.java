@@ -36,11 +36,21 @@ public class ChatUserController {
         return ResponseEntity.ok(u);
     }
 
+    /**
+     * Checks whether the user exists
+     * @param id username
+     * @return true if user exists, false otherwise.
+     */
     @GetMapping("/exists")
     public Boolean existsUser(String id){
         return repo.existsById(id);
     }
 
+    /**
+     * Gets a user from the database
+     * @param id username of the user
+     * @return the user
+     */
     @GetMapping("/user")
     public ChatUser getUser(String id){
         Optional<ChatUser> user = repo.findById(id);
@@ -50,6 +60,12 @@ public class ChatUserController {
         return user.get();
     }
 
+    /**
+     * Checks if the password corresponds to the user's password
+     * @param user user to check password of
+     * @param password password input
+     * @return true if passwords match, false otherwise.
+     */
     @GetMapping("/password")
     public Boolean validatePassword(String user, String password){
         if(!repo.existsById(user)) return false;
