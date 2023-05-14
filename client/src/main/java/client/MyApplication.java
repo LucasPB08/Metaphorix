@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.io.IOException;
+
 
 public class MyApplication extends Application {
     private static final MainCtrl mainCtrl = new MainCtrl();
@@ -24,18 +26,17 @@ public class MyApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/sign-in.fxml"));
-        Scene scene = new Scene(loader.load());
-        SignInCtrl ctrl = loader.getController();
-
-        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("scenes/chatOverview.fxml"));
-        Scene scene2 = new Scene(loader2.load());
-        ChatOverviewCtrl ctrl2 = loader2.getController();
-
-        Pair<SignInCtrl, Scene> pair = new Pair<>(ctrl, scene);
-        Pair<ChatOverviewCtrl, Scene> pair2 = new Pair<>(ctrl2, scene2);
+        Pair<SignInCtrl, Scene> pair = createPair("scenes/sign-in.fxml", SignInCtrl.class);
+        Pair<ChatOverviewCtrl, Scene> pair2 = createPair("scenes/chatOverview.fxml", ChatOverviewCtrl.class);
 
         mainCtrl.init(stage, pair, pair2);
+    }
+
+    private <T> Pair<T, Scene> createPair(String resource, Class<T> type) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
+        Scene scene = new Scene(loader.load());
+        T controller = loader.getController();
+        return new Pair<>(controller, scene);
     }
 
     /**

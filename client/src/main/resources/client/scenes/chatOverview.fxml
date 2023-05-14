@@ -7,6 +7,6 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ChatOverviewCtrl">
    <children>
       <Text layoutX="276.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Changed" />
-      <Button layoutX="263.0" layoutY="132.0" mnemonicParsing="false" onAction="#showWelcome" text="Button" />
+      <Button layoutX="263.0" layoutY="132.0" mnemonicParsing="false" onAction="#showSignIn" text="Button" />
    </children>
 </AnchorPane>

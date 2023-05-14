@@ -3,10 +3,10 @@ package client.scenes;
 import client.MyApplication;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import server.commons.ChatUser;
 
-import java.awt.*;
 
 public class SignInCtrl {
     private MainCtrl mainCtrl;
