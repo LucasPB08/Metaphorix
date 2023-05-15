@@ -17,11 +17,10 @@ public class ServerUtils {
     /**
      * Stores a new user in the database
      * @param fullName full name of user
-     * @param userName user name
+     * @param userName username
      * @param password password of user
-     * @return Response from server
      */
-    public Response storeUser(String fullName, String userName, String password)
+    public void storeUser(String fullName, String userName, String password)
             throws HTTPException, EntityAlreadyExistsException{
         if(existsUser(userName)) throw new EntityAlreadyExistsException("This user already exists");
 
@@ -38,8 +37,6 @@ public class ServerUtils {
         }
 
         System.out.println(response);
-
-        return response;
     }
 
     /**
