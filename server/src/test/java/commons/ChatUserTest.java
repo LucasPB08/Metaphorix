@@ -1,6 +1,5 @@
 package commons;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.commons.ChatUser;
@@ -13,7 +12,7 @@ public class ChatUserTest {
 
     @BeforeEach
     void setup(){
-        this.user = new ChatUser("Lucas");
+        this.user = new ChatUser("UserName", "Lucas", "123");
     }
 
     @Test
@@ -22,14 +21,29 @@ public class ChatUserTest {
     }
 
     @Test
-    void setNameTest(){
-        user.setName("User");
-        assertEquals("User", user.getName());
+    void setUserNameTest(){
+        user.setUserName("User");
+        assertEquals("User", user.getUserName());
     }
 
     @Test
-    void getNameTest(){
-        assertEquals("Lucas", user.getName());
+    void getUserNameTest(){
+        assertEquals("UserName", user.getUserName());
+    }
+
+    @Test
+    void getFullNameTest(){
+        assertEquals("Lucas", user.getFullName());
+    }
+
+    @Test
+    void validatePasswordTest(){
+        assertFalse(user.validatePassword("124"));
+    }
+
+    @Test
+    void validateCorrectPassword(){
+        assertTrue(user.validatePassword("123"));
     }
 
 }
