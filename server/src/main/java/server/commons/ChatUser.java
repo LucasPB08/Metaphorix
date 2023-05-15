@@ -20,6 +20,16 @@ public class ChatUser {
     }
 
     /**
+     * Constructor for ChatUser without password
+     * @param userName username
+     * @param fullName full name
+     */
+    public ChatUser(String userName, String fullName){
+        this.userName = userName;
+        this.fullName = fullName;
+    }
+
+    /**
      * Constructor for a new user
      * @param name username of user
      * @param fullName full name of user
