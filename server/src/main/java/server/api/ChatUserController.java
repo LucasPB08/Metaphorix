@@ -6,9 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import server.database.ChatUserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class ChatUserController {
     private final ChatUserRepository repo;
 
@@ -21,16 +22,57 @@ public class ChatUserController {
     }
 
     /**
-     * Stores a user in the database.
-     * @param name name of user
-     * @return OK response
+     * Stores a new user in the database
+     * @param fullName full name of user
+     * @param userName user name
+     * @param password password of user
+     * @return OK status
      */
-    @PostMapping("/{name}")
-    public ResponseEntity<ChatUser> storeUser(@PathVariable("name") String name){
-        ChatUser u = new ChatUser(name);
+    @PostMapping("/store")
+    public ResponseEntity<ChatUser> storeUser(String fullName, String userName, String password){
+        ChatUser u = new ChatUser(userName, fullName, password);
         repo.save(u);
 
         return ResponseEntity.ok(u);
+    }
+
+    /**
+     * Checks whether the user exists
+     * @param id username
+     * @return true if user exists, false otherwise.
+     */
+    @GetMapping("/exists")
+    public Boolean existsUser(String id){
+        return repo.existsById(id);
+    }
+
+    /**
+     * Gets a user from the database
+     * @param id username of the user
+     * @return the user
+     */
+    @GetMapping("/user")
+    public ChatUser getUser(String id){
+        Optional<ChatUser> user = repo.findById(id);
+
+        if(user.isEmpty()) return null;
+
+        return user.get();
+    }
+
+    /**
+     * Checks if the password corresponds to the user's password
+     * @param user user to check password of
+     * @param password password input
+     * @return true if passwords match, false otherwise.
+     */
+    @GetMapping("/password")
+    public Boolean validatePassword(String user, String password){
+        if(!repo.existsById(user)) return false;
+
+        ChatUser u = repo.findById(user).get();
+
+        return u.validatePassword(password);
     }
 
     /**

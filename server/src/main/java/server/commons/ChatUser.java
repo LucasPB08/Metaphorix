@@ -1,8 +1,6 @@
 package server.commons;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -11,45 +9,59 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class ChatUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private String userName;
 
-    private String name;
+    private String fullName;
+
+    private String password;
 
     private ChatUser(){
         //for object mapper
     }
 
     /**
-     * Constructor for chat user
-     * @param name name of user
+     * Constructor for a new user
+     * @param name username of user
+     * @param fullName full name of user
+     * @param password password of user
      */
-    public ChatUser(String name){
-        this.name = name;
+    public ChatUser(String name, String fullName, String password){
+        this.userName = name;
+        this.fullName = fullName;
+        this.password = password;
     }
 
     /**
      * Gets user's name
      * @return name
      */
-    public String getName(){
-        return name;
+    public String getUserName(){
+        return userName;
+    }
+
+    /**
+     * Gets full name of user
+     * @return full name
+     */
+    public String getFullName(){
+        return fullName;
     }
 
     /**
      * Sets name
      * @param name new name
      */
-    public void setName(String name){
-        this.name = name;
+    public void setUserName(String name){
+        this.userName = name;
     }
 
     /**
-     * Gets user's id
-     * @return user's id
+     * Checks whether the password used is this user's password
+     * @param password password input
+     * @return true if the password corresponds to the user's password, false otherwise.
      */
-    public long getId(){
-        return id;
+    public boolean validatePassword(String password){
+        return this.password.equals(password);
     }
 
     /**
@@ -68,8 +80,8 @@ public class ChatUser {
     @Override
     public String toString(){
         return "ChatUser{" +
-                "Name = " + name +
-                ", ID = " + id +
+                "User Name = " + userName + "\n" +
+                "Full name = " + fullName +
                 "}";
     }
 

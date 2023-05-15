@@ -7,29 +7,37 @@ import javafx.util.Pair;
 public class MainCtrl {
     private Stage primaryStage;
 
-    private WelcomeCtrl welcomeCtrl;
-    private Scene welcomeScene;
+    private SignInCtrl signInCtrl;
+    private Scene signInScene;
 
     private ChatOverviewCtrl chatOverviewCtrl;
     private Scene chatOverview;
 
+    private SignUpCtrl signUpCtrl;
+    private Scene signUpScene;
+
     /**
      * Initialises controller
      * @param stage primary stage
-     * @param welcome welcome pair
+     * @param signIn signIn pair
      * @param chatOverview chatOverview pair
+     * @param signUp signUp pair
      */
-    public void init(Stage stage, Pair<WelcomeCtrl, Scene> welcome,
-                     Pair<ChatOverviewCtrl, Scene> chatOverview){
+    public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
+                     Pair<ChatOverviewCtrl, Scene> chatOverview,
+                     Pair<SignUpCtrl, Scene> signUp){
         this.primaryStage = stage;
 
-        this.welcomeCtrl = welcome.getKey();
-        this.welcomeScene = welcome.getValue();
+        this.signInCtrl = signIn.getKey();
+        this.signInScene = signIn.getValue();
 
         this.chatOverviewCtrl = chatOverview.getKey();
         this.chatOverview = chatOverview.getValue();
 
-        showWelcome();
+        this.signUpCtrl = signUp.getKey();
+        this.signUpScene = signUp.getValue();
+
+        showSignIn();
         stage.show();
     }
 
@@ -42,11 +50,19 @@ public class MainCtrl {
     }
 
     /**
-     * Shows welcome scene.
+     * Shows sign in scene.
      */
-    public void showWelcome(){
-        primaryStage.setTitle("Metaphorix");
-        primaryStage.setScene(welcomeScene);
+    public void showSignIn(){
+        primaryStage.setTitle("Sign in");
+        primaryStage.setScene(signInScene);
+    }
+
+    /**
+     * Shows sign up scene.
+     */
+    public void showSignUp(){
+        primaryStage.setTitle("Sign up");
+        primaryStage.setScene(signUpScene);
     }
 
 }

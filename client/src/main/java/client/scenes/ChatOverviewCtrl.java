@@ -17,7 +17,7 @@ public class ChatOverviewCtrl {
     /**
      * Shows welcome scene.
      */
-    public void showWelcome(){
-        mainCtrl.showWelcome();
+    public void showSignIn(){
+        mainCtrl.showSignIn();
     }
 }
