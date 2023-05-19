@@ -1,9 +1,6 @@
 package client;
 
-import client.scenes.ChatOverviewCtrl;
-import client.scenes.MainCtrl;
-import client.scenes.SignInCtrl;
-import client.scenes.SignUpCtrl;
+import client.scenes.*;
 import client.utils.ServerUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,8 +28,9 @@ public class MyApplication extends Application {
         Pair<ChatOverviewCtrl, Scene> chatOverviewPair = createPair("scenes/chatOverview.fxml",
                                                                             ChatOverviewCtrl.class);
         Pair<SignUpCtrl, Scene> signUpPair =createPair("scenes/sign-up.fxml", SignUpCtrl.class);
+        Pair<UserOverviewController, Scene> userOverviewPair = createPair("scenes/user-overview.fxml", UserOverviewController.class);
 
-        mainCtrl.init(stage, signInPair, chatOverviewPair, signUpPair);
+        mainCtrl.init(stage, signInPair, chatOverviewPair, signUpPair, userOverviewPair);
     }
 
     private <T> Pair<T, Scene> createPair(String resource, Class<T> type) throws IOException {

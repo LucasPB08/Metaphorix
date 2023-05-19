@@ -3,6 +3,7 @@ package client.scenes;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import server.commons.ChatUser;
 
 public class MainCtrl {
     private Stage primaryStage;
@@ -16,16 +17,21 @@ public class MainCtrl {
     private SignUpCtrl signUpCtrl;
     private Scene signUpScene;
 
+    private UserOverviewController userOverviewCtrl;
+    private Scene userOverviewScene;
+
     /**
      * Initialises controller
      * @param stage primary stage
      * @param signIn signIn pair
      * @param chatOverview chatOverview pair
      * @param signUp signUp pair
+     * @param userOverview user overview pair
      */
     public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
                      Pair<ChatOverviewCtrl, Scene> chatOverview,
-                     Pair<SignUpCtrl, Scene> signUp){
+                     Pair<SignUpCtrl, Scene> signUp,
+                     Pair<UserOverviewController, Scene> userOverview){
         this.primaryStage = stage;
 
         this.signInCtrl = signIn.getKey();
@@ -36,6 +42,9 @@ public class MainCtrl {
 
         this.signUpCtrl = signUp.getKey();
         this.signUpScene = signUp.getValue();
+
+        this.userOverviewCtrl = userOverview.getKey();
+        this.userOverviewScene = userOverview.getValue();
 
         showSignIn();
         stage.show();
@@ -63,6 +72,14 @@ public class MainCtrl {
     public void showSignUp(){
         primaryStage.setTitle("Sign up");
         primaryStage.setScene(signUpScene);
+    }
+
+    public void showUserOverview(ChatUser user){
+        userOverviewCtrl.setUser(user);
+        userOverviewCtrl.loadProfile();
+
+        primaryStage.setTitle("Chats");
+        primaryStage.setScene(userOverviewScene);
     }
 
 }
