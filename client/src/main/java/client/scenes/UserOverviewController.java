@@ -3,15 +3,23 @@ package client.scenes;
 import client.MyApplication;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 import server.commons.ChatUser;
+
+import java.util.Optional;
 
 
 public class UserOverviewController{
@@ -57,24 +65,54 @@ public class UserOverviewController{
     }
 
     private ImagePattern loadImage(){
-        Image pic = new Image("C:\\Users\\Lucas\\Documents\\Personal\\Code\\Projects\\Java\\Metaphorix\\client\\src\\main\\resources\\images\\profile-pic.jpg");
-        ImagePattern imagePattern = new ImagePattern(pic);
+        Image pic = new Image("images/profile-pic.jpg");
 
-        return imagePattern;
+        return new ImagePattern(pic);
     }
 
     public void addChat(){
-        Text text = new Text();
-        text.setText(user.getUserName());
+        Pair<AddChatsCtrl, Dialog<ButtonType>> pair = makeDialog();
+        if(pair == null) return;
 
-        Image pic = new Image("C:\\Users\\Lucas\\Documents\\Personal\\Code\\Projects\\Java\\Metaphorix\\client\\src\\main\\resources\\images\\profile-pic.jpg");
+        Dialog<ButtonType> dialog = pair.getValue();
+        dialog.setTitle("Available users");
+        Optional<ButtonType> pressed = dialog.showAndWait();
 
-        Circle circle = new Circle();
-        circle.setRadius(profilePictureRadius);
-        circle.setFill(new ImagePattern(pic));
 
-        VBox pair = new VBox();
-        pair.getChildren().addAll(circle, text);
+
+        if(pressed.isEmpty()) return;
+
+        ButtonType type = pressed.get();
+        AddChatsCtrl controller = pair.getKey();
+
+        if(type == ButtonType.OK) {
+            String userIdSelected  = controller.getSelected();
+
+            if(userIdSelected != null)
+                addUser(userIdSelected);
+        }
+    }
+
+    private Pair<AddChatsCtrl ,Dialog<ButtonType>> makeDialog(){
+        try {
+            FXMLLoader loader = new FXMLLoader(MyApplication.class.getResource("scenes/add-user-dialog.fxml"));
+            DialogPane pane = loader.load();
+
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setDialogPane(pane);
+
+            return new Pair<>(loader.getController(), dialog);
+        } catch(Exception e){
+            System.err.println("Something went wrong");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void addUser(String userId){
+        ChatUser user = server.getUserById(userId);
+
+        VBox pair = createProfileBox(user);
 
         chats.getChildren().add(pair);
     }
