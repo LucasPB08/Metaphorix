@@ -24,7 +24,7 @@ public class ChatUserController {
     /**
      * Stores a new user in the database
      * @param fullName full name of user
-     * @param userName user name
+     * @param userName username
      * @param password password of user
      * @return OK status
      */

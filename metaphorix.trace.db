@@ -1,0 +1,3 @@
+2023-05-21 21:48:29 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM CHAT CHAT_USER_CHATS [*]CHAT_USER_USER_NAME CHAT_USER"; SQL statement:
+SELECT * FROM CHAT CHAT_USER_CHATS CHAT_USER_USER_NAME CHAT_USER [42000-214]

@@ -5,6 +5,7 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
+import server.api.ChatController;
 import server.commons.ChatUser;
 
 import java.util.List;
@@ -91,6 +92,15 @@ public class ServerUtils {
                 .queryParam("password", password)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Boolean.class);
+    }
+
+    public Response createChat(ChatUser initiator, ChatUser receiver){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("/chat/create")
+                .queryParam("initiator", initiator)
+                .queryParam("receiver", receiver)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .post(null);
     }
 
 }
