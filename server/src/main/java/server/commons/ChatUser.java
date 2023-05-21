@@ -2,8 +2,11 @@ package server.commons;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.util.Set;
 
 @Entity
 public class ChatUser {
@@ -14,6 +17,9 @@ public class ChatUser {
     private String fullName;
 
     private String password;
+
+    @OneToMany
+    private Set<Chat> chats;
 
     private ChatUser(){
         //for object mapper
