@@ -11,34 +11,34 @@ import java.io.Serializable;
 public class ChatKey implements Serializable {
 
     @Column(name = "user_1")
-    String initiator;
+    String initiatorId;
 
     @Column(name = "user_2")
-    String receiver;
+    String receiverId;
 
     public ChatKey(){
         //for object mapper
     }
 
-    public ChatKey(String initiator, String receiver) {
-        this.initiator = initiator;
-        this.receiver = receiver;
+    public ChatKey(String initiatorId, String receiverId) {
+        this.initiatorId = initiatorId;
+        this.receiverId = receiverId;
     }
 
-    public void setInitiator(String initiator) {
-        this.initiator = initiator;
+    public void setInitiatorId(String initiatorId) {
+        this.initiatorId = initiatorId;
     }
 
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
     }
 
-    public String getInitiator() {
-        return initiator;
+    public String getInitiatorId() {
+        return initiatorId;
     }
 
-    public String getReceiver(){
-        return receiver;
+    public String getReceiverId(){
+        return receiverId;
     }
 
     @Override

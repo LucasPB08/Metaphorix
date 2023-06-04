@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.MyApplication;
+import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,8 +41,6 @@ public class UserOverviewController{
     public void initialize(){
         mainCtrl = MyApplication.getMainCtrl();
         server = MyApplication.getServer();
-
-
     }
 
     public void setUser(ChatUser user){
@@ -95,7 +94,9 @@ public class UserOverviewController{
 
     private Pair<AddChatsCtrl ,Dialog<ButtonType>> makeDialog(){
         try {
-            FXMLLoader loader = new FXMLLoader(MyApplication.class.getResource("scenes/add-user-dialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(MyApplication.class.
+                    getResource("scenes/add-user-dialog.fxml"));
+
             DialogPane pane = loader.load();
 
             Dialog<ButtonType> dialog = new Dialog<>();
@@ -110,11 +111,16 @@ public class UserOverviewController{
     }
 
     private void addUser(String userId){
-        ChatUser user = server.getUserById(userId);
+        ChatUser addedUser = server.getUserById(userId);
 
-        VBox pair = createProfileBox(user);
-
+        VBox pair = createProfileBox(addedUser);
         chats.getChildren().add(pair);
+
+        try {
+            server.createChat(this.user.getUserName(), addedUser.getUserName());
+        } catch(HTTPException e){
+            e.printStackTrace();
+        }
     }
 
 }

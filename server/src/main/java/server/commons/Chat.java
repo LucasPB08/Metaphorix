@@ -3,6 +3,7 @@ package server.commons;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Type;
 
 
 @Entity
@@ -27,7 +28,8 @@ public class Chat {
         //for object mapper
     }
 
-    public Chat(ChatUser initiator, ChatUser receiver){
+    public Chat(ChatKey id, ChatUser initiator, ChatUser receiver){
+        this.id = id;
         this.initiator = initiator;
         this.receiver = receiver;
         //messages = new HashMap<>();

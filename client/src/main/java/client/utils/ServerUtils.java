@@ -13,7 +13,7 @@ import java.util.List;
 public class ServerUtils {
     private static final String SERVER = "http://localhost:8080";
     @SuppressWarnings("checkstyle:StaticVariableName")
-    private static int OK_STATUS = 200;
+    final private static int OK_STATUS = 200;
 
     /**
      * Stores a new user in the database
@@ -94,13 +94,17 @@ public class ServerUtils {
                 .get(Boolean.class);
     }
 
-    public Response createChat(ChatUser initiator, ChatUser receiver){
-        return ClientBuilder.newClient(new ClientConfig())
+    public void createChat(String initiatorId, String receiverId) throws HTTPException {
+        Response response =  ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/chat/create")
-                .queryParam("initiator", initiator)
-                .queryParam("receiver", receiver)
+                .queryParam("initiatorId", initiatorId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(null);
+                .post(Entity.json(receiverId));
+
+        if(response.getStatus() != OK_STATUS)
+            throw new HTTPException("HTTP Status: " + response.getStatus());
+
+        System.out.println(response);
     }
 
 }

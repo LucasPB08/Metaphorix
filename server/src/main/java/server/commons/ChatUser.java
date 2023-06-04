@@ -18,8 +18,11 @@ public class ChatUser {
 
     private String password;
 
-    @OneToMany
-    private Set<Chat> chats;
+    @OneToMany(mappedBy = "initiator")
+    private Set<Chat> initiatedChats;
+
+    @OneToMany(mappedBy = "receiver")
+    private Set<Chat> receivedChats;
 
     private ChatUser(){
         //for object mapper
@@ -95,10 +98,11 @@ public class ChatUser {
      */
     @Override
     public String toString(){
-        return "ChatUser{" +
-                "User Name = " + userName + "\n" +
-                "Full name = " + fullName +
-                "}";
+//        return "ChatUser{" +
+//                "User Name = " + userName + "\n" +
+//                "Full name = " + fullName +
+//                "}";
+        return this.userName;
     }
 
     /**

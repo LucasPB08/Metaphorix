@@ -36,15 +36,15 @@ public class SignInCtrl {
      * the user gets logged in.
      */
     public void login(){
-//        errorMessage.setText("");
-//        if(!validateUserName() || !validatePassword()) {
-//            setErrorMessage();
-//            return;
-//        }
-//
-//        ChatUser user = server.getUserById(userName.getText());
+        errorMessage.setText("");
+        if(!validateUserName() || !validatePassword()) {
+            setErrorMessage();
+            return;
+        }
 
-        ChatUser user = new ChatUser("User", "Lucas", "Ronnye");
+        ChatUser user = server.getUserById(userName.getText());
+
+        //ChatUser user = new ChatUser("User", "Lucas", "Ronnye");
 
         mainCtrl.showUserOverview(user);
     }
