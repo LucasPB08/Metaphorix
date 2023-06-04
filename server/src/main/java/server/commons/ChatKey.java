@@ -11,10 +11,10 @@ import java.io.Serializable;
 public class ChatKey implements Serializable {
 
     @Column(name = "user_1")
-    String initiatorId;
+    private String initiatorId;
 
     @Column(name = "user_2")
-    String receiverId;
+    private String receiverId;
 
     public ChatKey(){
         //for object mapper

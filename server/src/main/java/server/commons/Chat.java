@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Type;
 
+import java.util.*;
+
 
 @Entity
 public class Chat {
@@ -14,15 +16,16 @@ public class Chat {
 
     @ManyToOne
     @MapsId("user_1")
-    @JoinColumn(name="initiator_id")
+    @JoinColumn(name="userName")
     private ChatUser initiator;
 
     @ManyToOne
     @MapsId("user_2")
-    @JoinColumn(name="receiver_id")
+    @JoinColumn(name="userName")
     private ChatUser receiver;
 
-//    private Map<ChatUser, List<Message>> messages;
+    @OneToMany(mappedBy = "chat")
+    private Queue<Message> messages;
 
     public Chat(){
         //for object mapper
@@ -32,7 +35,7 @@ public class Chat {
         this.id = id;
         this.initiator = initiator;
         this.receiver = receiver;
-        //messages = new HashMap<>();
+        this.messages = new LinkedList<>();
     }
 
     public ChatKey getId() {
@@ -53,6 +56,10 @@ public class Chat {
 
     public void setReceiver(ChatUser receiver) {
         this.receiver = receiver;
+    }
+
+    public void addMessage(Message message){
+        this.messages.offer(message);
     }
 
     @Override

@@ -1,17 +1,21 @@
 package server.commons;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 public class Message {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "user_1"),
+            @JoinColumn(name = "user_2")
+        }
+    )
+    private Chat chat;
+
 
     private String message;
 
@@ -23,9 +27,6 @@ public class Message {
         return message;
     }
 
-    public Long getId(){
-        return id;
-    }
 
     @Override
     public String toString(){
