@@ -21,7 +21,7 @@ public class ChatController {
         this.userRepo = userRepo;
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<Chat> createChat(@RequestParam String initiatorId, @RequestBody String receiverId){
         Optional<ChatUser> persistedInitiator = userRepo.findById(initiatorId);
         Optional<ChatUser> persistedReceiver = userRepo.findById(receiverId);
@@ -30,9 +30,7 @@ public class ChatController {
             return ResponseEntity.badRequest().build();
         }
 
-        ChatKey key = new ChatKey(initiatorId, receiverId);
-
-        Chat savedChat = repo.save(new Chat(key, persistedInitiator.get(), persistedReceiver.get()));
+        Chat savedChat = repo.save(new Chat(persistedInitiator.get(), persistedReceiver.get()));
 
         return ResponseEntity.ok(savedChat);
     }

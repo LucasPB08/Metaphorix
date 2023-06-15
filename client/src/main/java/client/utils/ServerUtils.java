@@ -5,7 +5,7 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
-import server.api.ChatController;
+import server.commons.Chat;
 import server.commons.ChatUser;
 
 import java.util.List;
@@ -94,9 +94,9 @@ public class ServerUtils {
                 .get(Boolean.class);
     }
 
-    public void createChat(String initiatorId, String receiverId) throws HTTPException {
+    public Long createChat(String initiatorId, String receiverId) throws HTTPException {
         Response response =  ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("/chat/create")
+                .target(SERVER).path("/chat")
                 .queryParam("initiatorId", initiatorId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(receiverId));
@@ -105,6 +105,12 @@ public class ServerUtils {
             throw new HTTPException("HTTP Status: " + response.getStatus());
 
         System.out.println(response);
+
+        Chat savedChat = (Chat)response.getEntity();
+
+        return savedChat.getId();
     }
+
+
 
 }

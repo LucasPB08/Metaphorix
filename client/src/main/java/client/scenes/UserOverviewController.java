@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.MyApplication;
+import client.utils.ChatUserBox;
 import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
@@ -48,26 +49,9 @@ public class UserOverviewController{
     }
 
     public void loadProfile(){
-        userSection.getChildren().add(createProfileBox(user));
+        userSection.getChildren().add(createProfileBox(user.getUserName(), -1L));
     }
 
-    private VBox createProfileBox(ChatUser user){
-        VBox profileBox = new VBox();
-
-        Circle profilePicture = new Circle();
-        profilePicture.setRadius(profilePictureRadius);
-        profilePicture.setFill(loadImage());
-
-        profileBox.getChildren().addAll(profilePicture, new Text(user.getUserName()));
-
-        return profileBox;
-    }
-
-    private ImagePattern loadImage(){
-        Image pic = new Image("images/profile-pic.jpg");
-
-        return new ImagePattern(pic);
-    }
 
     public void addChat(){
         Pair<AddChatsCtrl, Dialog<ButtonType>> pair = makeDialog();
@@ -76,8 +60,6 @@ public class UserOverviewController{
         Dialog<ButtonType> dialog = pair.getValue();
         dialog.setTitle("Available users");
         Optional<ButtonType> pressed = dialog.showAndWait();
-
-
 
         if(pressed.isEmpty()) return;
 
@@ -111,16 +93,32 @@ public class UserOverviewController{
     }
 
     private void addUser(String userId){
-        ChatUser addedUser = server.getUserById(userId);
-
-        VBox pair = createProfileBox(addedUser);
-        chats.getChildren().add(pair);
-
         try {
-            server.createChat(this.user.getUserName(), addedUser.getUserName());
+            Long chatId = server.createChat(this.user.getUserName(), userId);
+
+            ChatUserBox pair = createProfileBox(userId, chatId);
+            chats.getChildren().add(pair);
         } catch(HTTPException e){
             e.printStackTrace();
         }
+    }
+
+    private ChatUserBox createProfileBox(String user, Long chatId){
+        ChatUserBox profileBox = new ChatUserBox(chatId);
+
+        Circle profilePicture = new Circle();
+        profilePicture.setRadius(profilePictureRadius);
+        profilePicture.setFill(loadImage());
+
+        profileBox.getChildren().addAll(profilePicture, new Text(user));
+
+        return profileBox;
+    }
+
+    private ImagePattern loadImage(){
+        Image pic = new Image("images/profile-pic.jpg");
+
+        return new ImagePattern(pic);
     }
 
 }

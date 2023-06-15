@@ -3,7 +3,6 @@ package server.commons;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.Type;
 
 import java.util.*;
 
@@ -11,35 +10,31 @@ import java.util.*;
 @Entity
 public class Chat {
 
-    @EmbeddedId
-    private ChatKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @ManyToOne
-    @MapsId("user_1")
-    @JoinColumn(name="userName")
     private ChatUser initiator;
 
     @ManyToOne
-    @MapsId("user_2")
-    @JoinColumn(name="userName")
     private ChatUser receiver;
 
     @OneToMany(mappedBy = "chat")
-    private Queue<Message> messages;
+    private List<Message> messages;
 
     public Chat(){
         //for object mapper
     }
 
-    public Chat(ChatKey id, ChatUser initiator, ChatUser receiver){
-        this.id = id;
+    public Chat(ChatUser initiator, ChatUser receiver){
         this.initiator = initiator;
         this.receiver = receiver;
         this.messages = new LinkedList<>();
     }
 
-    public ChatKey getId() {
-        return id;
+    public Long getId(){
+        return this.id;
     }
 
     public ChatUser getInitiator() {
@@ -59,7 +54,7 @@ public class Chat {
     }
 
     public void addMessage(Message message){
-        this.messages.offer(message);
+        this.messages.add(0, message);
     }
 
     @Override
