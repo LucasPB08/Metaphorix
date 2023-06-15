@@ -76,6 +76,16 @@ public class UserOverviewController{
         }
     }
 
+    public void sendMessage(){
+        try {
+            String message = messageBox.getText();
+
+            server.sendMessage(selectedUser.getChatId(), message);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private Pair<AddChatsCtrl ,Dialog<ButtonType>> makeDialog(){
         try {
             FXMLLoader loader = new FXMLLoader(MyApplication.class.

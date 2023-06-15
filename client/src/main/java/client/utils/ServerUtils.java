@@ -113,5 +113,16 @@ public class ServerUtils {
     }
 
 
+    public void sendMessage(Long chatId, String message){
+        Response response = ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("/chat").queryParam("chatId", chatId)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.json(message));
 
+        if(response.getStatus() != OK_STATUS)
+            throw new RuntimeException();
+
+        System.out.println(response);
+    }
 }
