@@ -99,6 +99,7 @@ public class ServerUtils {
                 .target(SERVER).path("/chat")
                 .queryParam("initiatorId", initiatorId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(receiverId));
 
         if(response.getStatus() != OK_STATUS)
@@ -106,7 +107,7 @@ public class ServerUtils {
 
         System.out.println(response);
 
-        Chat savedChat = (Chat)response.getEntity();
+        Chat savedChat = response.readEntity(Chat.class);
 
         return savedChat.getId();
     }

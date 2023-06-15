@@ -9,13 +9,8 @@ public class Message {
 
     @Id
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "user_1"),
-            @JoinColumn(name = "user_2")
-        }
-    )
+    @JoinColumn(name = "chat_id")
     private Chat chat;
-
 
     private String message;
 
