@@ -6,10 +6,7 @@ import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -31,6 +28,11 @@ public class UserOverviewController{
     private ChatUser user;
 
     private int profilePictureRadius = 45;
+
+    private ChatUserBox selectedUser;
+
+    @FXML
+    private TextField messageBox;
 
     @FXML
     private HBox chats;
@@ -97,6 +99,8 @@ public class UserOverviewController{
             Long chatId = server.createChat(this.user.getUserName(), userId);
 
             ChatUserBox pair = createProfileBox(userId, chatId);
+            makeSelectable(pair);
+
             chats.getChildren().add(pair);
         } catch(HTTPException e){
             e.printStackTrace();
@@ -121,4 +125,12 @@ public class UserOverviewController{
         return new ImagePattern(pic);
     }
 
+    private void makeSelectable(ChatUserBox profileBox) {
+        profileBox.setOnMouseClicked(event -> {
+            if(selectedUser != null) selectedUser.setStyle("-fx-background-color: null;");
+
+            this.selectedUser = profileBox;
+            selectedUser.setStyle("-fx-background-color: blue;");
+        });
+    }
 }
