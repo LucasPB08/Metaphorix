@@ -6,7 +6,7 @@ public class ChatUserBox extends VBox {
     private Long chatId;
 
     public ChatUserBox(Long id){
-        super(id);
+        this.chatId = id;
     }
 
     public Long getChatId(){

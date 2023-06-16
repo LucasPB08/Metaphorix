@@ -54,7 +54,6 @@ public class UserOverviewController{
         userSection.getChildren().add(createProfileBox(user.getUserName(), -1L));
     }
 
-
     public void addChat(){
         Pair<AddChatsCtrl, Dialog<ButtonType>> pair = makeDialog();
         if(pair == null) return;

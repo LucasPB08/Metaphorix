@@ -113,7 +113,7 @@ public class ServerUtils {
     }
 
 
-    public void sendMessage(Long chatId, String message){
+    public void sendMessage(Long chatId, String message) throws HTTPException{
         Response response = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/chat").queryParam("chatId", chatId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
@@ -121,7 +121,7 @@ public class ServerUtils {
                 .put(Entity.json(message));
 
         if(response.getStatus() != OK_STATUS)
-            throw new RuntimeException();
+            throw new HTTPException("HTTP Status: " + response.getStatus());
 
         System.out.println(response);
     }

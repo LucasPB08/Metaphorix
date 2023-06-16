@@ -8,11 +8,18 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class Message {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
     private String message;
+
+    public Message(){
+        //for object mapper
+    }
 
     public Message(String message){
         this.message = message;
@@ -22,6 +29,9 @@ public class Message {
         return message;
     }
 
+    public void setChat(Chat chat){
+        this.chat = chat;
+    }
 
     @Override
     public String toString(){

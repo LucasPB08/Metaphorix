@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import server.commons.Chat;
 import server.commons.ChatKey;
 import server.commons.ChatUser;
+import server.commons.Message;
 import server.database.ChatRepository;
 import server.database.ChatUserRepository;
 
@@ -33,5 +34,22 @@ public class ChatController {
         Chat savedChat = repo.save(new Chat(persistedInitiator.get(), persistedReceiver.get()));
 
         return ResponseEntity.ok(savedChat);
+    }
+
+    @PutMapping()
+    public ResponseEntity<Message> saveMessage(@RequestParam Long chatId, @RequestBody String message){
+        Message messageToSave = new Message(message);
+
+        Optional<Chat> optionalChat = repo.findById(chatId);
+        if(optionalChat.isEmpty()) return ResponseEntity.badRequest().build();
+
+        Chat chat = optionalChat.get();
+        chat.addMessage(messageToSave);
+
+        messageToSave.setChat(chat);
+
+        repo.save(chat);
+
+        return ResponseEntity.ok(messageToSave);
     }
 }
