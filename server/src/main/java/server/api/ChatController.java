@@ -3,11 +3,11 @@ package server.api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.commons.Chat;
-import server.commons.ChatKey;
 import server.commons.ChatUser;
 import server.commons.Message;
 import server.database.ChatRepository;
 import server.database.ChatUserRepository;
+import server.database.MessageRepo;
 
 import java.util.Optional;
 
@@ -16,10 +16,12 @@ import java.util.Optional;
 public class ChatController {
     private ChatRepository repo;
     private ChatUserRepository userRepo;
+    private MessageRepo messageRepo;
 
-    public ChatController(ChatRepository repo, ChatUserRepository userRepo){
+    public ChatController(ChatRepository repo, ChatUserRepository userRepo, MessageRepo messageRepo){
         this.repo = repo;
         this.userRepo = userRepo;
+        this.messageRepo = messageRepo;
     }
 
     @PostMapping()
@@ -49,6 +51,7 @@ public class ChatController {
         messageToSave.setChat(chat);
 
         repo.save(chat);
+        messageRepo.save(messageToSave);
 
         return ResponseEntity.ok(messageToSave);
     }
