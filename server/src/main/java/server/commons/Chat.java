@@ -57,6 +57,10 @@ public class Chat {
         this.messages.add(0, message);
     }
 
+    public List<Message> getMessages(){
+        return this.messages;
+    }
+
     @Override
     public String toString(){
         return "Chat{" +

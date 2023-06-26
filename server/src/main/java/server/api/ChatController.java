@@ -9,6 +9,7 @@ import server.database.ChatRepository;
 import server.database.ChatUserRepository;
 import server.database.MessageRepo;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -53,11 +54,20 @@ public class ChatController {
         messageToSave.setChat(chat);
         messageToSave.setSender(user);
 
-        chat.addMessage(messageToSave);
-
         repo.save(chat);
         messageRepo.save(messageToSave);
 
         return ResponseEntity.ok(messageToSave);
+    }
+
+    @GetMapping()
+    public List<Message> getMessages(@RequestParam Long chatId){
+        Optional<Chat> optionalChat = repo.findById(chatId);
+
+        if(optionalChat.isEmpty()) return null;
+
+        Chat chat = optionalChat.get();
+
+        return chat.getMessages();
     }
 }
