@@ -6,6 +6,7 @@ import jakarta.persistence.OneToMany;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,7 +26,7 @@ public class ChatUser {
     private Set<Chat> receivedChats;
 
     @OneToMany(mappedBy = "sender")
-    private Set<Message> messages;
+    private List<Message> messages;
 
     private ChatUser(){
         //for object mapper
@@ -75,6 +76,10 @@ public class ChatUser {
      */
     public void setUserName(String name){
         this.userName = name;
+    }
+
+    public List<Message> getMessages(){
+        return this.messages;
     }
 
     /**

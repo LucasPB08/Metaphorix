@@ -79,7 +79,7 @@ public class UserOverviewController{
         try {
             String message = messageBox.getText();
 
-            server.sendMessage(selectedUser.getChatId(), message);
+            server.sendMessage(selectedUser.getChatId(),user.getUserName() , message);
         } catch(Exception e){
             e.printStackTrace();
         }

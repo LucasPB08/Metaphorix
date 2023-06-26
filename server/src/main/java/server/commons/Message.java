@@ -37,6 +37,10 @@ public class Message {
         this.chat = chat;
     }
 
+    public void setSender(ChatUser sender){
+        this.sender = sender;
+    }
+
     @Override
     public String toString(){
         return "Message = {" + message + "}";

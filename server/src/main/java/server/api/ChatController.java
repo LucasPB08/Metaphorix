@@ -39,16 +39,21 @@ public class ChatController {
     }
 
     @PutMapping()
-    public ResponseEntity<Message> saveMessage(@RequestParam Long chatId, @RequestBody String message){
+    public ResponseEntity<Message> saveMessage(@RequestParam Long chatId, @RequestParam String userId, @RequestBody String message){
         Message messageToSave = new Message(message);
 
+        Optional<ChatUser> optionalChatUser = userRepo.findById(userId);
         Optional<Chat> optionalChat = repo.findById(chatId);
-        if(optionalChat.isEmpty()) return ResponseEntity.badRequest().build();
+
+        if(optionalChat.isEmpty() || optionalChatUser.isEmpty()) return ResponseEntity.badRequest().build();
 
         Chat chat = optionalChat.get();
-        chat.addMessage(messageToSave);
+        ChatUser user = optionalChatUser.get();
 
         messageToSave.setChat(chat);
+        messageToSave.setSender(user);
+
+        chat.addMessage(messageToSave);
 
         repo.save(chat);
         messageRepo.save(messageToSave);

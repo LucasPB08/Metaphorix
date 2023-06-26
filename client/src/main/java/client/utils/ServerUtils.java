@@ -112,10 +112,10 @@ public class ServerUtils {
         return savedChat.getId();
     }
 
-
-    public void sendMessage(Long chatId, String message) throws HTTPException{
+    public void sendMessage(Long chatId, String userId, String message) throws HTTPException{
         Response response = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/chat").queryParam("chatId", chatId)
+                .queryParam("userId", userId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .put(Entity.json(message));
