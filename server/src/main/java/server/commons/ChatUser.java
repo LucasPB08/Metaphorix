@@ -24,6 +24,9 @@ public class ChatUser {
     @OneToMany(mappedBy = "receiver")
     private Set<Chat> receivedChats;
 
+    @OneToMany(mappedBy = "sender")
+    private Set<Message> messages;
+
     private ChatUser(){
         //for object mapper
     }

@@ -15,6 +15,10 @@ public class Message {
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    private ChatUser sender;
+
     private String message;
 
     public Message(){
