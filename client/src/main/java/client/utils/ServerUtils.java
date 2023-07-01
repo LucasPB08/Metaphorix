@@ -2,6 +2,7 @@ package client.utils;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
@@ -49,7 +50,7 @@ public class ServerUtils {
                 .target(SERVER).path("/users/")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
-                .get(new MyGenericType());
+                .get(new ListOfChatUserGenericType());
     }
 
     /**
@@ -112,7 +113,13 @@ public class ServerUtils {
         return savedChat.getId();
     }
 
-
+    public List<Chat> getChatsOfUser(String userId){
+        return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/users/chats").queryParam("userId", userId)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(new ListOfChatsGenericType());
+    }
 
     public void sendMessage(Long chatId, String userId, String message) throws HTTPException{
         Response response = ClientBuilder.newClient(new ClientConfig())
