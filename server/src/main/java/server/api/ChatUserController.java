@@ -1,13 +1,16 @@
 package server.api;
 
 import org.springframework.http.ResponseEntity;
+import server.commons.Chat;
 import server.commons.ChatUser;
 import org.springframework.web.bind.annotation.*;
 import server.commons.Message;
 import server.database.ChatUserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -94,5 +97,16 @@ public class ChatUserController {
         ChatUser chatUser = user.get();
 
         return chatUser.getMessages();
+    }
+
+    @GetMapping("/chats")
+    public List<Chat> getChats(@RequestParam String userId){
+        Optional<ChatUser> optionalChatUser = repo.findById(userId);
+
+        if(optionalChatUser.isEmpty()) return null;
+
+        ChatUser user = optionalChatUser.get();
+
+        return user.getChats();
     }
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.OneToMany;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -89,6 +90,13 @@ public class ChatUser {
      */
     public boolean validatePassword(String password){
         return this.password.equals(password);
+    }
+
+    public List<Chat> getChats(){
+        List<Chat> chats = new ArrayList<>(this.receivedChats);
+        chats.addAll(this.initiatedChats);
+
+        return chats;
     }
 
     /**

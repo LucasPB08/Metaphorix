@@ -112,6 +112,8 @@ public class ServerUtils {
         return savedChat.getId();
     }
 
+
+
     public void sendMessage(Long chatId, String userId, String message) throws HTTPException{
         Response response = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/chat").queryParam("chatId", chatId)

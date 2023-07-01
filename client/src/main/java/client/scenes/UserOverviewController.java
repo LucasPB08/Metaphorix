@@ -51,7 +51,10 @@ public class UserOverviewController{
     }
 
     public void loadProfile(){
-        userSection.getChildren().add(createProfileBox(user.getUserName(), -1L));
+        ChatUserBox userToLoad = createProfileBox(user.getUserName(), -1L);
+        userSection.getChildren().add(userToLoad);
+
+
     }
 
     public void addChat(){
