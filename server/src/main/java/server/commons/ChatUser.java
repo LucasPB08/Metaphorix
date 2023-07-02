@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,10 +22,10 @@ public class ChatUser {
     private String password;
 
     @OneToMany(mappedBy = "initiator")
-    private Set<Chat> initiatedChats;
+    private List<Chat> initiatedChats;
 
     @OneToMany(mappedBy = "receiver")
-    private Set<Chat> receivedChats;
+    private List<Chat> receivedChats;
 
     @OneToMany(mappedBy = "sender")
     private List<Message> messages;
@@ -53,6 +54,8 @@ public class ChatUser {
         this.userName = name;
         this.fullName = fullName;
         this.password = password;
+        this.receivedChats = new ArrayList<>();
+        this.initiatedChats = new ArrayList<>();
     }
 
     /**
@@ -92,11 +95,20 @@ public class ChatUser {
         return this.password.equals(password);
     }
 
-    public List<Chat> getChats(){
-        List<Chat> chats = new ArrayList<>(this.receivedChats);
-        chats.addAll(this.initiatedChats);
+    public List<Chat> allChats(){
+        List<Chat> chats = new ArrayList<>();
+        if(this.initiatedChats != null) chats.addAll(this.initiatedChats);
+        if(this.receivedChats != null) chats.addAll(this.receivedChats);
 
         return chats;
+    }
+
+    public void addInitiatedChat(Chat chat){
+        this.initiatedChats.add(chat);
+    }
+
+    public void addReceivedChat(Chat chat){
+        this.receivedChats.add(chat);
     }
 
     /**
@@ -114,11 +126,10 @@ public class ChatUser {
      */
     @Override
     public String toString(){
-//        return "ChatUser{" +
-//                "User Name = " + userName + "\n" +
-//                "Full name = " + fullName +
-//                "}";
-        return this.userName;
+        return "ChatUser{" +
+                "User Name = " + userName + "\n" +
+                "Full name = " + fullName +
+                "}";
     }
 
     /**

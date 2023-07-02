@@ -34,7 +34,16 @@ public class ChatController {
             return ResponseEntity.badRequest().build();
         }
 
-        Chat savedChat = repo.save(new Chat(persistedInitiator.get(), persistedReceiver.get()));
+        ChatUser initiator = persistedInitiator.get();
+        ChatUser receiver = persistedReceiver.get();
+
+        Chat savedChat = repo.save(new Chat(initiator, receiver));
+
+        initiator.addInitiatedChat(savedChat);
+        receiver.addReceivedChat(savedChat);
+
+        userRepo.save(initiator);
+        userRepo.save(receiver);
 
         return ResponseEntity.ok(savedChat);
     }

@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import server.commons.Message;
 import server.database.ChatUserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -107,6 +105,6 @@ public class ChatUserController {
 
         ChatUser user = optionalChatUser.get();
 
-        return user.getChats();
+        return user.allChats();
     }
 }

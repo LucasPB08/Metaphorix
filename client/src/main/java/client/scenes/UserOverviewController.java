@@ -16,8 +16,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import server.commons.Chat;
 import server.commons.ChatUser;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -54,6 +56,22 @@ public class UserOverviewController{
         ChatUserBox userToLoad = createProfileBox(user.getUserName(), -1L);
         userSection.getChildren().add(userToLoad);
 
+        loadChats();
+    }
+
+    private void loadChats(){
+        List<Chat> userChats = server.getChatsOfUser(this.user.getUserName());
+        for(Chat chat: userChats){
+            String initiator = chat.getInitiator().getUserName();
+            String receiver = chat.getReceiver().getUserName();
+            String myUserName = this.user.getUserName();
+
+            if (initiator.equals(myUserName)) {
+                addUser(receiver);
+            } else {
+                addUser(initiator);
+            }
+        }
 
     }
 
