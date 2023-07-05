@@ -4,6 +4,8 @@ import client.MyApplication;
 import client.utils.ChatUserBox;
 import client.utils.HTTPException;
 import client.utils.ServerUtils;
+import commons.Chat;
+import commons.ChatUser;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -14,8 +16,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
-import server.commons.Chat;
-import server.commons.ChatUser;
 
 import java.util.List;
 import java.util.Optional;

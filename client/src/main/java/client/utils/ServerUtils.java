@@ -5,8 +5,8 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
-import server.commons.Chat;
-import server.commons.ChatUser;
+import commons.Chat;
+import commons.ChatUser;
 
 import java.util.List;
 

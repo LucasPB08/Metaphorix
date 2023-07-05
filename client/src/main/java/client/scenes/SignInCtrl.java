@@ -5,7 +5,7 @@ import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import server.commons.ChatUser;
+import commons.ChatUser;
 
 
 public class SignInCtrl {
@@ -46,7 +46,7 @@ public class SignInCtrl {
 
         ChatUser user = server.getUserById(userName.getText());
 
-        //ChatUser user = new ChatUser("User", "Lucas", "Ronnye");
+        //commons.ChatUser user = new commons.ChatUser("User", "Lucas", "Ronnye");
 
         mainCtrl.showUserOverview(user);
     }
