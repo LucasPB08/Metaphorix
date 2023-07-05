@@ -29,6 +29,8 @@ public class SignInCtrl {
     public void initialize(){
         mainCtrl = MyApplication.getMainCtrl();
         server = MyApplication.getServer();
+        userName.setText("LucasPB");
+        password.setText("R");
     }
 
     /**

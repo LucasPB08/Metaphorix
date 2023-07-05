@@ -1,8 +1,10 @@
 package server.api;
 
 import org.springframework.http.ResponseEntity;
+import server.commons.Chat;
 import server.commons.ChatUser;
 import org.springframework.web.bind.annotation.*;
+import server.commons.Message;
 import server.database.ChatUserRepository;
 
 import java.util.List;
@@ -82,5 +84,37 @@ public class ChatUserController {
     @GetMapping("/")
     public List<ChatUser> getAll(){
         return repo.findAll();
+    }
+
+    /**
+     * Gets all the messages from a certain user
+     * @param userId Id of the user
+     * @return all the messages from the user
+     */
+    @GetMapping("/messages")
+    public List<Message> getMessages(@RequestParam String userId){
+        Optional<ChatUser> user = repo.findById(userId);
+
+        if(user.isEmpty()) return null;
+
+        ChatUser chatUser = user.get();
+
+        return chatUser.getMessages();
+    }
+
+    /**
+     * Gets the chats that a certain user participates in
+     * @param userId Id of the user
+     * @return the chats that the user participates in
+     */
+    @GetMapping("/chats")
+    public List<Chat> getChats(@RequestParam String userId){
+        Optional<ChatUser> optionalChatUser = repo.findById(userId);
+
+        if(optionalChatUser.isEmpty()) return null;
+
+        ChatUser user = optionalChatUser.get();
+
+        return user.allChats();
     }
 }
