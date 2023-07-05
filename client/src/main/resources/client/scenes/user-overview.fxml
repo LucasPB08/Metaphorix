@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -13,7 +14,9 @@
             <HBox fx:id="chats" maxHeight="-Infinity" prefHeight="110.0" prefWidth="778.0" />
          </content>
       </ScrollPane>
-      <Button layoutX="760.0" layoutY="451.0" mnemonicParsing="false" onAction="#addChat" text="Add chat" />
+      <Button layoutX="29.0" layoutY="137.0" mnemonicParsing="false" onAction="#addChat" text="Add chat" />
       <Pane fx:id="userSection" layoutY="4.0" prefHeight="114.0" prefWidth="122.0" />
+      <TextField fx:id="messageBox" layoutX="159.0" layoutY="451.0" prefHeight="26.0" prefWidth="569.0" />
+      <Button layoutX="754.0" layoutY="452.0" mnemonicParsing="false" onAction="#sendMessage" text="SEND" />
    </children>
 </AnchorPane>

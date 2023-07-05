@@ -24,16 +24,16 @@ public class MyApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        Pair<SignInCtrl, Scene> signInPair = createPair("scenes/sign-in.fxml", SignInCtrl.class);
-        Pair<ChatOverviewCtrl, Scene> chatOverviewPair = createPair("scenes/chatOverview.fxml",
-                                                                            ChatOverviewCtrl.class);
-        Pair<SignUpCtrl, Scene> signUpPair =createPair("scenes/sign-up.fxml", SignUpCtrl.class);
-        Pair<UserOverviewController, Scene> userOverviewPair = createPair("scenes/user-overview.fxml", UserOverviewController.class);
+        Pair<SignInCtrl, Scene> signInPair = createPair("scenes/sign-in.fxml");
+        Pair<ChatOverviewCtrl, Scene> chatOverviewPair = createPair("scenes/chatOverview.fxml");
+        Pair<SignUpCtrl, Scene> signUpPair =createPair("scenes/sign-up.fxml");
+        Pair<UserOverviewController,
+                Scene> userOverviewPair = createPair("scenes/user-overview.fxml");
 
         mainCtrl.init(stage, signInPair, chatOverviewPair, signUpPair, userOverviewPair);
     }
 
-    private <T> Pair<T, Scene> createPair(String resource, Class<T> type) throws IOException {
+    private <T> Pair<T, Scene> createPair(String resource) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
         Scene scene = new Scene(loader.load());
         T controller = loader.getController();

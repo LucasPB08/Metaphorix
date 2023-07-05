@@ -2,8 +2,13 @@ package server.commons;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 public class ChatUser {
@@ -14,6 +19,15 @@ public class ChatUser {
     private String fullName;
 
     private String password;
+
+    @OneToMany(mappedBy = "initiator")
+    private List<Chat> initiatedChats;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Chat> receivedChats;
+
+    @OneToMany(mappedBy = "sender")
+    private List<Message> messages;
 
     private ChatUser(){
         //for object mapper
@@ -39,6 +53,8 @@ public class ChatUser {
         this.userName = name;
         this.fullName = fullName;
         this.password = password;
+        this.receivedChats = new ArrayList<>();
+        this.initiatedChats = new ArrayList<>();
     }
 
     /**
@@ -66,12 +82,48 @@ public class ChatUser {
     }
 
     /**
+     * Gets all messages sent by this user
+     * @return all messages sent by this user
+     */
+    public List<Message> getMessages(){
+        return this.messages;
+    }
+
+    /**
      * Checks whether the password used is this user's password
      * @param password password input
      * @return true if the password corresponds to the user's password, false otherwise.
      */
     public boolean validatePassword(String password){
         return this.password.equals(password);
+    }
+
+    /**
+     * Gets all the chats this user takes part in.
+     * @return all chats that this user takes part in.
+     */
+    public List<Chat> allChats(){
+        List<Chat> chats = new ArrayList<>();
+        if(this.initiatedChats != null) chats.addAll(this.initiatedChats);
+        if(this.receivedChats != null) chats.addAll(this.receivedChats);
+
+        return chats;
+    }
+
+    /**
+     * Adds a chat initiated by this user
+     * @param chat chat initiated by this user
+     */
+    public void addInitiatedChat(Chat chat){
+        this.initiatedChats.add(chat);
+    }
+
+    /**
+     * Adds a chat that was started with this user
+     * @param chat chat started with this user
+     */
+    public void addReceivedChat(Chat chat){
+        this.receivedChats.add(chat);
     }
 
     /**

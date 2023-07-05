@@ -5,6 +5,6 @@ import server.commons.ChatUser;
 
 import java.util.List;
 
-public class MyGenericType extends GenericType<List<ChatUser>> {
+public class ListOfChatUserGenericType extends GenericType<List<ChatUser>> {
 
 }

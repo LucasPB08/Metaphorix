@@ -5,6 +5,7 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
+import server.commons.Chat;
 import server.commons.ChatUser;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class ServerUtils {
     private static final String SERVER = "http://localhost:8080";
     @SuppressWarnings("checkstyle:StaticVariableName")
-    private static int OK_STATUS = 200;
+    final private static int OK_STATUS = 200;
 
     /**
      * Stores a new user in the database
@@ -48,7 +49,7 @@ public class ServerUtils {
                 .target(SERVER).path("/users/")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
-                .get(new MyGenericType());
+                .get(new ListOfChatUserGenericType());
     }
 
     /**
@@ -93,4 +94,62 @@ public class ServerUtils {
                 .get(Boolean.class);
     }
 
+    /**
+     * Creates a new chat in the database.
+     * @param initiatorId Id of the initiator of the chat.
+     * @param receiverId Id of the receiver of the chat.
+     * @return The Id of the created chat
+     * @throws HTTPException If the response status is not OK
+     */
+    public Long createChat(String initiatorId, String receiverId) throws HTTPException {
+        Response response =  ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("/chat")
+                .queryParam("initiatorId", initiatorId)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.json(receiverId));
+
+        if(response.getStatus() != OK_STATUS)
+            throw new HTTPException("HTTP Status: " + response.getStatus());
+
+        System.out.println(response);
+
+        Chat savedChat = response.readEntity(Chat.class);
+
+        return savedChat.getId();
+    }
+
+    /**
+     * Gets all the chats a certain user participates in.
+     * @param userId Id of the user.
+     * @return all the chats this user participates in.
+     */
+    public List<Chat> getChatsOfUser(String userId){
+        return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/users/chats").queryParam("userId", userId)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(new ListOfChatsGenericType());
+    }
+
+    /**
+     * Sends a message.
+     * @param chatId Id of the chat where the message is sent.
+     * @param userId Id of the sender.
+     * @param message Content of the message
+     * @throws HTTPException If the response status is not OK.
+     */
+    public void sendMessage(Long chatId, String userId, String message) throws HTTPException{
+        Response response = ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER).path("/chat").queryParam("chatId", chatId)
+                .queryParam("userId", userId)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.json(message));
+
+        if(response.getStatus() != OK_STATUS)
+            throw new HTTPException("HTTP Status: " + response.getStatus());
+
+        System.out.println(response);
+    }
 }
