@@ -3,7 +3,7 @@ package client.scenes;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import server.commons.ChatUser;
+import commons.ChatUser;
 
 public class MainCtrl {
     private Stage primaryStage;
@@ -54,7 +54,7 @@ public class MainCtrl {
      * Shows chat overview scene.
      */
     public void showChatOverview(){
-        primaryStage.setTitle("Chat overview");
+        primaryStage.setTitle("commons.Chat overview");
         primaryStage.setScene(chatOverview);
     }
 

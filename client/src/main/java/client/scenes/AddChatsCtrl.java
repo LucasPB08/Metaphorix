@@ -6,7 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import server.commons.ChatUser;
+import commons.ChatUser;
 
 import java.util.List;
 

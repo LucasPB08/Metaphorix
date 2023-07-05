@@ -1,7 +1,7 @@
 package server.database;
 
 
-import server.commons.ChatUser;
+import commons.ChatUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ChatUserRepository extends JpaRepository<ChatUser, String> {

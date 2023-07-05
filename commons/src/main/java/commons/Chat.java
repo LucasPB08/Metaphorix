@@ -1,11 +1,10 @@
-package server.commons;
+package commons;
 
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.*;
-
 
 @Entity
 public class Chat {
@@ -31,7 +30,7 @@ public class Chat {
     }
 
     /**
-     * Constructor for Chat object
+     * Constructor for commons.Chat object
      * @param initiator user that initiated the chat
      * @param receiver user at the receiving end of a chat
      */
@@ -103,7 +102,7 @@ public class Chat {
      */
     @Override
     public String toString(){
-        return "Chat{" +
+        return "commons.Chat{" +
                 "Initiator = " + initiator.toString() + ", \n" +
                 "Receiver = " + receiver.toString() + "}";
     }

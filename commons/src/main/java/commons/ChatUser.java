@@ -1,4 +1,4 @@
-package server.commons;
+package commons;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,7 +8,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 public class ChatUser {
@@ -34,7 +33,7 @@ public class ChatUser {
     }
 
     /**
-     * Constructor for ChatUser without password
+     * Constructor for commons.ChatUser without password
      * @param userName username
      * @param fullName full name
      */
@@ -141,7 +140,7 @@ public class ChatUser {
      */
     @Override
     public String toString(){
-        return "ChatUser{" +
+        return "commons.ChatUser{" +
                 "User Name = " + userName + "\n" +
                 "Full name = " + fullName +
                 "}";

@@ -7,7 +7,7 @@ public class ChatUserBox extends VBox {
 
     /**
      * Constructor for a ChatUserBox
-     * @param id id of the ChatUser stored in this box
+     * @param id id of the commons.ChatUser stored in this box
      */
     public ChatUserBox(Long id){
         this.chatId = id;

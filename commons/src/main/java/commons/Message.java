@@ -1,4 +1,4 @@
-package server.commons;
+package commons;
 
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -62,11 +62,11 @@ public class Message {
 
     /**
      * Makes a string representation of this message.
-     * @return The string representation of this Message.
+     * @return The string representation of this commons.Message.
      */
     @Override
     public String toString(){
-        return "Message = {" + message + "}";
+        return "commons.Message = {" + message + "}";
     }
 
     /**

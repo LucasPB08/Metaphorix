@@ -1,14 +1,15 @@
 package server.api;
 
+import commons.Chat;
+import commons.ChatUser;
+import commons.Message;
 import org.springframework.http.ResponseEntity;
-import server.commons.Chat;
-import server.commons.ChatUser;
 import org.springframework.web.bind.annotation.*;
-import server.commons.Message;
 import server.database.ChatUserRepository;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/users")

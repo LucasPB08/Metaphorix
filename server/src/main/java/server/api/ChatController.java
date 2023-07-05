@@ -1,10 +1,10 @@
 package server.api;
 
+import commons.Chat;
+import commons.ChatUser;
+import commons.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import server.commons.Chat;
-import server.commons.ChatUser;
-import server.commons.Message;
 import server.database.ChatRepository;
 import server.database.ChatUserRepository;
 import server.database.MessageRepo;
