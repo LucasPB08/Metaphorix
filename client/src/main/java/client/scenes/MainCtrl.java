@@ -74,6 +74,10 @@ public class MainCtrl {
         primaryStage.setScene(signUpScene);
     }
 
+    /**
+     * Shows the user overview
+     * @param user the user whose overview will be shown
+     */
     public void showUserOverview(ChatUser user){
         userOverviewCtrl.setUser(user);
         userOverviewCtrl.loadProfile();

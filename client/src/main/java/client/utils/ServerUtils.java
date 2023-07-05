@@ -2,7 +2,6 @@ package client.utils;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
@@ -95,6 +94,13 @@ public class ServerUtils {
                 .get(Boolean.class);
     }
 
+    /**
+     * Creates a new chat in the database.
+     * @param initiatorId Id of the initiator of the chat.
+     * @param receiverId Id of the receiver of the chat.
+     * @return The Id of the created chat
+     * @throws HTTPException If the response status is not OK
+     */
     public Long createChat(String initiatorId, String receiverId) throws HTTPException {
         Response response =  ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/chat")
@@ -113,6 +119,11 @@ public class ServerUtils {
         return savedChat.getId();
     }
 
+    /**
+     * Gets all the chats a certain user participates in.
+     * @param userId Id of the user.
+     * @return all the chats this user participates in.
+     */
     public List<Chat> getChatsOfUser(String userId){
         return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/users/chats").queryParam("userId", userId)
@@ -121,6 +132,13 @@ public class ServerUtils {
                 .get(new ListOfChatsGenericType());
     }
 
+    /**
+     * Sends a message.
+     * @param chatId Id of the chat where the message is sent.
+     * @param userId Id of the sender.
+     * @param message Content of the message
+     * @throws HTTPException If the response status is not OK.
+     */
     public void sendMessage(Long chatId, String userId, String message) throws HTTPException{
         Response response = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/chat").queryParam("chatId", chatId)

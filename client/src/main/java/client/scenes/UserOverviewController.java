@@ -8,10 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -42,16 +40,26 @@ public class UserOverviewController{
     @FXML
     private Pane userSection;
 
+    /**
+     * Initialises controller
+     */
     @FXML
     public void initialize(){
         mainCtrl = MyApplication.getMainCtrl();
         server = MyApplication.getServer();
     }
 
+    /**
+     * Sets the user whose overview will be shown.
+     * @param user
+     */
     public void setUser(ChatUser user){
         this.user = user;
     }
 
+    /**
+     * Loads the overview.
+     */
     public void loadProfile(){
         ChatUserBox userToLoad = createProfileBox(user.getUserName(), -1L);
         userSection.getChildren().add(userToLoad);
@@ -75,6 +83,9 @@ public class UserOverviewController{
 
     }
 
+    /**
+     * Adds a chat
+     */
     public void addChat(){
         Pair<AddChatsCtrl, Dialog<ButtonType>> pair = makeDialog();
         if(pair == null) return;
@@ -96,6 +107,9 @@ public class UserOverviewController{
         }
     }
 
+    /**
+     * Sends a message
+     */
     public void sendMessage(){
         try {
             String message = messageBox.getText();

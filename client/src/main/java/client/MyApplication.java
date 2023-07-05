@@ -27,7 +27,8 @@ public class MyApplication extends Application {
         Pair<SignInCtrl, Scene> signInPair = createPair("scenes/sign-in.fxml");
         Pair<ChatOverviewCtrl, Scene> chatOverviewPair = createPair("scenes/chatOverview.fxml");
         Pair<SignUpCtrl, Scene> signUpPair =createPair("scenes/sign-up.fxml");
-        Pair<UserOverviewController, Scene> userOverviewPair = createPair("scenes/user-overview.fxml");
+        Pair<UserOverviewController,
+                Scene> userOverviewPair = createPair("scenes/user-overview.fxml");
 
         mainCtrl.init(stage, signInPair, chatOverviewPair, signUpPair, userOverviewPair);
     }

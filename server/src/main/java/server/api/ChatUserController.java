@@ -86,6 +86,11 @@ public class ChatUserController {
         return repo.findAll();
     }
 
+    /**
+     * Gets all the messages from a certain user
+     * @param userId Id of the user
+     * @return all the messages from the user
+     */
     @GetMapping("/messages")
     public List<Message> getMessages(@RequestParam String userId){
         Optional<ChatUser> user = repo.findById(userId);
@@ -97,6 +102,11 @@ public class ChatUserController {
         return chatUser.getMessages();
     }
 
+    /**
+     * Gets the chats that a certain user participates in
+     * @param userId Id of the user
+     * @return the chats that the user participates in
+     */
     @GetMapping("/chats")
     public List<Chat> getChats(@RequestParam String userId){
         Optional<ChatUser> optionalChatUser = repo.findById(userId);
