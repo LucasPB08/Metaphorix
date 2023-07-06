@@ -54,6 +54,7 @@ public class ChatUser {
         this.password = password;
         this.receivedChats = new ArrayList<>();
         this.initiatedChats = new ArrayList<>();
+        this.messages = new ArrayList<>();
     }
 
     /**
@@ -123,6 +124,14 @@ public class ChatUser {
      */
     public void addReceivedChat(Chat chat){
         this.receivedChats.add(chat);
+    }
+
+    /**
+     * Adds a message to the list of sent messages.
+     * @param message the message to be added.
+     */
+    public void addMessage(Message message){
+        this.messages.add(message);
     }
 
     /**
