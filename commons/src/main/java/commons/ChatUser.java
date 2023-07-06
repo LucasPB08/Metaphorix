@@ -149,7 +149,7 @@ public class ChatUser {
      */
     @Override
     public String toString(){
-        return "commons.ChatUser{" +
+        return "ChatUser{" +
                 "User Name = " + userName + "\n" +
                 "Full name = " + fullName +
                 "}";
