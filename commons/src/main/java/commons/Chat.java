@@ -102,7 +102,7 @@ public class Chat {
      */
     @Override
     public String toString(){
-        return "commons.Chat{" +
+        return "Chat{" +
                 "Initiator = " + initiator.toString() + ", \n" +
                 "Receiver = " + receiver.toString() + "}";
     }
