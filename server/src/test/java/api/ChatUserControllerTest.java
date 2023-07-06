@@ -3,12 +3,12 @@ package api;
 import api.fakes.ChatUserRepoFake;
 import org.junit.jupiter.api.Test;
 import server.api.ChatUserController;
-import server.commons.ChatUser;
+import commons.ChatUser;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Java6Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 public class ChatUserControllerTest {
     private ChatUserRepoFake fakeRepo = new ChatUserRepoFake();
@@ -22,7 +22,9 @@ public class ChatUserControllerTest {
 
         sut.storeUser(name, userName, password);
         ChatUser user = new ChatUser(userName,name,password);
-        assertThat(fakeRepo.getUsers()).contains(user);
+
+        List<ChatUser> users = fakeRepo.getUsers();
+        assertThat(users).contains(user);
     }
 
     @Test

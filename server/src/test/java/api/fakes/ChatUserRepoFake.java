@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import server.commons.ChatUser;
+import commons.ChatUser;
 import server.database.ChatUserRepository;
 
 import java.util.ArrayList;
