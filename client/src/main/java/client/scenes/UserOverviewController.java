@@ -1,5 +1,6 @@
 package client.scenes;
 
+import client.FXMLBuilder;
 import client.MyApplication;
 import client.utils.ChatUserBox;
 import client.utils.HTTPException;
@@ -7,7 +8,6 @@ import client.utils.ServerUtils;
 import commons.Chat;
 import commons.ChatUser;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -87,7 +87,8 @@ public class UserOverviewController{
      * Adds a chat
      */
     public void addChat(){
-        Pair<AddChatsCtrl, Dialog<ButtonType>> pair = makeDialog();
+        Pair<AddChatsCtrl, Dialog<ButtonType>> pair = new FXMLBuilder()
+                .buildDialogPane("scenes/add-user-dialog.fxml");
         if(pair == null) return;
 
         Dialog<ButtonType> dialog = pair.getValue();
@@ -117,24 +118,6 @@ public class UserOverviewController{
             server.sendMessage(selectedUser.getChatId(),user.getUserName() , message);
         } catch(Exception e){
             e.printStackTrace();
-        }
-    }
-
-    private Pair<AddChatsCtrl ,Dialog<ButtonType>> makeDialog(){
-        try {
-            FXMLLoader loader = new FXMLLoader(MyApplication.class.
-                    getResource("scenes/add-user-dialog.fxml"));
-
-            DialogPane pane = loader.load();
-
-            Dialog<ButtonType> dialog = new Dialog<>();
-            dialog.setDialogPane(pane);
-
-            return new Pair<>(loader.getController(), dialog);
-        } catch(Exception e){
-            System.err.println("Something went wrong");
-            e.printStackTrace();
-            return null;
         }
     }
 

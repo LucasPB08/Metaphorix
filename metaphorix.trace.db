@@ -1,0 +1,3 @@
+2023-07-07 11:52:14 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CHATWHERE" not found; SQL statement:
+DELETE FROM CHATWHERE ID != 17553 [42102-214]

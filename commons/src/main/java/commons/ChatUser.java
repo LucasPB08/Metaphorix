@@ -54,6 +54,7 @@ public class ChatUser {
         this.password = password;
         this.receivedChats = new ArrayList<>();
         this.initiatedChats = new ArrayList<>();
+        this.messages = new ArrayList<>();
     }
 
     /**
@@ -126,6 +127,14 @@ public class ChatUser {
     }
 
     /**
+     * Adds a message to the list of sent messages.
+     * @param message the message to be added.
+     */
+    public void addMessage(Message message){
+        this.messages.add(message);
+    }
+
+    /**
      * Creates an int from this object
      * @return int
      */
@@ -140,7 +149,7 @@ public class ChatUser {
      */
     @Override
     public String toString(){
-        return "commons.ChatUser{" +
+        return "ChatUser{" +
                 "User Name = " + userName + "\n" +
                 "Full name = " + fullName +
                 "}";

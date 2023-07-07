@@ -3,17 +3,17 @@ package client;
 import client.scenes.*;
 import client.utils.ServerUtils;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import java.io.IOException;
 
 
 public class MyApplication extends Application {
     private static final MainCtrl mainCtrl = new MainCtrl();
     private static final ServerUtils server = new ServerUtils();
+
+
     /**
      * Starts application
      * @param stage the primary stage for this application, onto which
@@ -24,20 +24,16 @@ public class MyApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        Pair<SignInCtrl, Scene> signInPair = createPair("scenes/sign-in.fxml");
-        Pair<ChatOverviewCtrl, Scene> chatOverviewPair = createPair("scenes/chatOverview.fxml");
-        Pair<SignUpCtrl, Scene> signUpPair =createPair("scenes/sign-up.fxml");
+        FXMLBuilder fxmlBuilder = new FXMLBuilder();
+
+        Pair<SignInCtrl, Scene> signInPair = fxmlBuilder.buildPair("scenes/sign-in.fxml");
+        Pair<ChatOverviewCtrl,
+                Scene> chatOverviewPair = fxmlBuilder.buildPair("scenes/chatOverview.fxml");
+        Pair<SignUpCtrl, Scene> signUpPair = fxmlBuilder.buildPair("scenes/sign-up.fxml");
         Pair<UserOverviewController,
-                Scene> userOverviewPair = createPair("scenes/user-overview.fxml");
+                Scene> userOverviewPair = fxmlBuilder.buildPair("scenes/user-overview.fxml");
 
         mainCtrl.init(stage, signInPair, chatOverviewPair, signUpPair, userOverviewPair);
-    }
-
-    private <T> Pair<T, Scene> createPair(String resource) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
-        Scene scene = new Scene(loader.load());
-        T controller = loader.getController();
-        return new Pair<>(controller, scene);
     }
 
     /**

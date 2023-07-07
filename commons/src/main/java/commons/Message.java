@@ -37,6 +37,30 @@ public class Message {
     }
 
     /**
+     * Gets the message ID
+     * @return the ID
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Gets the chat that this message belongs to.
+     * @return The Chat.
+     */
+    public Chat getChat() {
+        return chat;
+    }
+
+    /**
+     * Gets the sender of this message.
+     * @return The sender.
+     */
+    public ChatUser getSender() {
+        return sender;
+    }
+
+    /**
      * Gets the content of this message
      * @return content of the message
      */
