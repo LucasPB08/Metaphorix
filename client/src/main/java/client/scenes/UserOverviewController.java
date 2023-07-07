@@ -172,8 +172,19 @@ public class UserOverviewController{
             selectedUser.setStyle("-fx-background-color: blue;");
 
             messages.getChildren().clear();
-            //loadMessagesOfChat(profileBox.getChatId());
+            loadMessagesOfChat(profileBox.getChatId());
         });
+    }
+
+    private void loadMessagesOfChat(Long chatId) {
+        List<Message> messagesOfChat = server.getMessagesOfChat(chatId);
+
+        for(Message message: messagesOfChat){
+            String messageContent = message.getMessage();
+            Text messageText = new Text(messageContent);
+
+            this.messages.getChildren().add(messageText);
+        }
     }
 
 }

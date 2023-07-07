@@ -1,5 +1,6 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -85,6 +86,7 @@ public class ChatUser {
      * Gets all messages sent by this user
      * @return all messages sent by this user
      */
+    @JsonIgnore
     public List<Message> getMessages(){
         return this.messages;
     }
