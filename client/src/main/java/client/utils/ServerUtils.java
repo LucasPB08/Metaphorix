@@ -1,5 +1,6 @@
 package client.utils;
 
+import commons.Message;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
@@ -151,5 +152,13 @@ public class ServerUtils {
             throw new HTTPException("HTTP Status: " + response.getStatus());
 
         System.out.println(response);
+    }
+
+    public List<Message> getMessagesOfChat(Long chatId){
+        return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/chat").queryParam("chatId", chatId)
+                .request()
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(new ListOfMessagesGenericType());
     }
 }

@@ -1,5 +1,6 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -92,6 +93,7 @@ public class Chat {
      * Getter for the messages of the chat
      * @return all messages sent in this chat
      */
+    @JsonIgnore
     public List<Message> getMessages(){
         return this.messages;
     }

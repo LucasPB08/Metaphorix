@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="541.0" prefWidth="906.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.UserOverviewController">
    <children>
@@ -18,5 +19,10 @@
       <Pane fx:id="userSection" layoutY="4.0" prefHeight="114.0" prefWidth="122.0" />
       <TextField fx:id="messageBox" layoutX="159.0" layoutY="451.0" prefHeight="26.0" prefWidth="569.0" />
       <Button layoutX="754.0" layoutY="452.0" mnemonicParsing="false" onAction="#sendMessage" text="SEND" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="101.0" layoutY="131.0" prefHeight="303.0" prefWidth="737.0">
+         <content>
+            <VBox fx:id="messages" prefHeight="299.0" prefWidth="736.0" />
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
