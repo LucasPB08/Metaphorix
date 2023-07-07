@@ -8,6 +8,7 @@ import client.utils.ServerUtils;
 import commons.Chat;
 import commons.ChatUser;
 import commons.Message;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -28,7 +29,7 @@ public class UserOverviewController{
     private MainCtrl mainCtrl;
     private ServerUtils server;
 
-    private ChatUser user;
+    private ChatUser loggedInUser;
 
     private int profilePictureRadius = 45;
 
@@ -53,21 +54,40 @@ public class UserOverviewController{
     public void initialize(){
         mainCtrl = MyApplication.getMainCtrl();
         server = MyApplication.getServer();
+
+        server.registerForWebsocketMessages("/topic/message", Message.class, m -> {
+            Platform.runLater(() -> handleWebsocketMessage(m));
+        });
+    }
+
+    private void handleWebsocketMessage(Message message) {
+        Long chatIdCurrentlyViewing = this.selectedUser.getChatId();
+
+        if(!message.getChat().getId().equals(chatIdCurrentlyViewing)
+            || message.getSender().equals(this.loggedInUser)) return;
+
+        HBox messageToView = new HBox();
+        messageToView.setAlignment(Pos.BASELINE_LEFT);
+
+        Label messageLabel = new Label(message.getMessage());
+        messageToView.getChildren().add(messageLabel);
+
+        this.messages.getChildren().add(messageToView);
     }
 
     /**
      * Sets the user whose overview will be shown.
-     * @param user
+     * @param loggedInUser
      */
-    public void setUser(ChatUser user){
-        this.user = user;
+    public void setLoggedInUser(ChatUser loggedInUser){
+        this.loggedInUser = loggedInUser;
     }
 
     /**
      * Loads the overview.
      */
     public void loadProfile(){
-        ChatUserBox userToLoad = createProfileBox(user.getUserName(), -1L);
+        ChatUserBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L);
         userSection.getChildren().add(userToLoad);
 
         loadChats();
@@ -105,7 +125,9 @@ public class UserOverviewController{
     public void sendMessage(){
         String message = messageBox.getText();
         try {
-            server.sendMessage(selectedUser.getChatId(),user.getUserName() , message);
+            Message messageSaved = server.sendMessage(selectedUser.getChatId(),
+                    loggedInUser.getUserName() , message);
+            server.send("/topic/message", messageSaved);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -121,7 +143,7 @@ public class UserOverviewController{
 
     private void addUser(String userId){
         try {
-            Long chatId = server.createChat(this.user.getUserName(), userId);
+            Long chatId = server.createChat(this.loggedInUser.getUserName(), userId);
 
             ChatUserBox pair = createProfileBox(userId, chatId);
 
@@ -132,11 +154,11 @@ public class UserOverviewController{
     }
 
     private void loadChats(){
-        List<Chat> userChats = server.getChatsOfUser(this.user.getUserName());
+        List<Chat> userChats = server.getChatsOfUser(this.loggedInUser.getUserName());
         for(Chat chat: userChats){
             String initiator = chat.getInitiator().getUserName();
             String receiver = chat.getReceiver().getUserName();
-            String myUserName = this.user.getUserName();
+            String myUserName = this.loggedInUser.getUserName();
 
             // if the initiator's username equals the username of the user that
             // is logged in, then we should create the profile box with the receiver's
@@ -199,7 +221,7 @@ public class UserOverviewController{
     }
 
     private boolean isReceiver(Message message){
-        return !message.getSender().getUserName().equals(this.user.getUserName());
+        return !message.getSender().getUserName().equals(this.loggedInUser.getUserName());
     }
 
 }

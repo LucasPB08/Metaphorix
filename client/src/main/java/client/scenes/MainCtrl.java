@@ -79,7 +79,7 @@ public class MainCtrl {
      * @param user the user whose overview will be shown
      */
     public void showUserOverview(ChatUser user){
-        userOverviewCtrl.setUser(user);
+        userOverviewCtrl.setLoggedInUser(user);
         userOverviewCtrl.loadProfile();
 
         primaryStage.setTitle("Chats");

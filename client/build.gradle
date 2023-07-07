@@ -18,6 +18,7 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.24.2'
     testImplementation 'org.mockito:mockito-core:5.4.0'
     implementation 'org.pitest:pitest:1.14.1'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:3.0.6'
 }
 
 javafx {

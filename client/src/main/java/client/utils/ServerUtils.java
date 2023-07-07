@@ -8,13 +8,70 @@ import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 import commons.Chat;
 import commons.ChatUser;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+import java.lang.reflect.Type;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ServerUtils {
     private static final String SERVER = "http://localhost:8080";
+    private StompSession session = connect("ws://localhost:8080/websocket");
     @SuppressWarnings("checkstyle:StaticVariableName")
     final private static int OK_STATUS = 200;
+
+    private StompSession connect(String url){
+        StandardWebSocketClient client = new StandardWebSocketClient();
+        WebSocketStompClient stomp = new WebSocketStompClient(client);
+
+        stomp.setMessageConverter(new MappingJackson2MessageConverter());
+
+        try {
+            return stomp.connectAsync(url, new StompSessionHandlerAdapter() {
+            }).get();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        throw new IllegalStateException();
+    }
+
+    /**
+     * Register for websocket messages.
+     * @param dest Destination to listen to.
+     * @param type The class type of the message sent.
+     * @param consumer Consumer to execute on the message.
+     * @param <T> Type of message.
+     */
+    public <T> void registerForWebsocketMessages(String dest, Class<T> type, Consumer<T> consumer){
+        session.subscribe(dest, new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return type;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                consumer.accept( (T) payload);
+            }
+        });
+    }
+
+    /**
+     * Sends a websocket message.
+     * @param dest destination to send message to.
+     * @param o Object to send.
+     */
+    public void send(String dest, Object o){
+        session.send(dest, o);
+    }
 
     /**
      * Stores a new user in the database
@@ -139,8 +196,9 @@ public class ServerUtils {
      * @param userId Id of the sender.
      * @param message Content of the message
      * @throws HTTPException If the response status is not OK.
+     * @return message saved to the database.
      */
-    public void sendMessage(Long chatId, String userId, String message) throws HTTPException{
+    public Message sendMessage(Long chatId, String userId, String message) throws HTTPException{
         Response response = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/chat").queryParam("chatId", chatId)
                 .queryParam("userId", userId)
@@ -151,9 +209,14 @@ public class ServerUtils {
         if(response.getStatus() != OK_STATUS)
             throw new HTTPException("HTTP Status: " + response.getStatus());
 
-        System.out.println(response);
+        return response.readEntity(Message.class);
     }
 
+    /**
+     * Gets the messages of a certain chat.
+     * @param chatId The id of the chat to get the messages from.
+     * @return List of the chat's messages.
+     */
     public List<Message> getMessagesOfChat(Long chatId){
         return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/chat").queryParam("chatId", chatId)
