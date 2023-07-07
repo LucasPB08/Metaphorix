@@ -9,6 +9,7 @@ import commons.Chat;
 import commons.ChatUser;
 import commons.Message;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -109,9 +110,13 @@ public class UserOverviewController{
             e.printStackTrace();
         }
 
-        Text textToSend = new Text(message);
+        Label textToSend = new Label(message);
 
-        this.messages.getChildren().add(textToSend);
+        HBox messageToView = new HBox();
+        messageToView.setAlignment(Pos.BASELINE_RIGHT);
+        messageToView.getChildren().add(textToSend);
+
+        this.messages.getChildren().add(messageToView);
     }
 
     private void addUser(String userId){
@@ -181,10 +186,20 @@ public class UserOverviewController{
 
         for(Message message: messagesOfChat){
             String messageContent = message.getMessage();
-            Text messageText = new Text(messageContent);
+            Label messageLabel = new Label(messageContent);
 
-            this.messages.getChildren().add(messageText);
+            HBox messageToView = new HBox();
+            messageToView.getChildren().add(messageLabel);
+
+            if(isReceiver(message)) messageToView.setAlignment(Pos.BASELINE_LEFT);
+            else messageToView.setAlignment(Pos.BASELINE_RIGHT);
+
+            this.messages.getChildren().add(messageToView);
         }
+    }
+
+    private boolean isReceiver(Message message){
+        return !message.getSender().getUserName().equals(this.user.getUserName());
     }
 
 }
