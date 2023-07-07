@@ -185,7 +185,7 @@ public class ServerUtils {
      * @param message Content of the message
      * @throws HTTPException If the response status is not OK.
      */
-    public void sendMessage(Long chatId, String userId, String message) throws HTTPException{
+    public Message sendMessage(Long chatId, String userId, String message) throws HTTPException{
         Response response = ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER).path("/chat").queryParam("chatId", chatId)
                 .queryParam("userId", userId)
@@ -196,7 +196,7 @@ public class ServerUtils {
         if(response.getStatus() != OK_STATUS)
             throw new HTTPException("HTTP Status: " + response.getStatus());
 
-        System.out.println(response);
+        return response.readEntity(Message.class);
     }
 
     public List<Message> getMessagesOfChat(Long chatId){
