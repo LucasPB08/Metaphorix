@@ -74,13 +74,16 @@ public class UserOverviewController{
             String receiver = chat.getReceiver().getUserName();
             String myUserName = this.user.getUserName();
 
-            if (initiator.equals(myUserName)) {
-                addUser(receiver);
-            } else {
-                addUser(initiator);
-            }
-        }
+            // if the initiator's username equals the username of the user that
+            // is logged in, then we should create the profile box with the receiver's
+            // username, and vice versa.
 
+            ChatUserBox toAdd = initiator.equals(myUserName) ?
+                    createProfileBox(receiver, chat.getId()):
+                    createProfileBox(initiator, chat.getId());
+
+            chats.getChildren().add(toAdd);
+        }
     }
 
     /**
