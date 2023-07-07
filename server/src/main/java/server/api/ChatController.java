@@ -4,8 +4,6 @@ import commons.Chat;
 import commons.ChatUser;
 import commons.Message;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import server.database.ChatRepository;
 import server.database.ChatUserRepository;

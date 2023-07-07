@@ -125,7 +125,8 @@ public class UserOverviewController{
     public void sendMessage(){
         String message = messageBox.getText();
         try {
-            Message messageSaved = server.sendMessage(selectedUser.getChatId(), loggedInUser.getUserName() , message);
+            Message messageSaved = server.sendMessage(selectedUser.getChatId(),
+                    loggedInUser.getUserName() , message);
             server.send("/topic/message", messageSaved);
         } catch(Exception e){
             e.printStackTrace();

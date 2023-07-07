@@ -42,6 +42,13 @@ public class ServerUtils {
         throw new IllegalStateException();
     }
 
+    /**
+     * Register for websocket messages.
+     * @param dest Destination to listen to.
+     * @param type The class type of the message sent.
+     * @param consumer Consumer to execute on the message.
+     * @param <T> Type of message.
+     */
     public <T> void registerForWebsocketMessages(String dest, Class<T> type, Consumer<T> consumer){
         session.subscribe(dest, new StompFrameHandler() {
             @Override
@@ -57,6 +64,11 @@ public class ServerUtils {
         });
     }
 
+    /**
+     * Sends a websocket message.
+     * @param dest destination to send message to.
+     * @param o Object to send.
+     */
     public void send(String dest, Object o){
         session.send(dest, o);
     }
@@ -184,6 +196,7 @@ public class ServerUtils {
      * @param userId Id of the sender.
      * @param message Content of the message
      * @throws HTTPException If the response status is not OK.
+     * @return message saved to the database.
      */
     public Message sendMessage(Long chatId, String userId, String message) throws HTTPException{
         Response response = ClientBuilder.newClient(new ClientConfig())
@@ -199,6 +212,11 @@ public class ServerUtils {
         return response.readEntity(Message.class);
     }
 
+    /**
+     * Gets the messages of a certain chat.
+     * @param chatId The id of the chat to get the messages from.
+     * @return List of the chat's messages.
+     */
     public List<Message> getMessagesOfChat(Long chatId){
         return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/chat").queryParam("chatId", chatId)
