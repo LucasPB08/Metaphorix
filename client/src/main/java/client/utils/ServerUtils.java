@@ -8,13 +8,58 @@ import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 import commons.Chat;
 import commons.ChatUser;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
+import java.lang.reflect.Type;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ServerUtils {
     private static final String SERVER = "http://localhost:8080";
+    private StompSession session = connect("ws://localhost:8080/websocket");
     @SuppressWarnings("checkstyle:StaticVariableName")
     final private static int OK_STATUS = 200;
+
+    private StompSession connect(String url){
+        StandardWebSocketClient client = new StandardWebSocketClient();
+        WebSocketStompClient stomp = new WebSocketStompClient(client);
+
+        stomp.setMessageConverter(new MappingJackson2MessageConverter());
+
+        try {
+            return stomp.connectAsync(url, new StompSessionHandlerAdapter() {
+            }).get();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        throw new IllegalStateException();
+    }
+
+    public <T> void registerForWebsocketMessages(String dest, Class<T> type, Consumer<T> consumer){
+        session.subscribe(dest, new StompFrameHandler() {
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return type;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                consumer.accept( (T) payload);
+            }
+        });
+    }
+
+    public void send(String dest, Object o){
+        session.send(dest, o);
+    }
 
     /**
      * Stores a new user in the database
