@@ -8,7 +8,6 @@ import client.utils.ServerUtils;
 import commons.Chat;
 import commons.ChatUser;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
@@ -88,7 +87,8 @@ public class UserOverviewController{
      * Adds a chat
      */
     public void addChat(){
-        Pair<AddChatsCtrl, Dialog<ButtonType>> pair = new FXMLBuilder().buildDialogPane("scenes/add-user-dialog.fxml");
+        Pair<AddChatsCtrl, Dialog<ButtonType>> pair = new FXMLBuilder()
+                .buildDialogPane("scenes/add-user-dialog.fxml");
         if(pair == null) return;
 
         Dialog<ButtonType> dialog = pair.getValue();

@@ -1,6 +1,5 @@
 package client;
 
-import client.scenes.AddChatsCtrl;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
@@ -12,7 +11,13 @@ import java.io.IOException;
 
 public class FXMLBuilder {
 
-    public Pair<AddChatsCtrl, Dialog<ButtonType>> buildDialogPane(String resource){
+    /**
+     *  Creates a dialog pane.
+     * @param resource path to fxml file of the dialog.
+     * @param <T> Controller class.
+     * @return Pair with dialog and its controller.
+     */
+    public <T> Pair<T, Dialog<ButtonType>> buildDialogPane(String resource){
         try {
             FXMLLoader loader = new FXMLLoader(MyApplication.class.
                     getResource("scenes/add-user-dialog.fxml"));
@@ -30,6 +35,13 @@ public class FXMLBuilder {
         }
     }
 
+    /**
+     * Creates a pair of a scene and its corresponding controller.
+     * @param resource Path to the fxml file of the scene
+     * @return Pair of scene and controller
+     * @param <T> Controller class
+     * @throws IOException If the path is incorrect.
+     */
     public <T> Pair<T, Scene> buildPair(String resource) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
         Scene scene = new Scene(loader.load());
