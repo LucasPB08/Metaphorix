@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class UserOverviewController{
+public class ChatOverviewController {
     private MainCtrl mainCtrl;
     private ServerUtils server;
 

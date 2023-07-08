@@ -14,8 +14,8 @@ public class MainCtrl {
     private SignUpCtrl signUpCtrl;
     private Scene signUpScene;
 
-    private UserOverviewController userOverviewCtrl;
-    private Scene userOverviewScene;
+    private ChatOverviewController chatOverviewController;
+    private Scene chatOverviewScene;
 
     /**
      * Initialises controller
@@ -26,7 +26,7 @@ public class MainCtrl {
      */
     public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
                      Pair<SignUpCtrl, Scene> signUp,
-                     Pair<UserOverviewController, Scene> userOverview){
+                     Pair<ChatOverviewController, Scene> userOverview){
         this.primaryStage = stage;
 
         this.signInCtrl = signIn.getKey();
@@ -35,8 +35,8 @@ public class MainCtrl {
         this.signUpCtrl = signUp.getKey();
         this.signUpScene = signUp.getValue();
 
-        this.userOverviewCtrl = userOverview.getKey();
-        this.userOverviewScene = userOverview.getValue();
+        this.chatOverviewController = userOverview.getKey();
+        this.chatOverviewScene = userOverview.getValue();
 
         showSignIn();
         stage.show();
@@ -63,11 +63,11 @@ public class MainCtrl {
      * @param user the user whose overview will be shown
      */
     public void showUserOverview(ChatUser user){
-        userOverviewCtrl.setLoggedInUser(user);
-        userOverviewCtrl.loadProfile();
+        chatOverviewController.setLoggedInUser(user);
+        chatOverviewController.loadProfile();
 
         primaryStage.setTitle("Chats");
-        primaryStage.setScene(userOverviewScene);
+        primaryStage.setScene(chatOverviewScene);
     }
 
 }

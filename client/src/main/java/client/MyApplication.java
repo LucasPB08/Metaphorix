@@ -28,10 +28,10 @@ public class MyApplication extends Application {
 
         Pair<SignInCtrl, Scene> signInPair = fxmlBuilder.buildPair("scenes/sign-in.fxml");
         Pair<SignUpCtrl, Scene> signUpPair = fxmlBuilder.buildPair("scenes/sign-up.fxml");
-        Pair<UserOverviewController,
-                Scene> userOverviewPair = fxmlBuilder.buildPair("scenes/user-overview.fxml");
+        Pair<ChatOverviewController,
+                Scene> chatOverviewPair = fxmlBuilder.buildPair("scenes/chat-overview.fxml");
 
-        mainCtrl.init(stage, signInPair, signUpPair, userOverviewPair);
+        mainCtrl.init(stage, signInPair, signUpPair, chatOverviewPair);
     }
 
     /**
