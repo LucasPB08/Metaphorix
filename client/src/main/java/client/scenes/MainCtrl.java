@@ -1,5 +1,6 @@
 package client.scenes;
 
+import client.utils.ChatUserBox;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -11,51 +12,43 @@ public class MainCtrl {
     private SignInCtrl signInCtrl;
     private Scene signInScene;
 
-    private ChatOverviewCtrl chatOverviewCtrl;
-    private Scene chatOverview;
-
     private SignUpCtrl signUpCtrl;
     private Scene signUpScene;
 
-    private UserOverviewController userOverviewCtrl;
+    private ChatOverviewController chatOverviewController;
+    private Scene chatOverviewScene;
+
+    private UserOverviewController userOverviewController;
     private Scene userOverviewScene;
 
     /**
      * Initialises controller
      * @param stage primary stage
      * @param signIn signIn pair
-     * @param chatOverview chatOverview pair
      * @param signUp signUp pair
+     * @param chatOverview chat overview pair
      * @param userOverview user overview pair
      */
     public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
-                     Pair<ChatOverviewCtrl, Scene> chatOverview,
                      Pair<SignUpCtrl, Scene> signUp,
+                     Pair<ChatOverviewController, Scene> chatOverview,
                      Pair<UserOverviewController, Scene> userOverview){
         this.primaryStage = stage;
 
         this.signInCtrl = signIn.getKey();
         this.signInScene = signIn.getValue();
 
-        this.chatOverviewCtrl = chatOverview.getKey();
-        this.chatOverview = chatOverview.getValue();
-
         this.signUpCtrl = signUp.getKey();
         this.signUpScene = signUp.getValue();
 
-        this.userOverviewCtrl = userOverview.getKey();
+        this.chatOverviewController = chatOverview.getKey();
+        this.chatOverviewScene = chatOverview.getValue();
+
+        this.userOverviewController = userOverview.getKey();
         this.userOverviewScene = userOverview.getValue();
 
         showSignIn();
         stage.show();
-    }
-
-    /**
-     * Shows chat overview scene.
-     */
-    public void showChatOverview(){
-        primaryStage.setTitle("commons.Chat overview");
-        primaryStage.setScene(chatOverview);
     }
 
     /**
@@ -76,14 +69,34 @@ public class MainCtrl {
 
     /**
      * Shows the user overview
-     * @param user the user whose overview will be shown
      */
-    public void showUserOverview(ChatUser user){
-        userOverviewCtrl.setLoggedInUser(user);
-        userOverviewCtrl.loadProfile();
+    public void showUserOverview(){
+        userOverviewController.loadProfile();
 
-        primaryStage.setTitle("Chats");
+        primaryStage.setTitle("User");
         primaryStage.setScene(userOverviewScene);
     }
+
+    /**
+     * Sets the logged-in user field in the user and chat overview controller.
+     * @param loggedInUser The logged-in user.
+     */
+    public void login(ChatUser loggedInUser){
+        userOverviewController.setLoggedInUser(loggedInUser);
+        chatOverviewController.setLoggedInUser(loggedInUser);
+    }
+
+    /**
+     * Processes the click on a profile box when in the user overview.
+     * @param profileBox
+     */
+    public void clickOnChat(ChatUserBox profileBox){
+        this.chatOverviewController.sync();
+        this.chatOverviewController.clickOnChat(profileBox);
+
+        primaryStage.setTitle("Chats");
+        primaryStage.setScene(chatOverviewScene);
+    }
+
 
 }

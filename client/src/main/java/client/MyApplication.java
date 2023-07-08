@@ -27,13 +27,13 @@ public class MyApplication extends Application {
         FXMLBuilder fxmlBuilder = new FXMLBuilder();
 
         Pair<SignInCtrl, Scene> signInPair = fxmlBuilder.buildPair("scenes/sign-in.fxml");
-        Pair<ChatOverviewCtrl,
-                Scene> chatOverviewPair = fxmlBuilder.buildPair("scenes/chatOverview.fxml");
         Pair<SignUpCtrl, Scene> signUpPair = fxmlBuilder.buildPair("scenes/sign-up.fxml");
-        Pair<UserOverviewController,
-                Scene> userOverviewPair = fxmlBuilder.buildPair("scenes/user-overview.fxml");
+        Pair<ChatOverviewController,
+                Scene> chatOverviewPair = fxmlBuilder.buildPair("scenes/chat-overview.fxml");
+        Pair<UserOverviewController, Scene> userOverviewPair =
+                fxmlBuilder.buildPair("scenes/user-overview.fxml");
 
-        mainCtrl.init(stage, signInPair, chatOverviewPair, signUpPair, userOverviewPair);
+        mainCtrl.init(stage, signInPair, signUpPair, chatOverviewPair, userOverviewPair);
     }
 
     /**
