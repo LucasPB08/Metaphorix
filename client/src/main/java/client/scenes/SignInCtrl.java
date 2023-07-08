@@ -70,10 +70,4 @@ public class SignInCtrl {
         mainCtrl.showSignUp();
     }
 
-    /**
-     * Shows chat scene.
-     */
-    public void showChats(){
-        mainCtrl.showChatOverview();
-    }
 }
