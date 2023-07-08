@@ -60,20 +60,6 @@ public class UserOverviewController{
         });
     }
 
-    private void handleWebsocketMessage(Message message) {
-        Long chatIdCurrentlyViewing = this.selectedUser.getChatId();
-
-        if(!message.getChat().getId().equals(chatIdCurrentlyViewing)
-            || message.getSender().equals(this.loggedInUser)) return;
-
-        HBox messageToView = new HBox();
-        messageToView.setAlignment(Pos.BASELINE_LEFT);
-
-        Label messageLabel = new Label(message.getMessage());
-        messageToView.getChildren().add(messageLabel);
-
-        this.messages.getChildren().add(messageToView);
-    }
 
     /**
      * Sets the user whose overview will be shown.
@@ -137,6 +123,21 @@ public class UserOverviewController{
         HBox messageToView = new HBox();
         messageToView.setAlignment(Pos.BASELINE_RIGHT);
         messageToView.getChildren().add(textToSend);
+
+        this.messages.getChildren().add(messageToView);
+    }
+
+    private void handleWebsocketMessage(Message message) {
+        Long chatIdCurrentlyViewing = this.selectedUser.getChatId();
+
+        if(!message.getChat().getId().equals(chatIdCurrentlyViewing)
+            || message.getSender().equals(this.loggedInUser)) return;
+
+        HBox messageToView = new HBox();
+        messageToView.setAlignment(Pos.BASELINE_LEFT);
+
+        Label messageLabel = new Label(message.getMessage());
+        messageToView.getChildren().add(messageLabel);
 
         this.messages.getChildren().add(messageToView);
     }
