@@ -1,5 +1,6 @@
 package client.scenes;
 
+import client.utils.ChatUserBox;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -17,16 +18,20 @@ public class MainCtrl {
     private ChatOverviewController chatOverviewController;
     private Scene chatOverviewScene;
 
+    private UserOverviewController userOverviewController;
+    private Scene userOverviewScene;
+
     /**
      * Initialises controller
      * @param stage primary stage
      * @param signIn signIn pair
      * @param signUp signUp pair
-     * @param userOverview user overview pair
+     * @param chatOverview user overview pair
      */
     public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
                      Pair<SignUpCtrl, Scene> signUp,
-                     Pair<ChatOverviewController, Scene> userOverview){
+                     Pair<ChatOverviewController, Scene> chatOverview,
+                     Pair<UserOverviewController, Scene> userOverview){
         this.primaryStage = stage;
 
         this.signInCtrl = signIn.getKey();
@@ -35,8 +40,11 @@ public class MainCtrl {
         this.signUpCtrl = signUp.getKey();
         this.signUpScene = signUp.getValue();
 
-        this.chatOverviewController = userOverview.getKey();
-        this.chatOverviewScene = userOverview.getValue();
+        this.chatOverviewController = chatOverview.getKey();
+        this.chatOverviewScene = chatOverview.getValue();
+
+        this.userOverviewController = userOverview.getKey();
+        this.userOverviewScene = userOverview.getValue();
 
         showSignIn();
         stage.show();
@@ -62,12 +70,25 @@ public class MainCtrl {
      * Shows the user overview
      * @param user the user whose overview will be shown
      */
-    public void showUserOverview(ChatUser user){
-        chatOverviewController.setLoggedInUser(user);
-        chatOverviewController.loadProfile();
+    public void showUserOverview(){
+        userOverviewController.loadProfile();
+
+        primaryStage.setTitle("User");
+        primaryStage.setScene(userOverviewScene);
+    }
+
+    public void login(ChatUser loggedInUser){
+        userOverviewController.setLoggedInUser(loggedInUser);
+        chatOverviewController.setLoggedInUser(loggedInUser);
+    }
+
+    public void clickOnChat(ChatUserBox profileBox){
+        this.chatOverviewController.sync();
+        this.chatOverviewController.clickOnChat(profileBox);
 
         primaryStage.setTitle("Chats");
         primaryStage.setScene(chatOverviewScene);
     }
+
 
 }

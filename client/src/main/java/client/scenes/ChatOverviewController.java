@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.MyApplication;
+import client.utils.ChatUserBox;
 import commons.ChatUser;
 import commons.Message;
 import javafx.application.Platform;
@@ -8,8 +9,16 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+import java.util.List;
 
 public class ChatOverviewController extends OverviewParent{
+
+    protected ChatUserBox selectedUser;
+
+    @FXML
+    protected VBox messages;
 
     @FXML
     private TextField messageBox;
@@ -27,13 +36,9 @@ public class ChatOverviewController extends OverviewParent{
         });
     }
 
-
-    /**
-     * Sets the user whose overview will be shown.
-     * @param loggedInUser
-     */
-    public void setLoggedInUser(ChatUser loggedInUser){
-        this.loggedInUser = loggedInUser;
+    public void sync(){
+        loadChats();
+        loadProfile();
     }
 
     /**
@@ -58,6 +63,34 @@ public class ChatOverviewController extends OverviewParent{
         this.messages.getChildren().add(messageToView);
     }
 
+    public void clickOnChat(ChatUserBox profileBox){
+        if(selectedUser != null) selectedUser.setStyle("-fx-background-color: null;");
+
+        this.selectedUser = profileBox;
+
+        selectedUser.setStyle("-fx-background-color: blue;");
+
+        messages.getChildren().clear();
+        loadMessagesOfChat(profileBox.getChatId());
+    }
+
+    private void loadMessagesOfChat(Long chatId) {
+        List<Message> messagesOfChat = server.getMessagesOfChat(chatId);
+
+        for(Message message: messagesOfChat){
+            String messageContent = message.getMessage();
+            Label messageLabel = new Label(messageContent);
+
+            HBox messageToView = new HBox();
+            messageToView.getChildren().add(messageLabel);
+
+            if(isReceiver(message)) messageToView.setAlignment(Pos.BASELINE_LEFT);
+            else messageToView.setAlignment(Pos.BASELINE_RIGHT);
+
+            this.messages.getChildren().add(messageToView);
+        }
+    }
+
     private void handleWebsocketMessage(Message message) {
         Long chatIdCurrentlyViewing = this.selectedUser.getChatId();
 
@@ -71,6 +104,11 @@ public class ChatOverviewController extends OverviewParent{
         messageToView.getChildren().add(messageLabel);
 
         this.messages.getChildren().add(messageToView);
+    }
+
+
+    private boolean isReceiver(Message message){
+        return !message.getSender().getUserName().equals(this.loggedInUser.getUserName());
     }
 
 

@@ -48,7 +48,8 @@ public class SignInCtrl {
 
         //commons.ChatUser user = new commons.ChatUser("User", "Lucas", "Ronnye");
 
-        mainCtrl.showUserOverview(user);
+        mainCtrl.login(user);
+        mainCtrl.showUserOverview();
     }
 
     private void setErrorMessage(){
