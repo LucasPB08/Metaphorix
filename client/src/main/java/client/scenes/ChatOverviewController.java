@@ -2,7 +2,6 @@ package client.scenes;
 
 import client.MyApplication;
 import client.utils.ChatUserBox;
-import commons.ChatUser;
 import commons.Message;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -36,6 +35,9 @@ public class ChatOverviewController extends OverviewParent{
         });
     }
 
+    /**
+     * Syncs the controller with the server.
+     */
     public void sync(){
         loadChats();
         loadProfile();
@@ -63,6 +65,10 @@ public class ChatOverviewController extends OverviewParent{
         this.messages.getChildren().add(messageToView);
     }
 
+    /**
+     * Handles a click on a chat.
+     * @param profileBox The clicked profile box.
+     */
     public void clickOnChat(ChatUserBox profileBox){
         if(selectedUser != null) selectedUser.setStyle("-fx-background-color: null;");
 

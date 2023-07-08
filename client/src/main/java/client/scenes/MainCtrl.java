@@ -26,7 +26,8 @@ public class MainCtrl {
      * @param stage primary stage
      * @param signIn signIn pair
      * @param signUp signUp pair
-     * @param chatOverview user overview pair
+     * @param chatOverview chat overview pair
+     * @param userOverview user overview pair
      */
     public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
                      Pair<SignUpCtrl, Scene> signUp,
@@ -68,7 +69,6 @@ public class MainCtrl {
 
     /**
      * Shows the user overview
-     * @param user the user whose overview will be shown
      */
     public void showUserOverview(){
         userOverviewController.loadProfile();
@@ -77,11 +77,19 @@ public class MainCtrl {
         primaryStage.setScene(userOverviewScene);
     }
 
+    /**
+     * Sets the logged-in user field in the user and chat overview controller.
+     * @param loggedInUser The logged-in user.
+     */
     public void login(ChatUser loggedInUser){
         userOverviewController.setLoggedInUser(loggedInUser);
         chatOverviewController.setLoggedInUser(loggedInUser);
     }
 
+    /**
+     * Processes the click on a profile box when in the user overview.
+     * @param profileBox
+     */
     public void clickOnChat(ChatUserBox profileBox){
         this.chatOverviewController.sync();
         this.chatOverviewController.clickOnChat(profileBox);

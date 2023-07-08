@@ -4,21 +4,18 @@ import client.FXMLBuilder;
 import client.MyApplication;
 import client.utils.ChatUserBox;
 import client.utils.HTTPException;
-import commons.Chat;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.util.Pair;
 
-import java.util.List;
 import java.util.Optional;
 
 public class UserOverviewController extends OverviewParent{
 
+    /**
+     * Initialises the controller
+     */
     @FXML
     public void initialize(){
         mainCtrl = MyApplication.getMainCtrl();
