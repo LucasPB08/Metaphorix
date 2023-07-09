@@ -9,6 +9,7 @@ import server.database.ChatRepository;
 import server.database.ChatUserRepository;
 import server.database.MessageRepo;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,7 +74,8 @@ public class ChatController {
     public ResponseEntity<Message> saveMessage(@RequestParam Long chatId,
                                                @RequestParam String userId,
                                                @RequestBody String message){
-        Message messageToSave = new Message(message);
+        Timestamp sent = new Timestamp(System.currentTimeMillis());
+        Message messageToSave = new Message(message, sent);
 
         Optional<ChatUser> optionalChatUser = userRepo.findById(userId);
         Optional<Chat> optionalChat = repo.findById(chatId);

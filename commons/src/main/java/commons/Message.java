@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 @Entity
 public class Message {
 
@@ -19,6 +22,8 @@ public class Message {
     @JoinColumn(name = "sender_id")
     private ChatUser sender;
 
+    private Timestamp timestampSent;
+
     private String message;
 
     /**
@@ -32,8 +37,9 @@ public class Message {
      * Constructor for message
      * @param message String context of the message
      */
-    public Message(String message){
+    public Message(String message, Timestamp timestampSent){
         this.message = message;
+        this.timestampSent = timestampSent;
     }
 
     /**
