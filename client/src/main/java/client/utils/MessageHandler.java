@@ -14,12 +14,15 @@ import java.util.List;
 public class MessageHandler {
     private final static Color COLOR_RECEIVER = Color.AQUA;
     private final static Color COLOR_SENDER = Color.RED;
-    private final static Insets INSETS = new Insets(-4.0);
+    private final static Insets BACKGROUND_INSETS = new Insets(-4.0);
     private final static CornerRadii RADII = new CornerRadii(7.0);
+    private final static  Insets HBOX_INSETS = new Insets(7.0);
 
     public void displayMessageSent(VBox messages, String message){
         Label textToSend = new Label(message);
-        textToSend.setBackground(new Background(new BackgroundFill(COLOR_SENDER, RADII, INSETS)));
+        textToSend.setBackground(new Background(new BackgroundFill(COLOR_SENDER, RADII, BACKGROUND_INSETS)));
+
+        HBox.setMargin(textToSend, HBOX_INSETS);
 
         HBox messageToView = new HBox();
         messageToView.setAlignment(Pos.BASELINE_RIGHT);
@@ -39,13 +42,13 @@ public class MessageHandler {
 
             if (isReceiver(message, loggedInUser)) {
                 messageToView.setAlignment(Pos.BASELINE_LEFT);
-                messageLabel.setBackground(new Background(new BackgroundFill(COLOR_RECEIVER, RADII, INSETS)));
+                messageLabel.setBackground(new Background(new BackgroundFill(COLOR_RECEIVER, RADII, BACKGROUND_INSETS)));
             } else {
                 messageToView.setAlignment(Pos.BASELINE_RIGHT);
-                messageLabel.setBackground(new Background(new BackgroundFill(COLOR_SENDER, RADII, INSETS)));
+                messageLabel.setBackground(new Background(new BackgroundFill(COLOR_SENDER, RADII, BACKGROUND_INSETS)));
             }
 
-            HBox.setMargin(messageLabel, new Insets(7.0));
+            HBox.setMargin(messageLabel, HBOX_INSETS);
 
             messages.getChildren().add(messageToView);
         }
@@ -54,7 +57,9 @@ public class MessageHandler {
 
     public void loadWebsocketMessage(VBox messages, Message message){
         Label messageLabel = new Label(message.getMessage());
-        messageLabel.setBackground(new Background(new BackgroundFill(COLOR_RECEIVER, RADII, INSETS)));
+        messageLabel.setBackground(new Background(new BackgroundFill(COLOR_RECEIVER, RADII, BACKGROUND_INSETS)));
+
+        HBox.setMargin(messageLabel, HBOX_INSETS);
 
         HBox messageToView = new HBox();
         messageToView.setAlignment(Pos.BASELINE_LEFT);
