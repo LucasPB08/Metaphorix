@@ -38,6 +38,8 @@ public class ChatOverviewController extends OverviewParent{
         server = MyApplication.getServer();
         messageHandler = new MessageHandler();
 
+        messages.setMaxWidth(messages.getPrefWidth());
+
         server.registerForWebsocketMessages("/topic/message", Message.class, m -> {
             Platform.runLater(() -> handleWebsocketMessage(m));
         });

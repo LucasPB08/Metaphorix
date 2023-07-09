@@ -45,6 +45,8 @@ public class MessageHandler {
                 messageLabel.setBackground(new Background(new BackgroundFill(COLOR_SENDER, RADII, INSETS)));
             }
 
+            HBox.setMargin(messageLabel, new Insets(7.0));
+
             messages.getChildren().add(messageToView);
         }
 

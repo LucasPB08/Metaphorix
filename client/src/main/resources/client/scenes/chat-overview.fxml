@@ -18,9 +18,9 @@
       <Pane fx:id="userSection" layoutY="4.0" prefHeight="114.0" prefWidth="122.0" />
       <TextField fx:id="messageBox" layoutX="159.0" layoutY="451.0" prefHeight="26.0" prefWidth="569.0" />
       <Button layoutX="754.0" layoutY="452.0" mnemonicParsing="false" onAction="#sendMessage" text="SEND" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="101.0" layoutY="131.0" prefHeight="303.0" prefWidth="737.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="101.0" layoutY="131.0" prefHeight="303.0" prefWidth="737.0" vbarPolicy="NEVER">
          <content>
-            <VBox fx:id="messages" prefHeight="299.0" prefWidth="736.0" />
+            <VBox fx:id="messages" maxWidth="-Infinity" prefHeight="299.0" prefWidth="735.0" />
          </content>
       </ScrollPane>
    </children>
