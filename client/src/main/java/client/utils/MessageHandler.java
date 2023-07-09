@@ -24,11 +24,11 @@ public class MessageHandler {
         Label textToSend = new Label(message);
         processLabel(textToSend);
 
-        HBox messageToView = new HBox();
-        messageToView.setAlignment(Pos.BASELINE_RIGHT);
-        messageToView.getChildren().add(textToSend);
+        HBox messageBox = new HBox();
+        messageBox.setAlignment(Pos.BASELINE_RIGHT);
+        messageBox.getChildren().add(textToSend);
 
-        messages.getChildren().add(messageToView);
+        messages.getChildren().add(messageBox);
     }
 
     public void loadMessagesOfChat(VBox messages, List<Message> messagesOfChat, ChatUser loggedInUser) {
@@ -38,20 +38,20 @@ public class MessageHandler {
             Label messageLabel = new Label(messageContent);
             messageLabel.setFont(FONT_SIZE);
 
-            HBox messageToView = new HBox();
-            messageToView.getChildren().add(messageLabel);
+            HBox messageBox = new HBox();
+            messageBox.getChildren().add(messageLabel);
 
             if (isReceiver(message, loggedInUser)) {
-                messageToView.setAlignment(Pos.BASELINE_LEFT);
+                messageBox.setAlignment(Pos.BASELINE_LEFT);
                 messageLabel.setBackground(new Background(new BackgroundFill(COLOR_RECEIVER, RADII, BACKGROUND_INSETS)));
             } else {
-                messageToView.setAlignment(Pos.BASELINE_RIGHT);
+                messageBox.setAlignment(Pos.BASELINE_RIGHT);
                 messageLabel.setBackground(new Background(new BackgroundFill(COLOR_SENDER, RADII, BACKGROUND_INSETS)));
             }
 
             HBox.setMargin(messageLabel, HBOX_INSETS);
 
-            messages.getChildren().add(messageToView);
+            messages.getChildren().add(messageBox);
         }
 
     }
@@ -60,11 +60,11 @@ public class MessageHandler {
         Label messageLabel = new Label(message.getMessage());
         processLabel(messageLabel);
 
-        HBox messageToView = new HBox();
-        messageToView.setAlignment(Pos.BASELINE_LEFT);
-        messageToView.getChildren().add(messageLabel);
+        HBox messageBox = new HBox();
+        messageBox.setAlignment(Pos.BASELINE_LEFT);
+        messageBox.getChildren().add(messageLabel);
 
-        messages.getChildren().add(messageToView);
+        messages.getChildren().add(messageBox);
     }
 
     private void processLabel(Label messageLabel){
