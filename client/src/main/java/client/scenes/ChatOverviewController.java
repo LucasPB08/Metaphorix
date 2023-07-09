@@ -2,19 +2,26 @@ package client.scenes;
 
 import client.MyApplication;
 import client.utils.ChatUserBox;
+import client.utils.MessageHandler;
 import commons.Message;
+import jakarta.inject.Inject;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 public class ChatOverviewController extends OverviewParent{
 
-    protected ChatUserBox selectedUser;
+    private ChatUserBox selectedUser;
+
+    private MessageHandler messageHandler;
 
     @FXML
     protected VBox messages;
@@ -29,6 +36,7 @@ public class ChatOverviewController extends OverviewParent{
     public void initialize(){
         mainCtrl = MyApplication.getMainCtrl();
         server = MyApplication.getServer();
+        messageHandler = new MessageHandler();
 
         server.registerForWebsocketMessages("/topic/message", Message.class, m -> {
             Platform.runLater(() -> handleWebsocketMessage(m));
@@ -56,13 +64,7 @@ public class ChatOverviewController extends OverviewParent{
             e.printStackTrace();
         }
 
-        Label textToSend = new Label(message);
-
-        HBox messageToView = new HBox();
-        messageToView.setAlignment(Pos.BASELINE_RIGHT);
-        messageToView.getChildren().add(textToSend);
-
-        this.messages.getChildren().add(messageToView);
+        messageHandler.displayMessageSent(this.messages, message);
     }
 
     /**
@@ -77,24 +79,10 @@ public class ChatOverviewController extends OverviewParent{
         selectedUser.setStyle("-fx-background-color: blue;");
 
         messages.getChildren().clear();
-        loadMessagesOfChat(profileBox.getChatId());
-    }
 
-    private void loadMessagesOfChat(Long chatId) {
-        List<Message> messagesOfChat = server.getMessagesOfChat(chatId);
+        List<Message> messageList = server.getMessagesOfChat(profileBox.getChatId());
 
-        for(Message message: messagesOfChat){
-            String messageContent = message.getMessage();
-            Label messageLabel = new Label(messageContent);
-
-            HBox messageToView = new HBox();
-            messageToView.getChildren().add(messageLabel);
-
-            if(isReceiver(message)) messageToView.setAlignment(Pos.BASELINE_LEFT);
-            else messageToView.setAlignment(Pos.BASELINE_RIGHT);
-
-            this.messages.getChildren().add(messageToView);
-        }
+        messageHandler.loadMessagesOfChat(messages, messageList, loggedInUser);
     }
 
     private void handleWebsocketMessage(Message message) {
@@ -103,19 +91,7 @@ public class ChatOverviewController extends OverviewParent{
         if(!message.getChat().getId().equals(chatIdCurrentlyViewing)
             || message.getSender().equals(this.loggedInUser)) return;
 
-        HBox messageToView = new HBox();
-        messageToView.setAlignment(Pos.BASELINE_LEFT);
-
-        Label messageLabel = new Label(message.getMessage());
-        messageToView.getChildren().add(messageLabel);
-
-        this.messages.getChildren().add(messageToView);
+        messageHandler.loadWebsocketMessage(this.messages, message);
     }
-
-
-    private boolean isReceiver(Message message){
-        return !message.getSender().getUserName().equals(this.loggedInUser.getUserName());
-    }
-
 
 }
