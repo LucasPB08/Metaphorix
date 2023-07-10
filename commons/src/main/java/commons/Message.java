@@ -1,14 +1,10 @@
 package commons;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Entity
 public class Message {
@@ -38,13 +34,18 @@ public class Message {
 
     /**
      * Constructor for message
-     * @param message String context of the message
+     * @param message String context of the message.
+     * @param timestampSent Timestamp of the creation of the message.
      */
     public Message(String message, Timestamp timestampSent){
         this.message = message;
         this.timestampSent = timestampSent;
     }
 
+    /**
+     * Gets the timestamp of when the message was created
+     * @return timestamp
+     */
     public Timestamp getTimestampSent(){
         return this.timestampSent;
     }

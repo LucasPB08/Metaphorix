@@ -4,16 +4,10 @@ import client.MyApplication;
 import client.utils.ChatUserBox;
 import client.utils.MessageHandler;
 import commons.Message;
-import jakarta.inject.Inject;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -62,7 +56,8 @@ public class ChatOverviewController extends OverviewParent{
 
             server.send("/topic/message", messageSaved);
 
-            messageHandler.displayMessageWithTimestamp(this.messages, messageSaved, this.loggedInUser);
+            messageHandler.displayMessageWithTimestamp(this.messages,
+                    messageSaved, this.loggedInUser);
         } catch(Exception e){
             e.printStackTrace();
         }

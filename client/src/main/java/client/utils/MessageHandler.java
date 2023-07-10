@@ -26,6 +26,12 @@ public class MessageHandler {
     private final static Font FONT_SIZE_TEXT = new Font(15.0);
     private final static Font FONT_SIZE_TIMESTAMP = new Font(10.0);
 
+    /**
+     * Displays message with its timestamp in the client ui.
+     * @param messages The container that holds the messages in the ui.
+     * @param message The message to display.
+     * @param loggedInUser The logged-in user.
+     */
     public void displayMessageWithTimestamp(VBox messages, Message message, ChatUser loggedInUser){
         Label messageLabel = new Label(message.getMessage());
         messageLabel.setFont(FONT_SIZE_TEXT);
@@ -43,10 +49,14 @@ public class MessageHandler {
 
         if (isReceiver(message, loggedInUser)) {
             messageLevel.setAlignment(Pos.BASELINE_LEFT);
-            messageBox.setBackground(new Background(new BackgroundFill(COLOR_RECEIVER, RADII, BACKGROUND_INSETS)));
+            messageBox.setBackground(new Background(
+                    new BackgroundFill(COLOR_RECEIVER, RADII, BACKGROUND_INSETS))
+            );
         } else {
             messageLevel.setAlignment(Pos.BASELINE_RIGHT);
-            messageBox.setBackground(new Background(new BackgroundFill(COLOR_SENDER, RADII, BACKGROUND_INSETS)));
+            messageBox.setBackground(new Background(
+                    new BackgroundFill(COLOR_SENDER, RADII, BACKGROUND_INSETS))
+            );
         }
 
         HBox.setMargin(messageBox, HBOX_INSETS);
@@ -64,12 +74,18 @@ public class MessageHandler {
         return new Label(hour + ":" + minute);
     }
 
-    public void loadMessagesOfChat(VBox messages, List<Message> messagesOfChat, ChatUser loggedInUser) {
-
+    /**
+     * Loads all the messages from a certain chat.
+     * @param messages The container that holds the messages in the ui.
+     * @param messagesOfChat All the messages from the chat to be loaded.
+     * @param loggedInUser The logged-in user.
+     */
+    public void loadMessagesOfChat(VBox messages,
+                                   List<Message> messagesOfChat,
+                                   ChatUser loggedInUser) {
         for (Message message : messagesOfChat) {
             displayMessageWithTimestamp(messages, message, loggedInUser);
         }
-
     }
 
     private boolean isReceiver(Message message, ChatUser loggedInUser){
