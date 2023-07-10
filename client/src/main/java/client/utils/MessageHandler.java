@@ -19,18 +19,8 @@ public class MessageHandler {
     private final static Insets BACKGROUND_INSETS = new Insets(-4.0);
     private final static CornerRadii RADII = new CornerRadii(7.0);
     private final static Insets HBOX_INSETS = new Insets(7.0);
+    private final static Insets VERTICAL_INSETS = new Insets(3.0);
     private final static Font FONT_SIZE = new Font(15.0);
-
-    public void displayMessageSent(VBox messages, String message){
-        Label textToSend = new Label(message);
-        processLabel(textToSend);
-
-        HBox messageBox = new HBox();
-        messageBox.setAlignment(Pos.BASELINE_RIGHT);
-        messageBox.getChildren().add(textToSend);
-
-        messages.getChildren().add(messageBox);
-    }
 
     public void displayMessageWithTimestamp(VBox messages, Message message, ChatUser loggedInUser){
         Label messageLabel = new Label(message.getMessage());
@@ -54,6 +44,7 @@ public class MessageHandler {
         }
 
         HBox.setMargin(messageBox, HBOX_INSETS);
+        VBox.setMargin(messageLevel, VERTICAL_INSETS);
 
         messages.getChildren().add(messageLevel);
     }
@@ -70,47 +61,9 @@ public class MessageHandler {
     public void loadMessagesOfChat(VBox messages, List<Message> messagesOfChat, ChatUser loggedInUser) {
 
         for (Message message : messagesOfChat) {
-//            String messageContent = message.getMessage();
-//            Label messageLabel = new Label(messageContent);
-//            messageLabel.setFont(FONT_SIZE);
-//
-//            HBox messageBox = new HBox();
-//            messageBox.getChildren().add(messageLabel);
-//
-//            if (isReceiver(message, loggedInUser)) {
-//                messageBox.setAlignment(Pos.BASELINE_LEFT);
-//                messageLabel.setBackground(new Background(new BackgroundFill(COLOR_RECEIVER, RADII, BACKGROUND_INSETS)));
-//            } else {
-//                messageBox.setAlignment(Pos.BASELINE_RIGHT);
-//                messageLabel.setBackground(new Background(new BackgroundFill(COLOR_SENDER, RADII, BACKGROUND_INSETS)));
-//            }
-//
-//            HBox.setMargin(messageLabel, HBOX_INSETS);
-//
-//
-//            messages.getChildren().add(messageBox);
             displayMessageWithTimestamp(messages, message, loggedInUser);
         }
 
-    }
-
-    public void loadWebsocketMessage(VBox messages, Message message){
-        Label messageLabel = new Label(message.getMessage());
-        processLabel(messageLabel);
-
-        HBox messageBox = new HBox();
-        messageBox.setAlignment(Pos.BASELINE_LEFT);
-        messageBox.getChildren().add(messageLabel);
-
-        messages.getChildren().add(messageBox);
-    }
-
-
-    private void processLabel(Label messageLabel){
-        messageLabel.setBackground(new Background(new BackgroundFill(COLOR_RECEIVER, RADII, BACKGROUND_INSETS)));
-        HBox.setMargin(messageLabel, HBOX_INSETS);
-
-        messageLabel.setFont(FONT_SIZE);
     }
 
     private boolean isReceiver(Message message, ChatUser loggedInUser){
