@@ -18,19 +18,25 @@ public class MessageHandler {
     private final static Color COLOR_SENDER = Color.RED;
     private final static Insets BACKGROUND_INSETS = new Insets(-4.0);
     private final static CornerRadii RADII = new CornerRadii(7.0);
+
     private final static Insets HBOX_INSETS = new Insets(7.0);
     private final static Insets VERTICAL_INSETS = new Insets(3.0);
-    private final static Font FONT_SIZE = new Font(15.0);
+
+    private final static Font FONT_SIZE_TEXT = new Font(15.0);
+    private final static Font FONT_SIZE_TIMESTAMP = new Font(10.0);
 
     public void displayMessageWithTimestamp(VBox messages, Message message, ChatUser loggedInUser){
         Label messageLabel = new Label(message.getMessage());
-        messageLabel.setFont(FONT_SIZE);
+        messageLabel.setFont(FONT_SIZE_TEXT);
 
         Timestamp timeSent = message.getTimestampSent();
         Label timeSentLabel = getTimeSentLabel(timeSent);
+        timeSentLabel.setFont(FONT_SIZE_TIMESTAMP);
 
         HBox messageBox = new HBox();
         messageBox.getChildren().addAll(messageLabel, timeSentLabel);
+        messageBox.setAlignment(Pos.BOTTOM_CENTER);
+
 
         HBox messageLevel = new HBox();
         messageLevel.getChildren().add(messageBox);
