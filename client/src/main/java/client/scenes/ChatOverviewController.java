@@ -55,16 +55,18 @@ public class ChatOverviewController extends OverviewParent{
      * Sends a message
      */
     public void sendMessage(){
-        String message = messageBox.getText();
         try {
+            String message = messageBox.getText();
             Message messageSaved = server.sendMessage(selectedUser.getChatId(),
                     loggedInUser.getUserName() , message);
+
             server.send("/topic/message", messageSaved);
+
+            messageHandler.displayMessageWithTimestamp(this.messages, messageSaved, this.loggedInUser);
         } catch(Exception e){
             e.printStackTrace();
         }
 
-        messageHandler.displayMessageSent(this.messages, message);
     }
 
     /**
@@ -91,7 +93,7 @@ public class ChatOverviewController extends OverviewParent{
         if(!message.getChat().getId().equals(chatIdCurrentlyViewing)
             || message.getSender().equals(this.loggedInUser)) return;
 
-        messageHandler.loadWebsocketMessage(this.messages, message);
+        messageHandler.displayMessageWithTimestamp(this.messages, message, this.loggedInUser);
     }
 
 }
