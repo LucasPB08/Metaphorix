@@ -21,6 +21,7 @@ public class MessageHandler {
 
     private final static Insets HBOX_INSETS = new Insets(7.0);
     private final static Insets VERTICAL_INSETS = new Insets(3.0);
+    private final static Insets TIMESTAMP_INSETS = new Insets(8.0, 0, 0, 7.0);
 
     private final static Font FONT_SIZE_TEXT = new Font(15.0);
     private final static Font FONT_SIZE_TIMESTAMP = new Font(10.0);
@@ -32,11 +33,10 @@ public class MessageHandler {
         Timestamp timeSent = message.getTimestampSent();
         Label timeSentLabel = getTimeSentLabel(timeSent);
         timeSentLabel.setFont(FONT_SIZE_TIMESTAMP);
+        HBox.setMargin(timeSentLabel, TIMESTAMP_INSETS);
 
         HBox messageBox = new HBox();
         messageBox.getChildren().addAll(messageLabel, timeSentLabel);
-        messageBox.setAlignment(Pos.BOTTOM_CENTER);
-
 
         HBox messageLevel = new HBox();
         messageLevel.getChildren().add(messageBox);
