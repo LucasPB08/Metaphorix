@@ -17,6 +17,7 @@
 
         <Pane fx:id="userSection" layoutY="4.0" prefHeight="114.0" prefWidth="122.0" />
         <Button layoutX="29.0" layoutY="137.0" mnemonicParsing="false" onAction="#addChat" text="Add chat" />
+      <Button layoutX="29.0" layoutY="190.0" mnemonicParsing="false" onAction="#logOut" prefHeight="26.0" prefWidth="64.0" text="Log out" />
 
     </children>
 

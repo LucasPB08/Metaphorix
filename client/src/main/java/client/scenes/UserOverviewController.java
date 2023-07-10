@@ -47,6 +47,12 @@ public class UserOverviewController extends OverviewParent{
         }
     }
 
+    public void logOut(){
+        this.loggedInUser = null;
+
+        mainCtrl.showSignIn();
+    }
+
     private void addUser(String userId){
         try {
             Long chatId = server.createChat(this.loggedInUser.getUserName(), userId);
