@@ -1,0 +1,27 @@
+ScrollPane {
+    -fx-background: #2C2C2C;
+    -fx-border-width: 0px;
+}
+
+HBox {
+    -fx-background-color: transparent;
+}
+
+HBox .messageBox {
+    -fx-background-color: #3C3C3C;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5px;
+}
+
+HBox .messageBox .content {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+}
+
+HBox .messageBox .timestamp {
+    -fx-text-fill: lightgray;
+    -fx-font-family: "Arial";
+    -fx-font-size: 10px;
+}

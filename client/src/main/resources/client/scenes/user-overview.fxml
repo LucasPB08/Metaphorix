@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="541.0" stylesheets="@../../stylesheets/controls-styling.css"  prefWidth="906.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.UserOverviewController">
+<AnchorPane prefHeight="541.0" prefWidth="906.0" stylesheets="@../../stylesheets/controls-styling.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.UserOverviewController">
 
     <children>
-        <ScrollPane layoutX="123.0" layoutY="4.0" prefHeight="114.0" prefWidth="780.0" vbarPolicy="NEVER" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="4.0">
+        <ScrollPane styleClass="edge-to-edge" layoutX="123.0" layoutY="4.0" prefHeight="114.0" prefWidth="780.0" stylesheets="@../../stylesheets/chat-boxes-styling.css" vbarPolicy="NEVER" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="4.0">
             <content>
                 <HBox fx:id="chats" maxHeight="-Infinity" prefHeight="110.0" prefWidth="110.0" />
             </content>
         </ScrollPane>
 
-        <Pane fx:id="userSection" layoutY="4.0" prefHeight="114.0" prefWidth="122.0" />
+        <Pane fx:id="userSection" layoutY="4.0" prefHeight="114.0" prefWidth="122.0" stylesheets="@../../stylesheets/chat-boxes-styling.css" />
         <Button layoutX="29.0" layoutY="137.0" mnemonicParsing="false" onAction="#addChat" text="Add chat" />
 
     </children>

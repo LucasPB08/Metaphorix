@@ -10,15 +10,15 @@
 
 <AnchorPane prefHeight="541.0" prefWidth="906.0" stylesheets="@../../stylesheets/controls-styling.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.ChatOverviewController">
    <children>
-      <ScrollPane layoutX="123.0" layoutY="4.0" prefHeight="114.0" prefWidth="780.0" vbarPolicy="NEVER" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="4.0">
+      <ScrollPane styleClass="edge-to-edge" layoutX="123.0" layoutY="4.0" prefHeight="114.0" prefWidth="780.0" stylesheets="@../../stylesheets/chat-boxes-styling.css" vbarPolicy="NEVER" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="4.0">
          <content>
             <HBox fx:id="chats" maxHeight="-Infinity" prefHeight="110.0" prefWidth="778.0" />
          </content>
       </ScrollPane>
-      <Pane fx:id="userSection" layoutY="4.0" prefHeight="114.0" prefWidth="122.0" />
+      <Pane fx:id="userSection" layoutY="4.0" prefHeight="114.0" prefWidth="122.0" stylesheets="@../../stylesheets/chat-boxes-styling.css" />
       <TextField fx:id="messageBox" layoutX="159.0" layoutY="451.0" prefHeight="26.0" prefWidth="569.0" />
       <Button layoutX="754.0" layoutY="452.0" mnemonicParsing="false" onAction="#sendMessage" text="SEND" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="101.0" layoutY="131.0" prefHeight="303.0" prefWidth="737.0" vbarPolicy="NEVER">
+      <ScrollPane styleClass="edge-to-edge" hbarPolicy="NEVER" layoutX="101.0" layoutY="131.0" prefHeight="303.0" prefWidth="737.0" stylesheets="@../../stylesheets/chat-display-style.css" vbarPolicy="NEVER">
          <content>
             <VBox fx:id="messages" maxWidth="-Infinity" prefHeight="299.0" prefWidth="735.0" />
          </content>

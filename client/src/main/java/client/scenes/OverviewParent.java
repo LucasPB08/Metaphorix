@@ -5,6 +5,7 @@ import client.utils.ServerUtils;
 import commons.Chat;
 import commons.ChatUser;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -67,6 +68,7 @@ public class OverviewParent {
 
     ChatUserBox createProfileBox(String user, Long chatId){
         ChatUserBox profileBox = new ChatUserBox(chatId);
+        HBox.setMargin(profileBox, new Insets(0, 2.0, 0, 2.0));
 
         Circle profilePicture = new Circle();
         profilePicture.setRadius(profilePictureRadius);
