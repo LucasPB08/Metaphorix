@@ -49,6 +49,11 @@ public class MainCtrl {
 
         showSignIn();
         stage.show();
+        setStyleSheet();
+    }
+
+    private void setStyleSheet(){
+        this.signInScene.getStylesheets().add("stylesheets/controls-styling.css");
     }
 
     /**

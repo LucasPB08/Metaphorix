@@ -1,0 +1,58 @@
+@font-face{
+    font-family: "DM Sans";
+    src: url("../fonts/DMSans-Regular.ttf");
+}
+
+.text {
+    -fx-font-family: "DM Sans";
+}
+
+.root {
+    -fx-background-color: #222733;
+}
+
+.button {
+    -fx-background-color: #2ea44f;
+    -fx-border-color: rgba(27, 31, 35, .15);
+    -fx-border-radius: 6px;
+    -fx-box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+    -fx-color: #fff;
+    -fx-cursor: hand;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 6px 16px;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #2c974b;
+}
+
+.button:disabled {
+    -fx-background-color: #94d3a2;
+    -fx-border-color: rgba(27, 31, 35, .1);
+    -fx-text-fill: rgba(255, 255, 255, .8);
+    -fx-cursor: default;
+}
+
+.button:pressed {
+    -fx-background-color: #298e46;
+    -fx-box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
+.button:focused {
+    -fx-box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+    -fx-outline: none;
+}
+
+.text-field {
+    -fx-background-color: #F0F0F0;
+    -fx-border-color: #D0D0D0;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: black;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.1), 2, 0.0, 0, 1);
+}
+
+
