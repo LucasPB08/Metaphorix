@@ -3,7 +3,7 @@
     src: url("../fonts/DMSans-Regular.ttf");
 }
 
-.text {
+Text {
     -fx-font-family: "DM Sans";
 }
 
@@ -21,14 +21,15 @@
 .button {
     -fx-background-color: #3E4C59;
     -fx-border-color: rgba(27, 31, 35, .15);
-    -fx-border-radius: 6px;
-    -fx-box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+    -fx-background-radius: 0px;
     -fx-color: #fff;
     -fx-cursor: hand;
     -fx-font-size: 14px;
     -fx-font-weight: 600;
     -fx-padding: 6px 16px;
     -fx-text-fill: white;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
 }
 
 .button:hover {
@@ -55,10 +56,11 @@
 .text-field {
     -fx-background-color: #616E7C;
     -fx-border-width: 0px;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+    -fx-background-radius: 2px;
     -fx-text-fill: black;
     -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.1), 2, 0.0, 0, 1);
+    -fx-font-family: "DM Sans";
+    -fx-text-fill: white;
 }
 
 
