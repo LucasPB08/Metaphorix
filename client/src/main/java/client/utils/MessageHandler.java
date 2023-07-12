@@ -34,12 +34,10 @@ public class MessageHandler {
      */
     public void displayMessageWithTimestamp(VBox messages, Message message, ChatUser loggedInUser){
         Label messageLabel = new Label(message.getMessage());
-        messageLabel.setFont(FONT_SIZE_TEXT);
         messageLabel.getStyleClass().add("content");
 
         Timestamp timeSent = message.getTimestampSent();
         Label timeSentLabel = getTimeSentLabel(timeSent);
-        timeSentLabel.setFont(FONT_SIZE_TIMESTAMP);
         HBox.setMargin(timeSentLabel, TIMESTAMP_INSETS);
         timeSentLabel.getStyleClass().add("timestamp");
 
