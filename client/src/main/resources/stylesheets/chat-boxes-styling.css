@@ -1,0 +1,14 @@
+ScrollPane{
+    -fx-background: #1C1C1C;
+    -fx-border-width: 0px;
+}
+
+.user-box {
+    -fx-background-color: transparent;
+    -fx-spacing: 5px;
+}
+
+.user-box Text {
+      -fx-fill: white;
+      -fx-text-alignment: center;
+  }

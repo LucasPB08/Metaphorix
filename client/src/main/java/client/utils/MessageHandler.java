@@ -34,29 +34,26 @@ public class MessageHandler {
      */
     public void displayMessageWithTimestamp(VBox messages, Message message, ChatUser loggedInUser){
         Label messageLabel = new Label(message.getMessage());
-        messageLabel.setFont(FONT_SIZE_TEXT);
+        messageLabel.getStyleClass().add("content");
 
         Timestamp timeSent = message.getTimestampSent();
         Label timeSentLabel = getTimeSentLabel(timeSent);
-        timeSentLabel.setFont(FONT_SIZE_TIMESTAMP);
         HBox.setMargin(timeSentLabel, TIMESTAMP_INSETS);
+        timeSentLabel.getStyleClass().add("timestamp");
 
         HBox messageBox = new HBox();
         messageBox.getChildren().addAll(messageLabel, timeSentLabel);
+        messageBox.getStyleClass().add("messageBox");
 
         HBox messageLevel = new HBox();
         messageLevel.getChildren().add(messageBox);
 
         if (isReceiver(message, loggedInUser)) {
             messageLevel.setAlignment(Pos.BASELINE_LEFT);
-            messageBox.setBackground(new Background(
-                    new BackgroundFill(COLOR_RECEIVER, RADII, BACKGROUND_INSETS))
-            );
+            messageBox.getStyleClass().add("receiver");
         } else {
             messageLevel.setAlignment(Pos.BASELINE_RIGHT);
-            messageBox.setBackground(new Background(
-                    new BackgroundFill(COLOR_SENDER, RADII, BACKGROUND_INSETS))
-            );
+            messageBox.getStyleClass().add("sender");
         }
 
         HBox.setMargin(messageBox, HBOX_INSETS);

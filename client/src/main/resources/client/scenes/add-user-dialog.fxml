@@ -7,11 +7,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<DialogPane expanded="true" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddChatsCtrl">
+<DialogPane expanded="true" stylesheets="@../../stylesheets/controls-styling.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddChatsCtrl">
    <content>
       <AnchorPane prefHeight="388.0" prefWidth="367.0">
          <children>
-            <Text layoutX="158.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Users">
+            <Text fx:id="title" layoutX="160.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Users">
                <font>
                   <Font size="22.0" />
                </font>

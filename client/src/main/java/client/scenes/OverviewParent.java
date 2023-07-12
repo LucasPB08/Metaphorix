@@ -5,6 +5,7 @@ import client.utils.ServerUtils;
 import commons.Chat;
 import commons.ChatUser;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -33,8 +34,6 @@ public class OverviewParent {
     public void loadProfile(){
         ChatUserBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L);
         userSection.getChildren().add(userToLoad);
-
-        loadChats();
     }
 
     /**
@@ -45,7 +44,7 @@ public class OverviewParent {
         this.loggedInUser = loggedInUser;
     }
 
-    void loadChats(){
+    public void loadChats(){
         this.chats.getChildren().clear();
         List<Chat> userChats = server.getChatsOfUser(this.loggedInUser.getUserName());
         for(Chat chat: userChats){
@@ -67,6 +66,7 @@ public class OverviewParent {
 
     ChatUserBox createProfileBox(String user, Long chatId){
         ChatUserBox profileBox = new ChatUserBox(chatId);
+        HBox.setMargin(profileBox, new Insets(0, 2.0, 0, 2.0));
 
         Circle profilePicture = new Circle();
         profilePicture.setRadius(profilePictureRadius);

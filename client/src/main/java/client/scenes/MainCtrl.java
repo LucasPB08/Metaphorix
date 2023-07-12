@@ -72,6 +72,7 @@ public class MainCtrl {
      */
     public void showUserOverview(){
         userOverviewController.loadProfile();
+        userOverviewController.loadChats();
 
         primaryStage.setTitle("User");
         primaryStage.setScene(userOverviewScene);

@@ -1,5 +1,6 @@
 package client.utils;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 
 public class ChatUserBox extends VBox {
@@ -11,6 +12,8 @@ public class ChatUserBox extends VBox {
      */
     public ChatUserBox(Long id){
         this.chatId = id;
+        this.getStyleClass().add("user-box");
+        this.setAlignment(Pos.CENTER);
     }
 
     /**
