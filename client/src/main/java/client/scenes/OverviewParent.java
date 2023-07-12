@@ -34,8 +34,6 @@ public class OverviewParent {
     public void loadProfile(){
         ChatUserBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L);
         userSection.getChildren().add(userToLoad);
-
-        loadChats();
     }
 
     /**
@@ -46,7 +44,7 @@ public class OverviewParent {
         this.loggedInUser = loggedInUser;
     }
 
-    void loadChats(){
+    public void loadChats(){
         this.chats.getChildren().clear();
         List<Chat> userChats = server.getChatsOfUser(this.loggedInUser.getUserName());
         for(Chat chat: userChats){
