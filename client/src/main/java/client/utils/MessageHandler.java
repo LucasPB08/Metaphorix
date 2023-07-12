@@ -52,14 +52,10 @@ public class MessageHandler {
 
         if (isReceiver(message, loggedInUser)) {
             messageLevel.setAlignment(Pos.BASELINE_LEFT);
-            messageBox.setBackground(new Background(
-                    new BackgroundFill(COLOR_RECEIVER, RADII, BACKGROUND_INSETS))
-            );
+            messageBox.getStyleClass().add("receiver");
         } else {
             messageLevel.setAlignment(Pos.BASELINE_RIGHT);
-            messageBox.setBackground(new Background(
-                    new BackgroundFill(COLOR_SENDER, RADII, BACKGROUND_INSETS))
-            );
+            messageBox.getStyleClass().add("sender");
         }
 
         HBox.setMargin(messageBox, HBOX_INSETS);

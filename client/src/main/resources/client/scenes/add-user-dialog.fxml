@@ -11,7 +11,7 @@
    <content>
       <AnchorPane prefHeight="388.0" prefWidth="367.0">
          <children>
-            <Text fx:id="title" layoutX="158.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Users">
+            <Text fx:id="title" layoutX="160.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Users">
                <font>
                   <Font size="22.0" />
                </font>

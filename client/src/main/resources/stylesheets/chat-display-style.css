@@ -8,10 +8,18 @@ HBox {
 }
 
 HBox .messageBox {
-    -fx-background-color: #3C3C3C;
+    /* -fx-background-color: #3C3C3C; */
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-padding: 5px;
+}
+
+HBox .receiver{
+    -fx-background-color: #3E4C59;
+}
+
+HBox .sender{
+    -fx-background-color: #323F4B;
 }
 
 HBox .messageBox .content {
