@@ -1,5 +1,6 @@
 package client.utils;
 
+import com.google.inject.Inject;
 import commons.ChatUser;
 import commons.Message;
 import javafx.geometry.Insets;
@@ -14,17 +15,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class MessageHandler {
-    private final static Color COLOR_RECEIVER = Color.AQUA;
-    private final static Color COLOR_SENDER = Color.RED;
-    private final static Insets BACKGROUND_INSETS = new Insets(-4.0);
-    private final static CornerRadii RADII = new CornerRadii(7.0);
+    private TimeStampHandler timeStampHandler;
 
     private final static Insets HBOX_INSETS = new Insets(7.0);
     private final static Insets VERTICAL_INSETS = new Insets(3.0);
     private final static Insets TIMESTAMP_INSETS = new Insets(8.0, 0, 0, 7.0);
 
-    private final static Font FONT_SIZE_TEXT = new Font(15.0);
-    private final static Font FONT_SIZE_TIMESTAMP = new Font(10.0);
+    @Inject
+    public MessageHandler(TimeStampHandler timeStampHandler){
+        this.timeStampHandler = timeStampHandler;
+    }
 
     /**
      * Displays message with its timestamp in the client ui.
@@ -36,8 +36,7 @@ public class MessageHandler {
         Label messageLabel = new Label(message.getMessage());
         messageLabel.getStyleClass().add("content");
 
-        Timestamp timeSent = message.getTimestampSent();
-        Label timeSentLabel = getTimeSentLabel(timeSent);
+        Label timeSentLabel = timeStampHandler.getTimeSentLabel(message);
         HBox.setMargin(timeSentLabel, TIMESTAMP_INSETS);
         timeSentLabel.getStyleClass().add("timestamp");
 
@@ -60,15 +59,6 @@ public class MessageHandler {
         VBox.setMargin(messageLevel, VERTICAL_INSETS);
 
         messages.getChildren().add(messageLevel);
-    }
-
-    private Label getTimeSentLabel(Timestamp timestamp){
-        LocalDateTime timeSent = timestamp.toLocalDateTime();
-
-        int hour = timeSent.getHour();
-        int minute = timeSent.getMinute();
-
-        return new Label(hour + ":" + minute);
     }
 
     /**
