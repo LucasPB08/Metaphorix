@@ -70,9 +70,32 @@ public class MessageHandler {
     public void loadMessagesOfChat(VBox messages,
                                    List<Message> messagesOfChat,
                                    ChatUser loggedInUser) {
+        timeStampHandler.reset();
+
         for (Message message : messagesOfChat) {
+            if(!timeStampHandler.wasSentToday(message))
+                displayDate(messages, message);
+
             displayMessageWithTimestamp(messages, message, loggedInUser);
         }
+    }
+
+    private void displayDate(VBox messages, Message message){
+        Label dateLabel = timeStampHandler.dateLabel(message);
+
+        if(dateLabel == null) return;
+
+
+        HBox dateBox = new HBox();
+        dateBox.getChildren().add(dateLabel);
+
+        HBox level = new HBox();
+        level.setAlignment(Pos.CENTER);
+        VBox.setMargin(level, VERTICAL_INSETS);
+
+        level.getChildren().add(dateBox);
+
+        messages.getChildren().add(level);
     }
 
     private boolean isReceiver(Message message, ChatUser loggedInUser){
