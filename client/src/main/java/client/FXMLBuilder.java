@@ -1,5 +1,10 @@
 package client;
 
+import client.modules.ControllerModule;
+import client.modules.MessageHandlerModule;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
@@ -10,6 +15,8 @@ import javafx.util.Pair;
 import java.io.IOException;
 
 public class FXMLBuilder {
+
+    private Injector injector = Guice.createInjector(new ControllerModule(), new MessageHandlerModule());
 
     /**
      *  Creates a dialog pane.
@@ -44,6 +51,9 @@ public class FXMLBuilder {
      */
     public <T> Pair<T, Scene> buildPair(String resource) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
+
+        loader.setControllerFactory(injector::getInstance);
+
         Scene scene = new Scene(loader.load());
         T controller = loader.getController();
         return new Pair<>(controller, scene);
