@@ -1,5 +1,6 @@
 package client.utils;
 
+import com.google.inject.Singleton;
 import commons.Message;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -20,6 +21,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.function.Consumer;
 
+@Singleton
 public class ServerUtils {
     private static final String SERVER = "http://localhost:8080";
     private StompSession session = connect("ws://localhost:8080/websocket");

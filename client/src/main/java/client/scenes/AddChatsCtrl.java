@@ -1,7 +1,7 @@
 package client.scenes;
 
-import client.MyApplication;
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,11 +18,19 @@ public class AddChatsCtrl {
     private ListView<String> users;
 
     /**
+     * Constructor
+     * @param server the server to communicate with.
+     */
+    @Inject
+    public AddChatsCtrl(ServerUtils server){
+        this.server = server;
+    }
+
+    /**
      * Initialises controller
      */
     @FXML
     public void initialize(){
-        server = MyApplication.getServer();
         users.setItems(getUsers());
     }
 

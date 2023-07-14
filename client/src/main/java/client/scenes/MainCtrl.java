@@ -1,11 +1,13 @@
 package client.scenes;
 
 import client.utils.ChatUserBox;
+import com.google.inject.Singleton;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import commons.ChatUser;
 
+@Singleton
 public class MainCtrl {
     private Stage primaryStage;
 

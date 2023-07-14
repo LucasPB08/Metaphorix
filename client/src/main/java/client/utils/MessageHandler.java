@@ -1,30 +1,31 @@
 package client.utils;
 
+import com.google.inject.Inject;
 import commons.ChatUser;
 import commons.Message;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class MessageHandler {
-    private final static Color COLOR_RECEIVER = Color.AQUA;
-    private final static Color COLOR_SENDER = Color.RED;
-    private final static Insets BACKGROUND_INSETS = new Insets(-4.0);
-    private final static CornerRadii RADII = new CornerRadii(7.0);
+    private TimeStampHandler timeStampHandler;
 
     private final static Insets HBOX_INSETS = new Insets(7.0);
     private final static Insets VERTICAL_INSETS = new Insets(3.0);
     private final static Insets TIMESTAMP_INSETS = new Insets(8.0, 0, 0, 7.0);
 
-    private final static Font FONT_SIZE_TEXT = new Font(15.0);
-    private final static Font FONT_SIZE_TIMESTAMP = new Font(10.0);
+    /**
+     * Constructor
+     * @param timeStampHandler Class that handles time stamps &
+     *                         the display of the date of messages sent.
+     */
+    @Inject
+    public MessageHandler(TimeStampHandler timeStampHandler){
+        this.timeStampHandler = timeStampHandler;
+    }
 
     /**
      * Displays message with its timestamp in the client ui.
@@ -36,8 +37,7 @@ public class MessageHandler {
         Label messageLabel = new Label(message.getMessage());
         messageLabel.getStyleClass().add("content");
 
-        Timestamp timeSent = message.getTimestampSent();
-        Label timeSentLabel = getTimeSentLabel(timeSent);
+        Label timeSentLabel = timeStampHandler.getTimeSentLabel(message);
         HBox.setMargin(timeSentLabel, TIMESTAMP_INSETS);
         timeSentLabel.getStyleClass().add("timestamp");
 
@@ -62,15 +62,6 @@ public class MessageHandler {
         messages.getChildren().add(messageLevel);
     }
 
-    private Label getTimeSentLabel(Timestamp timestamp){
-        LocalDateTime timeSent = timestamp.toLocalDateTime();
-
-        int hour = timeSent.getHour();
-        int minute = timeSent.getMinute();
-
-        return new Label(hour + ":" + minute);
-    }
-
     /**
      * Loads all the messages from a certain chat.
      * @param messages The container that holds the messages in the ui.
@@ -80,9 +71,31 @@ public class MessageHandler {
     public void loadMessagesOfChat(VBox messages,
                                    List<Message> messagesOfChat,
                                    ChatUser loggedInUser) {
+        timeStampHandler.reset();
+
         for (Message message : messagesOfChat) {
+            displayDate(messages, message);
+
             displayMessageWithTimestamp(messages, message, loggedInUser);
         }
+    }
+
+    private void displayDate(VBox messages, Message message){
+        Label dateLabel = timeStampHandler.dateLabel(message);
+
+        if(dateLabel == null) return;
+
+
+        HBox dateBox = new HBox();
+        dateBox.getChildren().add(dateLabel);
+
+        HBox level = new HBox();
+        level.setAlignment(Pos.CENTER);
+        VBox.setMargin(level, VERTICAL_INSETS);
+
+        level.getChildren().add(dateBox);
+
+        messages.getChildren().add(level);
     }
 
     private boolean isReceiver(Message message, ChatUser loggedInUser){

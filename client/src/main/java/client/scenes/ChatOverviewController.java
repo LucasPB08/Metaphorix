@@ -1,8 +1,9 @@
 package client.scenes;
 
-import client.MyApplication;
 import client.utils.ChatUserBox;
 import client.utils.MessageHandler;
+import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import commons.Message;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -24,14 +25,24 @@ public class ChatOverviewController extends OverviewParent{
     private TextField messageBox;
 
     /**
+     * Constructor
+     * @param mainCtrl The main controller of the client
+     * @param server The server to communicate with
+     * @param messageHandler Class that handles the creation of messages.
+     */
+    @Inject
+    public ChatOverviewController(MainCtrl mainCtrl,
+                                  ServerUtils server, MessageHandler messageHandler){
+        this.messageHandler = messageHandler;
+        this.mainCtrl = mainCtrl;
+        this.server = server;
+    }
+
+    /**
      * Initialises controller
      */
     @FXML
     public void initialize(){
-        mainCtrl = MyApplication.getMainCtrl();
-        server = MyApplication.getServer();
-        messageHandler = new MessageHandler();
-
         server.registerForWebsocketMessages("/topic/message", Message.class, m -> {
             Platform.runLater(() -> handleWebsocketMessage(m));
         });
