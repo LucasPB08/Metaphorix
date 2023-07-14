@@ -2,6 +2,7 @@ package client.scenes;
 
 import client.MyApplication;
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -21,14 +22,17 @@ public class SignInCtrl {
     @FXML
     private Text errorMessage;
 
+    @Inject
+    public SignInCtrl(MainCtrl mainCtrl, ServerUtils server){
+        this.mainCtrl = mainCtrl;
+        this.server = server;
+    }
 
     /**
      * Initialises controller
      */
     @FXML
     public void initialize(){
-        mainCtrl = MyApplication.getMainCtrl();
-        server = MyApplication.getServer();
         userName.setText("LucasPB");
         password.setText("R");
     }

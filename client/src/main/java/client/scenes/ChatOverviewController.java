@@ -3,6 +3,7 @@ package client.scenes;
 import client.MyApplication;
 import client.utils.ChatUserBox;
 import client.utils.MessageHandler;
+import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Message;
 import javafx.application.Platform;
@@ -25,8 +26,10 @@ public class ChatOverviewController extends OverviewParent{
     private TextField messageBox;
 
     @Inject
-    public ChatOverviewController(MessageHandler messageHandler){
+    public ChatOverviewController(MainCtrl mainCtrl, ServerUtils server, MessageHandler messageHandler){
         this.messageHandler = messageHandler;
+        this.mainCtrl = mainCtrl;
+        this.server = server;
     }
 
     /**
@@ -34,10 +37,6 @@ public class ChatOverviewController extends OverviewParent{
      */
     @FXML
     public void initialize(){
-        mainCtrl = MyApplication.getMainCtrl();
-        server = MyApplication.getServer();
-        //messageHandler = new MessageHandler();
-
         server.registerForWebsocketMessages("/topic/message", Message.class, m -> {
             Platform.runLater(() -> handleWebsocketMessage(m));
         });

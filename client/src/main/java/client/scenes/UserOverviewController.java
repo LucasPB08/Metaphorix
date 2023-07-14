@@ -4,6 +4,8 @@ import client.FXMLBuilder;
 import client.MyApplication;
 import client.utils.ChatUserBox;
 import client.utils.HTTPException;
+import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -13,20 +15,17 @@ import java.util.Optional;
 
 public class UserOverviewController extends OverviewParent{
 
-    /**
-     * Initialises the controller
-     */
-    @FXML
-    public void initialize(){
-        mainCtrl = MyApplication.getMainCtrl();
-        server = MyApplication.getServer();
+    @Inject
+    public UserOverviewController(MainCtrl mainCtrl, ServerUtils server){
+        this.mainCtrl = mainCtrl;
+        this.server = server;
     }
 
     /**
      * Adds a chat
      */
     public void addChat(){
-        Pair<AddChatsCtrl, Dialog<ButtonType>> pair = new FXMLBuilder()
+        Pair<AddChatsCtrl, Dialog<ButtonType>> pair = new FXMLBuilder(MyApplication.getInjector())
                 .buildDialogPane("scenes/add-user-dialog.fxml");
         if(pair == null) return;
 

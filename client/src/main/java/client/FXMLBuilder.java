@@ -16,7 +16,11 @@ import java.io.IOException;
 
 public class FXMLBuilder {
 
-    private Injector injector = Guice.createInjector(new ControllerModule(), new MessageHandlerModule());
+    private final Injector injector;
+
+    public FXMLBuilder(Injector injector){
+        this.injector = injector;
+    }
 
     /**
      *  Creates a dialog pane.
@@ -27,7 +31,9 @@ public class FXMLBuilder {
     public <T> Pair<T, Dialog<ButtonType>> buildDialogPane(String resource){
         try {
             FXMLLoader loader = new FXMLLoader(MyApplication.class.
-                    getResource("scenes/add-user-dialog.fxml"));
+                    getResource(resource));
+
+            loader.setControllerFactory(injector::getInstance);
 
             DialogPane pane = loader.load();
 
