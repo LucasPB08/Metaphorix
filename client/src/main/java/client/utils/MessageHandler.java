@@ -73,8 +73,7 @@ public class MessageHandler {
         timeStampHandler.reset();
 
         for (Message message : messagesOfChat) {
-            if(!timeStampHandler.wasSentToday(message))
-                displayDate(messages, message);
+            displayDate(messages, message);
 
             displayMessageWithTimestamp(messages, message, loggedInUser);
         }

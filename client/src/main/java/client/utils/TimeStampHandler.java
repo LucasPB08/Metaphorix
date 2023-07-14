@@ -23,18 +23,6 @@ public class TimeStampHandler {
         return new Label(hour + ":" + minute);
     }
 
-    public boolean wasSentToday(Message message){
-        Timestamp today = new Timestamp(System.currentTimeMillis());
-
-        Timestamp messageSentTime = message.getTimestampSent();
-
-        LocalDateTime todayDate = today.toLocalDateTime();
-        LocalDateTime messageDate = messageSentTime.toLocalDateTime();
-
-        return todayDate.getYear() == messageDate.getYear() &&
-                todayDate.getDayOfYear() == messageDate.getDayOfYear();
-    }
-
     public Label dateLabel(Message message){
         LocalDateTime messageSent = message.getTimestampSent().toLocalDateTime();
 
@@ -54,6 +42,10 @@ public class TimeStampHandler {
 
     private Label createDateLabel(LocalDateTime messageDate){
         LocalDateTime today = new Timestamp(System.currentTimeMillis()).toLocalDateTime();
+
+        if(today.getYear() == messageDate.getYear() &&
+                today.getDayOfYear() == messageDate.getDayOfYear())
+            return new Label("today");
 
         return today.getYear() > messageDate.getYear() ? dateLabelWithYear(messageDate):dateLabelWithoutYear(messageDate);
     }
