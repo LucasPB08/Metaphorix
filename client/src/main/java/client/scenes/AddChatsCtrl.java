@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.MyApplication;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.collections.FXCollections;
@@ -18,6 +17,10 @@ public class AddChatsCtrl {
     @FXML
     private ListView<String> users;
 
+    /**
+     * Constructor
+     * @param server the server to communicate with.
+     */
     @Inject
     public AddChatsCtrl(ServerUtils server){
         this.server = server;

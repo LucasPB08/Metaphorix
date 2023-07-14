@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.MyApplication;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
@@ -32,6 +31,11 @@ public class SignUpCtrl {
     @FXML
     private Text errorMessages;
 
+    /**
+     * Constructor
+     * @param mainCtrl The main controller of the application
+     * @param server The server to communicate with.
+     */
     @Inject
     public SignUpCtrl(MainCtrl mainCtrl, ServerUtils server){
         this.mainCtrl = mainCtrl;

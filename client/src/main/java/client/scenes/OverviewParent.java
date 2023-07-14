@@ -44,6 +44,10 @@ public class OverviewParent {
         this.loggedInUser = loggedInUser;
     }
 
+    /**
+     * Loads the chat section of the UI with the chats that this user
+     * takes part in.
+     */
     public void loadChats(){
         this.chats.getChildren().clear();
         List<Chat> userChats = server.getChatsOfUser(this.loggedInUser.getUserName());

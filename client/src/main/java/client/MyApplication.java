@@ -3,7 +3,6 @@ package client;
 import client.modules.ControllerModule;
 import client.modules.MessageHandlerModule;
 import client.scenes.*;
-import client.utils.ServerUtils;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import javafx.application.Application;
@@ -50,6 +49,10 @@ public class MyApplication extends Application {
         launch(args);
     }
 
+    /**
+     * Gets the injector used in the application
+     * @return the injector.
+     */
     public static Injector getInjector(){
         return INJECTOR;
     }

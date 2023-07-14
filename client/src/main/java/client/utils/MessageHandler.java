@@ -7,11 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class MessageHandler {
@@ -21,6 +17,11 @@ public class MessageHandler {
     private final static Insets VERTICAL_INSETS = new Insets(3.0);
     private final static Insets TIMESTAMP_INSETS = new Insets(8.0, 0, 0, 7.0);
 
+    /**
+     * Constructor
+     * @param timeStampHandler Class that handles time stamps &
+     *                         the display of the date of messages sent.
+     */
     @Inject
     public MessageHandler(TimeStampHandler timeStampHandler){
         this.timeStampHandler = timeStampHandler;

@@ -5,6 +5,9 @@ import com.google.inject.AbstractModule;
 
 public class ControllerModule extends AbstractModule {
 
+    /**
+     * Configures what to inject.
+     */
     @Override
     public void configure(){
         bind(AddChatsCtrl.class);

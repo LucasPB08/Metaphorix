@@ -1,6 +1,5 @@
 package client.utils;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import commons.Message;
 import javafx.scene.control.Label;
 
@@ -12,6 +11,12 @@ import java.util.Locale;
 public class TimeStampHandler {
     private LocalDateTime lastDisplayedDate;
 
+    /**
+     * Gets the label that is displayed together with a message, indicating
+     * the time it was sent at.
+     * @param message The message that was sent.
+     * @return Label holding the time stamp.
+     */
     public Label getTimeSentLabel(Message message){
         Timestamp timestamp = message.getTimestampSent();
 
@@ -23,6 +28,12 @@ public class TimeStampHandler {
         return new Label(hour + ":" + minute);
     }
 
+    /**
+     *  Creates the label that is shown to separate messages sent on different days.
+     * @param message A message from the chat.
+     * @return Null if the previous loaded message was on the same day, otherwise
+     * a label with the date of the message.
+     */
     public Label dateLabel(Message message){
         LocalDateTime messageSent = message.getTimestampSent().toLocalDateTime();
 
@@ -32,7 +43,7 @@ public class TimeStampHandler {
         }
 
         if(this.lastDisplayedDate.getYear() != messageSent.getYear() ||
-           this.lastDisplayedDate.getDayOfYear() != messageSent.getDayOfYear()) {
+            this.lastDisplayedDate.getDayOfYear() != messageSent.getDayOfYear()) {
             this.lastDisplayedDate = messageSent;
             return createDateLabel(messageSent);
         }
@@ -47,7 +58,8 @@ public class TimeStampHandler {
                 today.getDayOfYear() == messageDate.getDayOfYear())
             return new Label("today");
 
-        return today.getYear() > messageDate.getYear() ? dateLabelWithYear(messageDate):dateLabelWithoutYear(messageDate);
+        return today.getYear() > messageDate.getYear() ?
+                dateLabelWithYear(messageDate):dateLabelWithoutYear(messageDate);
     }
 
     private Label dateLabelWithYear(LocalDateTime messageDate){
@@ -69,6 +81,10 @@ public class TimeStampHandler {
         return new Label(date);
     }
 
+    /**
+     * This is called when a new chat is loaded,
+     * as there hasn't been a last displayed date.
+     */
     public void reset(){
         lastDisplayedDate = null;
     }

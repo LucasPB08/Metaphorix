@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.MyApplication;
 import client.utils.ChatUserBox;
 import client.utils.MessageHandler;
 import client.utils.ServerUtils;
@@ -25,8 +24,15 @@ public class ChatOverviewController extends OverviewParent{
     @FXML
     private TextField messageBox;
 
+    /**
+     * Constructor
+     * @param mainCtrl The main controller of the client
+     * @param server The server to communicate with
+     * @param messageHandler Class that handles the creation of messages.
+     */
     @Inject
-    public ChatOverviewController(MainCtrl mainCtrl, ServerUtils server, MessageHandler messageHandler){
+    public ChatOverviewController(MainCtrl mainCtrl,
+                                  ServerUtils server, MessageHandler messageHandler){
         this.messageHandler = messageHandler;
         this.mainCtrl = mainCtrl;
         this.server = server;

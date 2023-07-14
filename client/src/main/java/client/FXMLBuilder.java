@@ -1,9 +1,5 @@
 package client;
 
-import client.modules.ControllerModule;
-import client.modules.MessageHandlerModule;
-import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +14,10 @@ public class FXMLBuilder {
 
     private final Injector injector;
 
+    /**
+     * Constructor
+     * @param injector Guice Injector
+     */
     public FXMLBuilder(Injector injector){
         this.injector = injector;
     }

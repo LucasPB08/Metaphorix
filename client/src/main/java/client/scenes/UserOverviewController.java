@@ -6,7 +6,6 @@ import client.utils.ChatUserBox;
 import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.util.Pair;
@@ -15,6 +14,11 @@ import java.util.Optional;
 
 public class UserOverviewController extends OverviewParent{
 
+    /**
+     * Constructor
+     * @param mainCtrl The main controller of the application
+     * @param server The server to communicate with.
+     */
     @Inject
     public UserOverviewController(MainCtrl mainCtrl, ServerUtils server){
         this.mainCtrl = mainCtrl;
