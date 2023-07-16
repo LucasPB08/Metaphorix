@@ -103,6 +103,10 @@ public class MainCtrl {
         primaryStage.setScene(chatOverviewScene);
     }
 
+    /**
+     * Gets the list of the names of which the logged-in user has an active chat with.
+     * @return the list.
+     */
     public List<String> getListOfChattingUsers(){
         return userOverviewController.getNamesOfChatters();
     }

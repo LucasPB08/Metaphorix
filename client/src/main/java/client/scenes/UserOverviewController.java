@@ -6,11 +6,9 @@ import client.utils.ChatUserBox;
 import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 
@@ -56,6 +54,10 @@ public class UserOverviewController extends OverviewParent{
         }
     }
 
+    /**
+     * Gets the names of the users who have a chat with the logged-in user.
+     * @return the list of names.
+     */
     public List<String> getNamesOfChatters(){
         List<Node> chats = this.chats.getChildren();
 

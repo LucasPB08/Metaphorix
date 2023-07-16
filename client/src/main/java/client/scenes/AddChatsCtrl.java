@@ -21,6 +21,7 @@ public class AddChatsCtrl {
     /**
      * Constructor
      * @param server the server to communicate with.
+     * @param mainCtrl the main controller of the application.
      */
     @Inject
     public AddChatsCtrl(ServerUtils server, MainCtrl mainCtrl){
