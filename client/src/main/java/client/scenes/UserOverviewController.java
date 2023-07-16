@@ -76,6 +76,8 @@ public class UserOverviewController extends OverviewParent{
             }
         }
 
+        usersChatting.add(this.loggedInUser.getUserName());
+
         return usersChatting;
     }
 
