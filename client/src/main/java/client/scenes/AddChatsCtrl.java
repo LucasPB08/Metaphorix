@@ -13,6 +13,7 @@ import java.util.List;
 
 public class AddChatsCtrl {
     private ServerUtils server;
+    private MainCtrl mainCtrl;
 
     @FXML
     private ListView<String> users;
@@ -20,10 +21,12 @@ public class AddChatsCtrl {
     /**
      * Constructor
      * @param server the server to communicate with.
+     * @param mainCtrl the main controller of the application.
      */
     @Inject
-    public AddChatsCtrl(ServerUtils server){
+    public AddChatsCtrl(ServerUtils server, MainCtrl mainCtrl){
         this.server = server;
+        this.mainCtrl = mainCtrl;
     }
 
     /**
@@ -45,7 +48,11 @@ public class AddChatsCtrl {
     }
 
     private ObservableList<String> getUsers(){
-        List<String> users = server.getUsers().stream().map(ChatUser::getUserName).toList();
+        List<String> usersAlreadyChatting = mainCtrl.getListOfChattingUsers();
+
+        List<String> users = server.getUsers().stream().map(ChatUser::getUserName)
+                .filter(s -> !usersAlreadyChatting.contains(s)).toList();
+
         return FXCollections.observableArrayList(users);
     }
 }
