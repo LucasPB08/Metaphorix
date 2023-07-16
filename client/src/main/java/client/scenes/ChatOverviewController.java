@@ -8,6 +8,7 @@ import commons.Message;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 
 import java.util.List;
@@ -43,6 +44,12 @@ public class ChatOverviewController extends OverviewParent{
      */
     @FXML
     public void initialize(){
+        messageBox.setOnKeyPressed(event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+                sendMessage();
+            }
+        } );
+
         server.registerForWebsocketMessages("/topic/message", Message.class, m -> {
             Platform.runLater(() -> handleWebsocketMessage(m));
         });

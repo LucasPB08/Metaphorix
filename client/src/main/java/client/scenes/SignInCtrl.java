@@ -4,6 +4,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import commons.ChatUser;
 
@@ -39,6 +40,17 @@ public class SignInCtrl {
     public void initialize(){
         userName.setText("LucasPB");
         password.setText("R");
+
+        userName.setOnKeyPressed(key -> {
+            if(key.getCode() == KeyCode.ENTER)
+                password.requestFocus();
+        });
+
+        password.setOnKeyPressed(key -> {
+            if(key.getCode() == KeyCode.ENTER)
+                login();
+        });
+
     }
 
     /**
