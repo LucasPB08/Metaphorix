@@ -6,10 +6,16 @@ import client.utils.ChatUserBox;
 import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserOverviewController extends OverviewParent{
@@ -48,6 +54,27 @@ public class UserOverviewController extends OverviewParent{
             if(userIdSelected != null)
                 addUser(userIdSelected);
         }
+    }
+
+    public List<String> getNamesOfChatters(){
+        List<Node> chats = this.chats.getChildren();
+
+        List<String> usersChatting = new ArrayList<>();
+
+        for(Node n: chats){
+
+            List<Node> children = ((ChatUserBox) n).getChildren();
+
+            for(Node child: children){
+                if(child.getClass() != Text.class) continue;
+
+                String userNameInBox = ((Text)child).getText();
+
+                usersChatting.add(userNameInBox);
+            }
+        }
+
+        return usersChatting;
     }
 
     private void addUser(String userId){

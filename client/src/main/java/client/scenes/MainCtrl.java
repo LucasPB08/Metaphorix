@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import commons.ChatUser;
 
+import java.util.List;
+
 @Singleton
 public class MainCtrl {
     private Stage primaryStage;
@@ -99,6 +101,10 @@ public class MainCtrl {
 
         primaryStage.setTitle("Chats");
         primaryStage.setScene(chatOverviewScene);
+    }
+
+    public List<String> getListOfChattingUsers(){
+        return userOverviewController.getNamesOfChatters();
     }
 
 
