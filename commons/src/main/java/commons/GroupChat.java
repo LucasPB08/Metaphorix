@@ -26,10 +26,10 @@ public class GroupChat {
 
     private Timestamp timeCreated;
 
-    public GroupChat(Timestamp timeCreated, String groupName, GroupParticipant... initialParticipants){
+    public GroupChat(Timestamp timeCreated, String groupName, List<GroupParticipant> initialParticipants){
         this.timeCreated = timeCreated;
         this.groupName = groupName;
-        this.groupParticipants = Arrays.asList(initialParticipants);
+        this.groupParticipants = initialParticipants;
     }
 
     public Long getId() {
