@@ -15,7 +15,7 @@ public class GroupParticipant {
 
     @ManyToOne
     @JoinColumn(name = "chat_id")
-    private Chat chatId;
+    private GroupChat chatId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -31,7 +31,7 @@ public class GroupParticipant {
         return id;
     }
 
-    public Chat getChatId() {
+    public GroupChat getChatId() {
         return chatId;
     }
 
@@ -43,7 +43,7 @@ public class GroupParticipant {
         return joinedTime;
     }
 
-    public void setChatId(Chat chatId) {
+    public void setChatId(GroupChat chatId) {
         this.chatId = chatId;
     }
 

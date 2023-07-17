@@ -1,5 +1,6 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -26,16 +27,17 @@ public class GroupChat {
 
     private Timestamp timeCreated;
 
-    public GroupChat(Timestamp timeCreated, String groupName, List<GroupParticipant> initialParticipants){
+    public GroupChat(Timestamp timeCreated, String groupName){
         this.timeCreated = timeCreated;
         this.groupName = groupName;
-        this.groupParticipants = initialParticipants;
+        this.groupParticipants = new ArrayList<>();
     }
 
     public Long getId() {
         return id;
     }
 
+    @JsonIgnore
     public List<GroupParticipant> getGroupParticipants() {
         return groupParticipants;
     }
@@ -60,8 +62,8 @@ public class GroupChat {
         this.groupDescription = groupDescription;
     }
 
-    public void addParticipants(GroupParticipant... participantsToAdd){
-        Collections.addAll(this.groupParticipants, participantsToAdd);
+    public void addParticipants(List<GroupParticipant> participantsToAdd){
+        this.groupParticipants.addAll(participantsToAdd);
     }
 
     @Override

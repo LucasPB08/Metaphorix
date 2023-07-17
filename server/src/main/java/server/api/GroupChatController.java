@@ -42,28 +42,38 @@ public class GroupChatController {
 
         if(creator.isEmpty()) return ResponseEntity.badRequest().build();
 
+        Timestamp timeCreated = new Timestamp(System.currentTimeMillis());
+        GroupChat savedGroupChat = repo.save(new GroupChat(timeCreated,groupName));
+
         GroupParticipant creatorOfGroup = new GroupParticipant(new Timestamp(System.currentTimeMillis()));
+        creatorOfGroup.setChatId(savedGroupChat);
+        creatorOfGroup.setUserId(creator.get());
         participantRepo.save(creatorOfGroup);
 
         List<GroupParticipant> participants = new ArrayList<>();
         participants.add(creatorOfGroup);
 
-        List<GroupParticipant> addedByCreator = makeListOfParticipants(addedUsersIds);
+        List<GroupParticipant> addedByCreator = makeListOfParticipants(savedGroupChat, addedUsersIds);
         participants.addAll(addedByCreator);
 
-        Timestamp timeCreated = new Timestamp(System.currentTimeMillis());
-        GroupChat savedGroupChat = repo.save(new GroupChat(timeCreated,groupName, participants));
+        savedGroupChat.addParticipants(participants);
 
         return ResponseEntity.ok(savedGroupChat);
     }
 
-    private List<GroupParticipant> makeListOfParticipants(String... userIds){
+    private List<GroupParticipant> makeListOfParticipants(GroupChat chat, String... userIds){
         List<GroupParticipant> toReturn = new ArrayList<>();
 
         for(String id: userIds){
             Timestamp joined = new Timestamp(System.currentTimeMillis());
 
+            Optional<ChatUser> user = chatUserRepo.findById(id);
+            if(user.isEmpty()) continue;
+
             GroupParticipant participant = new GroupParticipant(joined);
+            participant.setChatId(chat);
+            participant.setUserId(user.get());
+
             participantRepo.save(participant);
 
             toReturn.add(participant);
