@@ -1,9 +1,11 @@
 package client.utils;
 
 import com.google.inject.Singleton;
+import commons.GroupChat;
 import commons.Message;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
@@ -225,5 +227,20 @@ public class ServerUtils {
                 .request()
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .get(new ListOfMessagesGenericType());
+    }
+
+    public void createGroupChat(String creatorId, String groupName, List<String> otherParticipants) throws CreatorNotFoundException {
+        WebTarget target = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/groups/create").queryParam("creatorId", creatorId)
+                .queryParam("groupName", groupName);
+
+        for(String participant: otherParticipants)
+            target.queryParam("addedUsersIds", participant);
+
+        Response response = target.request().accept(MediaType.APPLICATION_JSON_TYPE).post(null);
+
+        if(response.getStatus() != OK_STATUS) throw new CreatorNotFoundException();
+
+        System.out.println(response);
     }
 }
