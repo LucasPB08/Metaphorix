@@ -8,6 +8,7 @@ import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Pair;
 
 
@@ -27,6 +28,8 @@ public class MyApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setResizable(false);
+
         FXMLBuilder fxmlBuilder = new FXMLBuilder(INJECTOR);
 
         Pair<SignInCtrl, Scene> signInPair = fxmlBuilder.buildPair("scenes/sign-in.fxml");
