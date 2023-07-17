@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import server.database.ChatUserRepository;
 import server.database.GroupChatRepository;
+import server.database.GroupParticipantRepository;
 
 import javax.swing.*;
 import java.sql.Timestamp;
@@ -23,21 +24,26 @@ public class GroupChatController {
 
     private GroupChatRepository repo;
     private ChatUserRepository chatUserRepo;
+    private GroupParticipantRepository participantRepo;
 
-    public GroupChatController(GroupChatRepository repo, ChatUserRepository chatUserRepository){
+    public GroupChatController(GroupChatRepository repo,
+                               ChatUserRepository chatUserRepository,
+                               GroupParticipantRepository participantRepo){
         this.repo = repo;
         this.chatUserRepo = chatUserRepository;
+        this.participantRepo = participantRepo;
     }
 
     @PostMapping("/create")
     public ResponseEntity<GroupChat> createGroupChat(@RequestParam String creatorId,
                                                      @RequestParam String groupName,
-                                                     @RequestParam List<String> addedUsersIds){
+                                                     @RequestParam String... addedUsersIds){
         Optional<ChatUser> creator = chatUserRepo.findById(creatorId);
 
         if(creator.isEmpty()) return ResponseEntity.badRequest().build();
 
         GroupParticipant creatorOfGroup = new GroupParticipant(new Timestamp(System.currentTimeMillis()));
+        participantRepo.save(creatorOfGroup);
 
         List<GroupParticipant> participants = new ArrayList<>();
         participants.add(creatorOfGroup);
@@ -51,12 +57,15 @@ public class GroupChatController {
         return ResponseEntity.ok(savedGroupChat);
     }
 
-    private List<GroupParticipant> makeListOfParticipants(List<String> userIds){
+    private List<GroupParticipant> makeListOfParticipants(String... userIds){
         List<GroupParticipant> toReturn = new ArrayList<>();
 
         for(String id: userIds){
             Timestamp joined = new Timestamp(System.currentTimeMillis());
+
             GroupParticipant participant = new GroupParticipant(joined);
+            participantRepo.save(participant);
+
             toReturn.add(participant);
         }
 
