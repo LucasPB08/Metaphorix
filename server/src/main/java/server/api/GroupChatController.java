@@ -4,10 +4,7 @@ import commons.ChatUser;
 import commons.GroupChat;
 import commons.GroupParticipant;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import server.database.ChatUserRepository;
 import server.database.GroupChatRepository;
 import server.database.GroupParticipantRepository;
@@ -57,15 +54,26 @@ public class GroupChatController {
         participants.addAll(addedByCreator);
 
         savedGroupChat.addParticipants(participants);
+        repo.save(savedGroupChat);
 
         return ResponseEntity.ok(savedGroupChat);
     }
 
+    @GetMapping("/participants")
+    public List<GroupParticipant> participantsOfGroupChat(@RequestParam Long groupChatId){
+        Optional<GroupChat> optionalGroupChat = repo.findById(groupChatId);
+        if(optionalGroupChat.isEmpty()) return null;
+
+        GroupChat groupChat = optionalGroupChat.get();
+
+        return groupChat.getGroupParticipants();
+    }
+
     private List<GroupParticipant> makeListOfParticipants(GroupChat chat, String... userIds){
         List<GroupParticipant> toReturn = new ArrayList<>();
+        Timestamp joined = new Timestamp(System.currentTimeMillis());
 
         for(String id: userIds){
-            Timestamp joined = new Timestamp(System.currentTimeMillis());
 
             Optional<ChatUser> user = chatUserRepo.findById(id);
             if(user.isEmpty()) continue;

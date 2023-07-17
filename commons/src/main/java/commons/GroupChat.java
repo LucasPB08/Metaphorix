@@ -27,6 +27,10 @@ public class GroupChat {
 
     private Timestamp timeCreated;
 
+    public GroupChat(){
+
+    }
+
     public GroupChat(Timestamp timeCreated, String groupName){
         this.timeCreated = timeCreated;
         this.groupName = groupName;

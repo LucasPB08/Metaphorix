@@ -21,7 +21,11 @@ public class GroupParticipant {
     @JoinColumn(name = "user_id")
     private ChatUser userId;
 
-    private final Timestamp joinedTime;
+    private Timestamp joinedTime;
+
+    public GroupParticipant(){
+
+    }
 
     public GroupParticipant(Timestamp joinedTime){
         this.joinedTime = joinedTime;
@@ -31,6 +35,7 @@ public class GroupParticipant {
         return id;
     }
 
+    @JoinColumn
     public GroupChat getChatId() {
         return chatId;
     }
