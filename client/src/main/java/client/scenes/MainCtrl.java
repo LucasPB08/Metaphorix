@@ -118,5 +118,10 @@ public class MainCtrl {
         return userOverviewController.getNamesOfChatters();
     }
 
+    public void showGroupCreation(){
+        primaryStage.setTitle("Group Chat Creation");
+        primaryStage.setScene(groupCreationScene);
+    }
+
 
 }

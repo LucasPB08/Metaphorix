@@ -43,7 +43,7 @@ public class MyApplication extends Application {
                 fxmlBuilder.buildPair("scenes/user-overview.fxml");
 
         Pair<GroupChatCreationController, Scene> groupChatCreationPair =
-                fxmlBuilder.buildPair("scenes/group-creation");
+                fxmlBuilder.buildPair("scenes/group-creation.fxml");
 
         MainCtrl mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 

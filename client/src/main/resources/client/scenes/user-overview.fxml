@@ -16,7 +16,8 @@
         </ScrollPane>
 
         <Pane fx:id="userSection" layoutY="4.0" prefHeight="114.0" prefWidth="122.0" stylesheets="@../../stylesheets/chat-boxes-styling.css" />
-        <Button layoutX="29.0" layoutY="137.0" mnemonicParsing="false" onAction="#addChat" text="ADD CHAT" />
+        <Button layoutX="29.0" layoutY="137.0" mnemonicParsing="false" onAction="#addChat" prefHeight="30.0" prefWidth="119.0" text="ADD CHAT" />
+      <Button layoutX="29.0" layoutY="215.0" mnemonicParsing="false" onAction="#createNewGroupChat" text="ADD GROUP" />
 
     </children>
 

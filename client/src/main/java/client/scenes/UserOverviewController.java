@@ -54,6 +54,10 @@ public class UserOverviewController extends OverviewParent{
         }
     }
 
+    public void createNewGroupChat(){
+        mainCtrl.showGroupCreation();
+    }
+
     /**
      * Gets the names of the users who have a chat with the logged-in user.
      * @return the list of names.
