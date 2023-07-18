@@ -25,6 +25,9 @@ public class MainCtrl {
     private UserOverviewController userOverviewController;
     private Scene userOverviewScene;
 
+    private GroupChatCreationController groupCreationController;
+    private Scene groupCreationScene;
+
     /**
      * Initialises controller
      * @param stage primary stage
@@ -36,7 +39,8 @@ public class MainCtrl {
     public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
                      Pair<SignUpCtrl, Scene> signUp,
                      Pair<ChatOverviewController, Scene> chatOverview,
-                     Pair<UserOverviewController, Scene> userOverview){
+                     Pair<UserOverviewController, Scene> userOverview,
+                     Pair<GroupChatCreationController, Scene> groupChatOverview){
         this.primaryStage = stage;
 
         this.signInCtrl = signIn.getKey();
@@ -50,6 +54,9 @@ public class MainCtrl {
 
         this.userOverviewController = userOverview.getKey();
         this.userOverviewScene = userOverview.getValue();
+
+        this.groupCreationController = groupChatOverview.getKey();
+        this.groupCreationScene = groupChatOverview.getValue();
 
         showSignIn();
         stage.show();
