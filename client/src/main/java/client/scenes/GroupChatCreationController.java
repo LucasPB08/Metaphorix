@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -20,7 +21,7 @@ public class GroupChatCreationController {
     @FXML
     private ListView<String> availableUsers;
 
-
+    @Inject
     public GroupChatCreationController(MainCtrl mainCtrl, ServerUtils server){
         this.mainCtrl = mainCtrl;
         this.server = server;
