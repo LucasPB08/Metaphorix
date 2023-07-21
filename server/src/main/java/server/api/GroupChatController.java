@@ -34,13 +34,16 @@ public class GroupChatController {
     @PostMapping("/create")
     public ResponseEntity<GroupChat> createGroupChat(@RequestParam String creatorId,
                                                      @RequestParam String groupName,
+                                                     @RequestBody String groupDesc,
                                                      @RequestParam String... addedUsersIds){
         Optional<ChatUser> creator = chatUserRepo.findById(creatorId);
 
         if(creator.isEmpty()) return ResponseEntity.badRequest().build();
 
         Timestamp timeCreated = new Timestamp(System.currentTimeMillis());
+
         GroupChat savedGroupChat = repo.save(new GroupChat(timeCreated,groupName));
+        savedGroupChat.setGroupDescription(groupDesc);
 
         GroupParticipant creatorOfGroup = new GroupParticipant(new Timestamp(System.currentTimeMillis()));
         creatorOfGroup.setChatId(savedGroupChat);

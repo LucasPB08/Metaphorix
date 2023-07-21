@@ -229,10 +229,11 @@ public class ServerUtils {
                 .get(new ListOfMessagesGenericType());
     }
 
-    public void createGroupChat(String creatorId, String groupName, List<String> otherParticipants) throws CreatorNotFoundException {
+    public void createGroupChat(String creatorId, String groupName, String groupDesc, List<String> otherParticipants) throws CreatorNotFoundException {
         WebTarget target = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/groups/create").queryParam("creatorId", creatorId)
-                .queryParam("groupName", groupName);
+                .queryParam("groupName", groupName)
+                .queryParam("groupDesc", groupDesc);
 
         for(String participant: otherParticipants)
             target.queryParam("addedUsersIds", participant);
