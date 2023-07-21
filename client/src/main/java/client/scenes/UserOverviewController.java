@@ -6,6 +6,7 @@ import client.utils.ChatUserBox;
 import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.ChatUser;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -83,6 +84,10 @@ public class UserOverviewController extends OverviewParent{
         usersChatting.add(this.loggedInUser.getUserName());
 
         return usersChatting;
+    }
+
+    public ChatUser getLoggedInUser(){
+        return this.loggedInUser;
     }
 
     private void addUser(String userId){

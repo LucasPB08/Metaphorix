@@ -123,5 +123,9 @@ public class MainCtrl {
         primaryStage.setScene(groupCreationScene);
     }
 
+    public ChatUser loggedInUser(){
+        return userOverviewController.getLoggedInUser();
+    }
+
 
 }
