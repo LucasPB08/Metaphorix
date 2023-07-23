@@ -104,7 +104,7 @@ public class ChatUserController {
 
     /**
      * Gets the chats that a certain user participates in
-     * @param userId Id of the user
+     * @param userId ID of the user
      * @return the chats that the user participates in
      */
     @GetMapping("/chats")
@@ -124,8 +124,6 @@ public class ChatUserController {
 
         if(optionalChatUser.isEmpty()) return null;
 
-        List<GroupChatDTO> allGroups = repo.findAllGroupChats(userId);
-
-        return allGroups;
+        return repo.findAllGroupChats(userId);
     }
 }
