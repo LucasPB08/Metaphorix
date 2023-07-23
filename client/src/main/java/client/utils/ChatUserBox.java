@@ -4,7 +4,8 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 
 public class ChatUserBox extends VBox {
-    private Long chatId;
+    private final Long chatId;
+    private final boolean isGroupChat;
 
     /**
      * Constructor for a ChatUserBox
@@ -14,6 +15,14 @@ public class ChatUserBox extends VBox {
         this.chatId = id;
         this.getStyleClass().add("user-box");
         this.setAlignment(Pos.CENTER);
+        this.isGroupChat = false;
+    }
+
+    public ChatUserBox(Long id, boolean isGroupChat){
+        this.chatId = id;
+        this.getStyleClass().add("user-box");
+        this.setAlignment(Pos.CENTER);
+        this.isGroupChat = isGroupChat;
     }
 
     /**
@@ -22,6 +31,10 @@ public class ChatUserBox extends VBox {
      */
     public Long getChatId(){
         return chatId;
+    }
+
+    public boolean isGroupChat(){
+        return isGroupChat;
     }
 
 }
