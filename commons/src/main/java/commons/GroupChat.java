@@ -18,7 +18,7 @@ public class GroupChat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "chatId")
     private List<GroupParticipant> groupParticipants;
 
     private String groupName;

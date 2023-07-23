@@ -2,6 +2,7 @@ package server.api;
 
 import commons.Chat;
 import commons.ChatUser;
+import commons.GroupParticipant;
 import commons.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -117,5 +118,14 @@ public class ChatUserController {
         ChatUser user = optionalChatUser.get();
 
         return user.allChats();
+    }
+
+    @GetMapping("/participants")
+    public List<GroupParticipant> getParticipants(@RequestParam String userId){
+        Optional<ChatUser> optionalChatUser = repo.findById(userId);
+
+        if(optionalChatUser.isEmpty()) return null;
+
+        return optionalChatUser.get().getParticipants();
     }
 }

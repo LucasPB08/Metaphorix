@@ -9,7 +9,6 @@ import server.database.ChatUserRepository;
 import server.database.GroupChatRepository;
 import server.database.GroupParticipantRepository;
 
-import javax.swing.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,16 +49,9 @@ public class GroupChatController {
         creatorOfGroup.setUserId(creator.get());
         participantRepo.save(creatorOfGroup);
 
-        List<GroupParticipant> participants = new ArrayList<>();
-        participants.add(creatorOfGroup);
+        if(addedUsersIds != null)
+            addParticipantsToChat(savedGroupChat, addedUsersIds);
 
-        if(addedUsersIds != null) {
-            List<GroupParticipant> addedByCreator = makeListOfParticipants(savedGroupChat, addedUsersIds);
-            participants.addAll(addedByCreator);
-        }
-
-        savedGroupChat.addParticipants(participants);
-        repo.save(savedGroupChat);
 
         return ResponseEntity.ok(savedGroupChat);
     }
@@ -74,7 +66,7 @@ public class GroupChatController {
         return groupChat.getGroupParticipants();
     }
 
-    private List<GroupParticipant> makeListOfParticipants(GroupChat chat, String... userIds){
+    private List<GroupParticipant> addParticipantsToChat(GroupChat chat, String... userIds){
         List<GroupParticipant> toReturn = new ArrayList<>();
         Timestamp joined = new Timestamp(System.currentTimeMillis());
 

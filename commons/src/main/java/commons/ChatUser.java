@@ -29,6 +29,9 @@ public class ChatUser {
     @OneToMany(mappedBy = "sender")
     private List<Message> messages;
 
+    @OneToMany(mappedBy = "userId")
+    private List<GroupParticipant> groupParticipants;
+
     private ChatUser(){
         //for object mapper
     }
@@ -56,6 +59,7 @@ public class ChatUser {
         this.receivedChats = new ArrayList<>();
         this.initiatedChats = new ArrayList<>();
         this.messages = new ArrayList<>();
+        this.groupParticipants = new ArrayList<>();
     }
 
     /**
@@ -134,6 +138,11 @@ public class ChatUser {
      */
     public void addMessage(Message message){
         this.messages.add(message);
+    }
+
+    @JsonIgnore
+    public List<GroupParticipant> getParticipants(){
+        return this.groupParticipants;
     }
 
     /**
