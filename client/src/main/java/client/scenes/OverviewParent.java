@@ -4,6 +4,7 @@ import client.utils.ChatUserBox;
 import client.utils.ServerUtils;
 import commons.Chat;
 import commons.ChatUser;
+import commons.GroupChatDTO;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -32,7 +33,7 @@ public class OverviewParent {
      * Loads the overview.
      */
     public void loadProfile(){
-        ChatUserBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L);
+        ChatUserBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L, false);
         userSection.getChildren().add(userToLoad);
     }
 
@@ -50,31 +51,41 @@ public class OverviewParent {
      */
     public void loadChats(){
         this.chats.getChildren().clear();
-        List<Chat> userChats = server.getChatsOfUser(this.loggedInUser.getUserName());
+
+        String userName = this.loggedInUser.getUserName();
+
+        List<Chat> userChats = server.getChatsOfUser(userName);
+        List<GroupChatDTO> groupChats = server.getGroupChatsOfUser(userName);
+
         for(Chat chat: userChats){
             String initiator = chat.getInitiator().getUserName();
             String receiver = chat.getReceiver().getUserName();
-            String myUserName = this.loggedInUser.getUserName();
 
             // if the initiator's username equals the username of the user that
             // is logged in, then we should create the profile box with the receiver's
             // username, and vice versa.
 
-            ChatUserBox toAdd = initiator.equals(myUserName) ?
-                    createProfileBox(receiver, chat.getId()):
-                    createProfileBox(initiator, chat.getId());
+            ChatUserBox toAdd = initiator.equals(userName) ?
+                    createProfileBox(receiver, chat.getId(), false):
+                    createProfileBox(initiator, chat.getId(), false);
 
             chats.getChildren().add(toAdd);
         }
+
+        for(GroupChatDTO groupChat: groupChats){
+            ChatUserBox box = createProfileBox(groupChat.getGroupName(), groupChat.getId(), true);
+
+            chats.getChildren().add(box);
+        }
     }
 
-    ChatUserBox createProfileBox(String user, Long chatId){
+    ChatUserBox createProfileBox(String user, Long chatId, boolean isGroupChat){
         ChatUserBox profileBox = new ChatUserBox(chatId);
         HBox.setMargin(profileBox, new Insets(0, 2.0, 0, 2.0));
 
         Circle profilePicture = new Circle();
         profilePicture.setRadius(profilePictureRadius);
-        profilePicture.setFill(loadImage());
+        profilePicture.setFill(loadImage(isGroupChat));
 
         profileBox.getChildren().addAll(profilePicture, new Text(user));
 
@@ -82,8 +93,9 @@ public class OverviewParent {
         return profileBox;
     }
 
-    private ImagePattern loadImage(){
-        Image pic = new Image("images/profile-pic.jpg");
+    private ImagePattern loadImage(boolean isGroupChat){
+        Image pic = isGroupChat ?
+                new Image("images/group-icon.jpg") : new Image("images/profile-pic.jpg");
 
         return new ImagePattern(pic);
     }

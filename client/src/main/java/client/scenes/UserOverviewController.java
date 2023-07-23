@@ -90,7 +90,7 @@ public class UserOverviewController extends OverviewParent{
         try {
             Long chatId = server.createChat(this.loggedInUser.getUserName(), userId);
 
-            ChatUserBox pair = createProfileBox(userId, chatId);
+            ChatUserBox pair = createProfileBox(userId, chatId, false);
 
             chats.getChildren().add(pair);
         } catch(HTTPException e){

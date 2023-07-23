@@ -247,6 +247,6 @@ public class ServerUtils {
                 .path("/users/groups")
                 .queryParam("userId", userName)
                 .request()
-                .get(new MyListGenericType<>());
+                .get(new ListOfGroupGenericType());
     }
 }

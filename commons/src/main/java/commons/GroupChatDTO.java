@@ -8,6 +8,10 @@ public class GroupChatDTO {
 
     private String groupDesc;
 
+    public GroupChatDTO(){
+
+    }
+
     public GroupChatDTO(Long id, String groupName, String groupDesc){
         this.id = id;
         this.groupName = groupName;
