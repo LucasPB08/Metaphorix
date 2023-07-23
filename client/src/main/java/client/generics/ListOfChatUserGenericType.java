@@ -1,4 +1,4 @@
-package client.utils;
+package client.generics;
 
 import jakarta.ws.rs.core.GenericType;
 import commons.ChatUser;

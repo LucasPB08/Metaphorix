@@ -1,16 +1,17 @@
 package client.utils;
 
+import client.generics.ListOfChatUserGenericType;
+import client.generics.ListOfChatsGenericType;
+import client.generics.ListOfGroupsGenericType;
+import client.generics.ListOfMessagesGenericType;
 import com.google.inject.Singleton;
-import commons.GroupChat;
-import commons.Message;
+import commons.*;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
-import commons.Chat;
-import commons.ChatUser;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -242,5 +243,13 @@ public class ServerUtils {
         if(response.getStatus() != OK_STATUS) throw new CreatorNotFoundException("HTTP STATUS: " + response.getStatus());
 
         System.out.println(response);
+    }
+
+    public List<GroupChatDTO> getGroupChatsOfUser(String userName){
+        return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/users/groups")
+                .queryParam("userId", userName)
+                .request()
+                .get(new ListOfGroupsGenericType());
     }
 }
