@@ -1,9 +1,6 @@
 package client.utils;
 
-import client.generics.ListOfChatUserGenericType;
-import client.generics.ListOfChatsGenericType;
-import client.generics.ListOfGroupsGenericType;
-import client.generics.ListOfMessagesGenericType;
+import client.generics.*;
 import com.google.inject.Singleton;
 import commons.*;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -112,7 +109,7 @@ public class ServerUtils {
                 .target(SERVER).path("/users/")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
-                .get(new ListOfChatUserGenericType());
+                .get(new MyListGenericType<>());
     }
 
     /**
@@ -192,7 +189,7 @@ public class ServerUtils {
                 .path("/users/chats").queryParam("userId", userId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
-                .get(new ListOfChatsGenericType());
+                .get(new MyListGenericType<>());
     }
 
     /**
@@ -227,7 +224,7 @@ public class ServerUtils {
                 .path("/chat").queryParam("chatId", chatId)
                 .request()
                 .accept(MediaType.APPLICATION_JSON_TYPE)
-                .get(new ListOfMessagesGenericType());
+                .get(new MyListGenericType<>());
     }
 
     public void createGroupChat(String creatorId, String groupName, String groupDesc, List<String> otherParticipants) throws CreatorNotFoundException {
@@ -250,6 +247,6 @@ public class ServerUtils {
                 .path("/users/groups")
                 .queryParam("userId", userName)
                 .request()
-                .get(new ListOfGroupsGenericType());
+                .get(new MyListGenericType<>());
     }
 }
