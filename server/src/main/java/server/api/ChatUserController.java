@@ -1,12 +1,10 @@
 package server.api;
 
-import commons.Chat;
-import commons.ChatUser;
-import commons.GroupParticipant;
-import commons.Message;
+import commons.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.ChatUserRepository;
+import commons.GroupChatDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -120,12 +118,14 @@ public class ChatUserController {
         return user.allChats();
     }
 
-    @GetMapping("/participants")
-    public List<GroupParticipant> getParticipants(@RequestParam String userId){
+    @GetMapping("/groups")
+    public List<GroupChatDTO> getGroups(@RequestParam String userId){
         Optional<ChatUser> optionalChatUser = repo.findById(userId);
 
         if(optionalChatUser.isEmpty()) return null;
 
-        return optionalChatUser.get().getParticipants();
+        List<GroupChatDTO> allGroups = repo.findAllGroupChats(userId);
+
+        return allGroups;
     }
 }

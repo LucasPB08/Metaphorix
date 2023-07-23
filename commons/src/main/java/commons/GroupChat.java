@@ -31,6 +31,12 @@ public class GroupChat {
 
     }
 
+    public GroupChat(Long id, String groupName, String groupDesc){
+        this.id = id;
+        this.groupName = groupName;
+        this.groupDescription = groupDesc;
+    }
+
     public GroupChat(Timestamp timeCreated, String groupName){
         this.timeCreated = timeCreated;
         this.groupName = groupName;
