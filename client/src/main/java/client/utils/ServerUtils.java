@@ -109,7 +109,7 @@ public class ServerUtils {
                 .target(SERVER).path("/users/")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
-                .get(new MyListGenericType<>());
+                .get(new ListOfUsersGenericType());
     }
 
     /**
@@ -189,7 +189,7 @@ public class ServerUtils {
                 .path("/users/chats").queryParam("userId", userId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
-                .get(new MyListGenericType<>());
+                .get(new ListOfChatsGenericType());
     }
 
     /**
@@ -224,7 +224,7 @@ public class ServerUtils {
                 .path("/chat").queryParam("chatId", chatId)
                 .request()
                 .accept(MediaType.APPLICATION_JSON_TYPE)
-                .get(new MyListGenericType<>());
+                .get(new ListOfMessagesGenericType());
     }
 
     public void createGroupChat(String creatorId, String groupName, String groupDesc, List<String> otherParticipants) throws CreatorNotFoundException {

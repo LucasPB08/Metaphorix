@@ -1,8 +1,9 @@
 package client.generics;
 
+import commons.Chat;
 import jakarta.ws.rs.core.GenericType;
 
 import java.util.List;
 
-public class MyListGenericType<T> extends GenericType<List<T>> {
+public class ListOfChatsGenericType extends GenericType<List<Chat>> {
 }
