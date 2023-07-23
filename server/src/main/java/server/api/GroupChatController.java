@@ -34,8 +34,8 @@ public class GroupChatController {
     @PostMapping("/create")
     public ResponseEntity<GroupChat> createGroupChat(@RequestParam String creatorId,
                                                      @RequestParam String groupName,
-                                                     @RequestBody String groupDesc,
-                                                     @RequestParam String... addedUsersIds){
+                                                     @RequestBody (required = false) String groupDesc,
+                                                     @RequestParam (required = false) String... addedUsersIds){
         Optional<ChatUser> creator = chatUserRepo.findById(creatorId);
 
         if(creator.isEmpty()) return ResponseEntity.badRequest().build();
@@ -53,8 +53,10 @@ public class GroupChatController {
         List<GroupParticipant> participants = new ArrayList<>();
         participants.add(creatorOfGroup);
 
-        List<GroupParticipant> addedByCreator = makeListOfParticipants(savedGroupChat, addedUsersIds);
-        participants.addAll(addedByCreator);
+        if(addedUsersIds != null) {
+            List<GroupParticipant> addedByCreator = makeListOfParticipants(savedGroupChat, addedUsersIds);
+            participants.addAll(addedByCreator);
+        }
 
         savedGroupChat.addParticipants(participants);
         repo.save(savedGroupChat);

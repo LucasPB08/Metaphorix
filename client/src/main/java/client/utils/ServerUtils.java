@@ -232,15 +232,14 @@ public class ServerUtils {
     public void createGroupChat(String creatorId, String groupName, String groupDesc, List<String> otherParticipants) throws CreatorNotFoundException {
         WebTarget target = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/groups/create").queryParam("creatorId", creatorId)
-                .queryParam("groupName", groupName)
-                .queryParam("groupDesc", groupDesc);
+                .queryParam("groupName", groupName);
 
         for(String participant: otherParticipants)
             target.queryParam("addedUsersIds", participant);
 
-        Response response = target.request().accept(MediaType.APPLICATION_JSON_TYPE).post(null);
+        Response response = target.request().accept(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(groupDesc));
 
-        if(response.getStatus() != OK_STATUS) throw new CreatorNotFoundException();
+        if(response.getStatus() != OK_STATUS) throw new CreatorNotFoundException("HTTP STATUS: " + response.getStatus());
 
         System.out.println(response);
     }

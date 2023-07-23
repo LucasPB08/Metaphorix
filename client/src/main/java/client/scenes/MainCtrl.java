@@ -118,14 +118,10 @@ public class MainCtrl {
         return userOverviewController.getNamesOfChatters();
     }
 
-    public void showGroupCreation(){
+    public void showGroupCreation(ChatUser creator){
+        groupCreationController.setup(creator);
+
         primaryStage.setTitle("Group Chat Creation");
         primaryStage.setScene(groupCreationScene);
     }
-
-    public ChatUser loggedInUser(){
-        return userOverviewController.getLoggedInUser();
-    }
-
-
 }

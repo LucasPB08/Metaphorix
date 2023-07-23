@@ -56,7 +56,7 @@ public class UserOverviewController extends OverviewParent{
     }
 
     public void createNewGroupChat(){
-        mainCtrl.showGroupCreation();
+        mainCtrl.showGroupCreation(this.loggedInUser);
     }
 
     /**
@@ -84,10 +84,6 @@ public class UserOverviewController extends OverviewParent{
         usersChatting.add(this.loggedInUser.getUserName());
 
         return usersChatting;
-    }
-
-    public ChatUser getLoggedInUser(){
-        return this.loggedInUser;
     }
 
     private void addUser(String userId){
