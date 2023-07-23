@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.ChatUserBox;
+import client.utils.ChatBox;
 import client.utils.MessageHandler;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ChatOverviewController extends OverviewParent{
 
-    private ChatUserBox selectedUser;
+    private ChatBox selectedUser;
 
     private MessageHandler messageHandler;
 
@@ -86,7 +86,7 @@ public class ChatOverviewController extends OverviewParent{
      * Handles a click on a chat.
      * @param profileBox The clicked profile box.
      */
-    public void clickOnChat(ChatUserBox profileBox){
+    public void clickOnChat(ChatBox profileBox){
         if(selectedUser != null) selectedUser.setStyle("-fx-background-color: null;");
 
         this.selectedUser = profileBox;

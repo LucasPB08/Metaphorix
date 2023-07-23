@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.ChatUserBox;
+import client.utils.ChatBox;
 import com.google.inject.Singleton;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -102,7 +102,7 @@ public class MainCtrl {
      * Processes the click on a profile box when in the user overview.
      * @param profileBox
      */
-    public void clickOnChat(ChatUserBox profileBox){
+    public void clickOnChat(ChatBox profileBox){
         this.chatOverviewController.sync();
         this.chatOverviewController.clickOnChat(profileBox);
 

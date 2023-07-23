@@ -2,11 +2,10 @@ package client.scenes;
 
 import client.FXMLBuilder;
 import client.MyApplication;
-import client.utils.ChatUserBox;
+import client.utils.ChatBox;
 import client.utils.HTTPException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import commons.ChatUser;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -70,7 +69,7 @@ public class UserOverviewController extends OverviewParent{
 
         for(Node n: chats){
 
-            List<Node> children = ((ChatUserBox) n).getChildren();
+            List<Node> children = ((ChatBox) n).getChildren();
 
             for(Node child: children){
                 if(child.getClass() != Text.class) continue;
@@ -90,7 +89,7 @@ public class UserOverviewController extends OverviewParent{
         try {
             Long chatId = server.createChat(this.loggedInUser.getUserName(), userId);
 
-            ChatUserBox pair = createProfileBox(userId, chatId, false);
+            ChatBox pair = createProfileBox(userId, chatId, false);
 
             chats.getChildren().add(pair);
         } catch(HTTPException e){

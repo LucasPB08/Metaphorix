@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.ChatUserBox;
+import client.utils.ChatBox;
 import client.utils.ServerUtils;
 import commons.Chat;
 import commons.ChatUser;
@@ -33,7 +33,7 @@ public class OverviewParent {
      * Loads the overview.
      */
     public void loadProfile(){
-        ChatUserBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L, false);
+        ChatBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L, false);
         userSection.getChildren().add(userToLoad);
     }
 
@@ -65,7 +65,7 @@ public class OverviewParent {
             // is logged in, then we should create the profile box with the receiver's
             // username, and vice versa.
 
-            ChatUserBox toAdd = initiator.equals(userName) ?
+            ChatBox toAdd = initiator.equals(userName) ?
                     createProfileBox(receiver, chat.getId(), false):
                     createProfileBox(initiator, chat.getId(), false);
 
@@ -73,14 +73,14 @@ public class OverviewParent {
         }
 
         for(GroupChatDTO groupChat: groupChats){
-            ChatUserBox box = createProfileBox(groupChat.getGroupName(), groupChat.getId(), true);
+            ChatBox box = createProfileBox(groupChat.getGroupName(), groupChat.getId(), true);
 
             chats.getChildren().add(box);
         }
     }
 
-    ChatUserBox createProfileBox(String user, Long chatId, boolean isGroupChat){
-        ChatUserBox profileBox = new ChatUserBox(chatId);
+    ChatBox createProfileBox(String user, Long chatId, boolean isGroupChat){
+        ChatBox profileBox = new ChatBox(chatId, isGroupChat);
         HBox.setMargin(profileBox, new Insets(0, 2.0, 0, 2.0));
 
         Circle profilePicture = new Circle();
@@ -100,7 +100,7 @@ public class OverviewParent {
         return new ImagePattern(pic);
     }
 
-    private void makeSelectable(ChatUserBox profileBox) {
+    private void makeSelectable(ChatBox profileBox) {
         profileBox.setOnMouseClicked(event -> {
 
             //Check whether the clicked user is the logged-in user
