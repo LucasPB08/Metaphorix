@@ -67,6 +67,10 @@ public class GroupChat {
         return timeCreated;
     }
 
+    public List<GroupMessage> getGroupMessages(){
+        return groupMessages;
+    }
+
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }

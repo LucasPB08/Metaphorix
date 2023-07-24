@@ -71,8 +71,18 @@ public class GroupChatController {
         return groupChat.getGroupParticipants();
     }
 
+    @GetMapping("/messages")
+    public List<GroupMessage> getMessagesOfChat(@RequestParam Long groupId){
+        Optional<GroupChat> optionalGroupChat = repo.findById(groupId);
+        if(optionalGroupChat.isEmpty()) return null;
+
+        GroupChat groupChat = optionalGroupChat.get();
+
+        return groupChat.getGroupMessages();
+    }
+
     @PostMapping("/messages")
-    public ResponseEntity<GroupMessage> sentMessage(@RequestParam Long groupId,
+    public ResponseEntity<GroupMessage> sendMessage(@RequestParam Long groupId,
                                                     @RequestParam Long senderId,
                                                     @RequestBody String message){
         Optional<GroupChat> optionalGroupChat = repo.findById(groupId);
