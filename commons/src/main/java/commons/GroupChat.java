@@ -27,6 +27,9 @@ public class GroupChat {
 
     private Timestamp timeCreated;
 
+    @OneToMany(mappedBy = "groupChat")
+    private List<GroupMessage> groupMessages;
+
     public GroupChat(){
 
     }

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class GroupParticipant {
@@ -20,6 +21,9 @@ public class GroupParticipant {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private ChatUser userId;
+
+    @OneToMany(mappedBy = "sender")
+    private List<GroupMessage> messagesSent;
 
     private Timestamp joinedTime;
 
