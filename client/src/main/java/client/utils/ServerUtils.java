@@ -12,6 +12,7 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.checkerframework.checker.units.qual.C;
 import org.glassfish.jersey.client.ClientConfig;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -252,6 +253,13 @@ public class ServerUtils {
                 .queryParam("userId", userName)
                 .request()
                 .get(new ListOfGroupGenericType());
+    }
+
+    public List<GroupMessage> getGroupChatMessages(Long groupId){
+        return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/messages").queryParam("groupId", groupId)
+                .request()
+                .get(new ListOfGroupMessagesGenericType());
     }
 
     public void sendGroupMessage(Long groupChatId,
