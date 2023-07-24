@@ -1,5 +1,9 @@
 package client.utils;
 
+import client.exceptions.CreatorNotFoundException;
+import client.exceptions.EntityAlreadyExistsException;
+import client.exceptions.EntityNotFoundException;
+import client.exceptions.HTTPException;
 import client.generics.*;
 import com.google.inject.Singleton;
 import commons.*;
@@ -82,7 +86,7 @@ public class ServerUtils {
      * @param password password of user
      */
     public void storeUser(String fullName, String userName, String password)
-            throws HTTPException, EntityAlreadyExistsException{
+            throws HTTPException, EntityAlreadyExistsException {
         if(existsUser(userName)) throw new EntityAlreadyExistsException("This user already exists");
 
         Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
@@ -248,5 +252,20 @@ public class ServerUtils {
                 .queryParam("userId", userName)
                 .request()
                 .get(new ListOfGroupGenericType());
+    }
+
+    public void sendGroupMessage(Long groupChatId,
+                                 Long participantId,
+                                 String message) throws EntityNotFoundException {
+        Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/messages").queryParam("groupId", groupChatId)
+                .queryParam("participantId", participantId)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.json(message));
+
+        if(response.getStatus() != OK_STATUS)
+            throw new EntityNotFoundException("HTTP STATUS: " + response.getStatus());
+
+        System.out.println(response);
     }
 }

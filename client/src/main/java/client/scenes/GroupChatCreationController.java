@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.CreatorNotFoundException;
+import client.exceptions.CreatorNotFoundException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.ChatUser;

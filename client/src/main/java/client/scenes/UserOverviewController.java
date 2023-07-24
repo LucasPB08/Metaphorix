@@ -3,7 +3,7 @@ package client.scenes;
 import client.FXMLBuilder;
 import client.MyApplication;
 import client.utils.ChatBox;
-import client.utils.HTTPException;
+import client.exceptions.HTTPException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.scene.Node;
