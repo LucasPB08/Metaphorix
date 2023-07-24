@@ -6,6 +6,7 @@ import commons.GroupMessage;
 import commons.GroupParticipant;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.Clock;
 import server.database.ChatUserRepository;
 import server.database.GroupChatRepository;
 import server.database.GroupMessageRepository;
@@ -24,15 +25,18 @@ public class GroupChatController {
     private final ChatUserRepository chatUserRepo;
     private final GroupParticipantRepository participantRepo;
     private final GroupMessageRepository messageRepo;
+    private final Clock clock;
 
     public GroupChatController(GroupChatRepository repo,
                                ChatUserRepository chatUserRepository,
                                GroupParticipantRepository participantRepo,
-                               GroupMessageRepository messageRepo){
+                               GroupMessageRepository messageRepo,
+                               Clock clock){
         this.repo = repo;
         this.chatUserRepo = chatUserRepository;
         this.participantRepo = participantRepo;
         this.messageRepo = messageRepo;
+        this.clock = clock;
     }
 
     @PostMapping("/create")
@@ -44,7 +48,7 @@ public class GroupChatController {
 
         if(creator.isEmpty()) return ResponseEntity.badRequest().build();
 
-        Timestamp timeCreated = new Timestamp(System.currentTimeMillis());
+        Timestamp timeCreated = clock.now();
 
         GroupChat savedGroupChat = repo.save(new GroupChat(timeCreated,groupName));
         savedGroupChat.setGroupDescription(groupDesc);
@@ -95,7 +99,7 @@ public class GroupChatController {
         GroupParticipant participant = optionalSender.get();
 
         GroupMessage groupMessage = new GroupMessage(message);
-        Timestamp sentAt = new Timestamp(System.currentTimeMillis());
+        Timestamp sentAt = clock.now();
         groupMessage.setTimestampSent(sentAt);
 
         groupMessage.setGroupChat(groupChat);
@@ -107,7 +111,7 @@ public class GroupChatController {
     }
 
     private void addParticipantsToChat(GroupChat chat, String... userIds){
-        Timestamp joined = new Timestamp(System.currentTimeMillis());
+        Timestamp joined = clock.now();
 
         for(String id: userIds){
 

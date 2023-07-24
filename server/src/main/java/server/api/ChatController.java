@@ -5,6 +5,7 @@ import commons.ChatUser;
 import commons.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import server.Clock;
 import server.database.ChatRepository;
 import server.database.ChatUserRepository;
 import server.database.MessageRepo;
@@ -16,9 +17,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
-    private ChatRepository repo;
-    private ChatUserRepository userRepo;
-    private MessageRepo messageRepo;
+    private final ChatRepository repo;
+    private final ChatUserRepository userRepo;
+    private final MessageRepo messageRepo;
+    private final Clock clock;
 
     /**
      * Constructor for the chat controller
@@ -26,11 +28,14 @@ public class ChatController {
      * @param userRepo repository of user entities
      * @param messageRepo repository of message entities
      */
-    public ChatController(ChatRepository repo, ChatUserRepository userRepo,
-                          MessageRepo messageRepo){
+    public ChatController(ChatRepository repo,
+                          ChatUserRepository userRepo,
+                          MessageRepo messageRepo,
+                          Clock clock){
         this.repo = repo;
         this.userRepo = userRepo;
         this.messageRepo = messageRepo;
+        this.clock = clock;
     }
 
     /**
@@ -74,7 +79,7 @@ public class ChatController {
     public ResponseEntity<Message> saveMessage(@RequestParam Long chatId,
                                                @RequestParam String userId,
                                                @RequestBody String message){
-        Timestamp sent = new Timestamp(System.currentTimeMillis());
+        Timestamp sent = clock.now();
         Message messageToSave = new Message(message, sent);
 
         Optional<ChatUser> optionalChatUser = userRepo.findById(userId);
