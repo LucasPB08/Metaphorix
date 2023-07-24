@@ -2,11 +2,13 @@ package server.api;
 
 import commons.ChatUser;
 import commons.GroupChat;
+import commons.GroupMessage;
 import commons.GroupParticipant;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.ChatUserRepository;
 import server.database.GroupChatRepository;
+import server.database.GroupMessageRepository;
 import server.database.GroupParticipantRepository;
 
 import java.sql.Timestamp;
@@ -18,16 +20,19 @@ import java.util.Optional;
 @RequestMapping("/groups")
 public class GroupChatController {
 
-    private GroupChatRepository repo;
-    private ChatUserRepository chatUserRepo;
-    private GroupParticipantRepository participantRepo;
+    private final GroupChatRepository repo;
+    private final ChatUserRepository chatUserRepo;
+    private final GroupParticipantRepository participantRepo;
+    private final GroupMessageRepository messageRepo;
 
     public GroupChatController(GroupChatRepository repo,
                                ChatUserRepository chatUserRepository,
-                               GroupParticipantRepository participantRepo){
+                               GroupParticipantRepository participantRepo,
+                               GroupMessageRepository messageRepo){
         this.repo = repo;
         this.chatUserRepo = chatUserRepository;
         this.participantRepo = participantRepo;
+        this.messageRepo = messageRepo;
     }
 
     @PostMapping("/create")
@@ -64,6 +69,31 @@ public class GroupChatController {
         GroupChat groupChat = optionalGroupChat.get();
 
         return groupChat.getGroupParticipants();
+    }
+
+    @PostMapping("/messages")
+    public ResponseEntity<GroupMessage> sentMessage(@RequestParam Long groupId,
+                                                    @RequestParam Long senderId,
+                                                    @RequestBody String message){
+        Optional<GroupChat> optionalGroupChat = repo.findById(groupId);
+        Optional<GroupParticipant> optionalSender = participantRepo.findById(senderId);
+
+        if(optionalGroupChat.isEmpty() ||
+           optionalSender.isEmpty()) return ResponseEntity.badRequest().build();
+
+        GroupChat groupChat = optionalGroupChat.get();
+        GroupParticipant participant = optionalSender.get();
+
+        GroupMessage groupMessage = new GroupMessage(message);
+        Timestamp sentAt = new Timestamp(System.currentTimeMillis());
+        groupMessage.setTimestampSent(sentAt);
+
+        groupMessage.setGroupChat(groupChat);
+        groupMessage.setSender(participant);
+
+        messageRepo.save(groupMessage);
+
+        return ResponseEntity.ok(groupMessage);
     }
 
     private List<GroupParticipant> addParticipantsToChat(GroupChat chat, String... userIds){

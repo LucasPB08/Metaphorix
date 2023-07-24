@@ -44,6 +44,14 @@ public class GroupMessage {
         this.timestampSent = timestampSent;
     }
 
+    public void setGroupChat(GroupChat groupChat) {
+        this.groupChat = groupChat;
+    }
+
+    public void setSender(GroupParticipant sender) {
+        this.sender = sender;
+    }
+
     @Override
     public boolean equals(Object other){
         return EqualsBuilder.reflectionEquals(this, other);
