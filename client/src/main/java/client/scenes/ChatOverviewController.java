@@ -4,6 +4,7 @@ import client.utils.ChatBox;
 import client.utils.MessageHandler;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.GroupMessage;
 import commons.Message;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -64,9 +65,19 @@ public class ChatOverviewController extends OverviewParent{
     }
 
     /**
-     * Sends a message
+     * Is triggered when the SEND button is clicked.
+     * Checks whether the clicked chat is a chat between two users,
+     * or if it's a group chat.
+     * This stores the message in the database, and displayed it in the UI
      */
     public void sendMessage(){
+        if(this.selectedUser.isGroupChat())
+            sendGroupMessage();
+        else
+            sendPersonalMessage();
+    }
+
+    private void sendPersonalMessage(){
         try {
             String message = messageBox.getText();
             Message messageSaved = server.sendMessage(selectedUser.getChatId(),
@@ -79,11 +90,14 @@ public class ChatOverviewController extends OverviewParent{
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void sendGroupMessage(){
 
     }
 
     /**
-     * Handles a click on a chat.
+     * Loads the messages of a chat, once the user clicks on it.
      * @param profileBox The clicked profile box.
      */
     public void clickOnChat(ChatBox profileBox){
