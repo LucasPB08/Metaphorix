@@ -96,8 +96,7 @@ public class GroupChatController {
         return ResponseEntity.ok(groupMessage);
     }
 
-    private List<GroupParticipant> addParticipantsToChat(GroupChat chat, String... userIds){
-        List<GroupParticipant> toReturn = new ArrayList<>();
+    private void addParticipantsToChat(GroupChat chat, String... userIds){
         Timestamp joined = new Timestamp(System.currentTimeMillis());
 
         for(String id: userIds){
@@ -110,10 +109,6 @@ public class GroupChatController {
             participant.setUserId(user.get());
 
             participantRepo.save(participant);
-
-            toReturn.add(participant);
         }
-
-        return toReturn;
     }
 }
