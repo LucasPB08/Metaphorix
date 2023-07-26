@@ -83,6 +83,8 @@ public class ChatOverviewController extends OverviewParent{
             sendGroupMessage();
         else
             sendPersonalMessage();
+
+        this.messageBox.clear();
     }
 
     private void sendPersonalMessage(){

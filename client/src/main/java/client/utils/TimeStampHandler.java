@@ -26,7 +26,8 @@ public class TimeStampHandler {
         int hour = timeSent.getHour();
         int minute = timeSent.getMinute();
 
-        return new Label(hour + ":" + minute);
+        return minute <= 9 ? new Label(hour + ":0" + minute) :
+                new Label(hour + ":" + minute);
     }
 
     /**
@@ -43,7 +44,8 @@ public class TimeStampHandler {
         int hour = timeSent.getHour();
         int minute = timeSent.getMinute();
 
-        return new Label(hour + ":" + minute);
+        return minute <= 9 ? new Label(hour + ":0" + minute) :
+                new Label(hour + ":" + minute);
     }
 
     /**

@@ -15,7 +15,7 @@ import java.util.List;
 public class GroupMessageHandler {
     private final TimeStampHandler timeStampHandler;
 
-    private final static Insets HORIZONTAL_INSETS = new Insets(7.0);
+    private final static Insets HORIZONTAL_INSETS = new Insets(0, 0, 0, 5.0);
     private final static Insets VERTICAL_INSETS = new Insets(3.0);
     private final static Insets TIMESTAMP_INSETS = new Insets(8.0, 0, 0, 7.0);
 
@@ -40,13 +40,10 @@ public class GroupMessageHandler {
         VBox messageBox = new VBox();
         messageBox.getStyleClass().add("messageBox");
 
-        String senderUsername = message.getSender().getUserId().getUserName();
-        Label senderLabel = new Label(senderUsername);
-
         HBox contentTimestampBox = new HBox();
         contentTimestampBox.getChildren().addAll(messageLabel, timeSentLabel);
 
-        messageBox.getChildren().addAll(senderLabel, contentTimestampBox);
+        messageBox.getChildren().add(contentTimestampBox);
 
         HBox messageLevel = new HBox();
         messageLevel.getChildren().add(messageBox);
@@ -54,12 +51,22 @@ public class GroupMessageHandler {
         if (isReceiver(message, loggedInUser)) {
             messageLevel.setAlignment(Pos.BASELINE_LEFT);
             messageBox.getStyleClass().add("receiver");
+
+            String senderUsername = message.getSender().getUserId().getUserName();
+            Label senderLabel = new Label(senderUsername);
+
+            // The name of the sender is only included
+            // if the sender isn't the one logged-in
+            messageBox.getChildren().add(0, senderLabel);
+
+            // Slight offset for the content and timestamp
+            // in comparison to the name of the sender
+            VBox.setMargin(contentTimestampBox, HORIZONTAL_INSETS);
         } else {
             messageLevel.setAlignment(Pos.BASELINE_RIGHT);
             messageBox.getStyleClass().add("sender");
         }
 
-        HBox.setMargin(contentTimestampBox, HORIZONTAL_INSETS);
         VBox.setMargin(messageLevel, VERTICAL_INSETS);
 
         messages.getChildren().add(messageLevel);
