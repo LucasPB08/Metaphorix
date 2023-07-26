@@ -1,5 +1,6 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -39,7 +40,7 @@ public class GroupParticipant {
         return id;
     }
 
-    @JoinColumn
+    @JsonIgnore
     public GroupChat getChatId() {
         return chatId;
     }

@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ChatBox;
+import client.utils.GroupMessageHandler;
 import client.utils.MessageHandler;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
@@ -16,9 +17,11 @@ import java.util.List;
 
 public class ChatOverviewController extends OverviewParent{
 
-    private ChatBox selectedUser;
+    private ChatBox selectedChat;
 
     private MessageHandler messageHandler;
+
+    private GroupMessageHandler groupMessageHandler;
 
     @FXML
     protected VBox messages;
@@ -34,10 +37,13 @@ public class ChatOverviewController extends OverviewParent{
      */
     @Inject
     public ChatOverviewController(MainCtrl mainCtrl,
-                                  ServerUtils server, MessageHandler messageHandler){
+                                  ServerUtils server,
+                                  MessageHandler messageHandler,
+                                  GroupMessageHandler groupMessageHandler){
         this.messageHandler = messageHandler;
         this.mainCtrl = mainCtrl;
         this.server = server;
+        this.groupMessageHandler = groupMessageHandler;
     }
 
     /**
@@ -68,10 +74,10 @@ public class ChatOverviewController extends OverviewParent{
      * Is triggered when the SEND button is clicked.
      * Checks whether the clicked chat is a chat between two users,
      * or if it's a group chat.
-     * This stores the message in the database, and displayed it in the UI
+     * This stores the message in the database, and displays it in the UI
      */
     public void sendMessage(){
-        if(this.selectedUser.isGroupChat())
+        if(this.selectedChat.isGroupChat())
             sendGroupMessage();
         else
             sendPersonalMessage();
@@ -80,7 +86,7 @@ public class ChatOverviewController extends OverviewParent{
     private void sendPersonalMessage(){
         try {
             String message = messageBox.getText();
-            Message messageSaved = server.sendMessage(selectedUser.getChatId(),
+            Message messageSaved = server.sendMessage(selectedChat.getChatId(),
                     loggedInUser.getUserName() , message);
 
             server.send("/topic/message", messageSaved);
@@ -93,7 +99,16 @@ public class ChatOverviewController extends OverviewParent{
     }
 
     private void sendGroupMessage(){
+        try {
+            String message = messageBox.getText();
+            GroupMessage messageSaved = server.sendGroupMessage(selectedChat.getChatId(),
+                    loggedInUser.getUserName() , message);
 
+            groupMessageHandler.displayGroupMessage(this.messages,
+                    messageSaved, this.loggedInUser);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -101,21 +116,25 @@ public class ChatOverviewController extends OverviewParent{
      * @param profileBox The clicked profile box.
      */
     public void clickOnChat(ChatBox profileBox){
-        if(selectedUser != null) selectedUser.setStyle("-fx-background-color: null;");
+        if(selectedChat != null) selectedChat.setStyle("-fx-background-color: null;");
 
-        this.selectedUser = profileBox;
+        this.selectedChat = profileBox;
 
-        selectedUser.setStyle("-fx-background-color: blue;");
+        selectedChat.setStyle("-fx-background-color: blue;");
 
         messages.getChildren().clear();
 
-        List<Message> messageList = server.getMessagesOfChat(profileBox.getChatId());
-
-        messageHandler.loadMessagesOfChat(messages, messageList, loggedInUser);
+        if(!profileBox.isGroupChat()) {
+            List<Message> messageList = server.getMessagesOfChat(profileBox.getChatId());
+            messageHandler.loadMessagesOfChat(messages, messageList, loggedInUser);
+        } else {
+            List<GroupMessage> messageList = server.getGroupChatMessages(profileBox.getChatId());
+            groupMessageHandler.loadMessagesOfChat(messages, messageList, loggedInUser);
+        }
     }
 
     private void handleWebsocketMessage(Message message) {
-        Long chatIdCurrentlyViewing = this.selectedUser.getChatId();
+        Long chatIdCurrentlyViewing = this.selectedChat.getChatId();
 
         if(!message.getChat().getId().equals(chatIdCurrentlyViewing)
             || message.getSender().equals(this.loggedInUser)) return;

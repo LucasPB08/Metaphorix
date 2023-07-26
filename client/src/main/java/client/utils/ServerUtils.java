@@ -257,16 +257,16 @@ public class ServerUtils {
 
     public List<GroupMessage> getGroupChatMessages(Long groupId){
         return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
-                .path("/messages").queryParam("groupId", groupId)
+                .path("/groups/messages").queryParam("groupId", groupId)
                 .request()
                 .get(new ListOfGroupMessagesGenericType());
     }
 
-    public void sendGroupMessage(Long groupChatId,
+    public GroupMessage sendGroupMessage(Long groupChatId,
                                  String userName,
                                  String message) throws EntityNotFoundException {
         Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
-                .path("/messages").queryParam("groupId", groupChatId)
+                .path("/groups/messages").queryParam("groupId", groupChatId)
                 .queryParam("senderId", userName)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(message));
@@ -275,5 +275,7 @@ public class ServerUtils {
             throw new EntityNotFoundException("HTTP STATUS: " + response.getStatus());
 
         System.out.println(response);
+
+        return response.readEntity(GroupMessage.class);
     }
 }

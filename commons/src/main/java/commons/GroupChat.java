@@ -38,12 +38,14 @@ public class GroupChat {
         this.id = id;
         this.groupName = groupName;
         this.groupDescription = groupDesc;
+        this.groupMessages = new ArrayList<>();
     }
 
     public GroupChat(Timestamp timeCreated, String groupName){
         this.timeCreated = timeCreated;
         this.groupName = groupName;
         this.groupParticipants = new ArrayList<>();
+        this.groupMessages = new ArrayList<>();
     }
 
     public Long getId() {

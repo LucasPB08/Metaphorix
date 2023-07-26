@@ -127,11 +127,4 @@ public class ChatUserController {
         return repo.findAllGroupChats(userId);
     }
 
-    @GetMapping("/participant")
-    public GroupParticipant getParticipant(@RequestParam Long chatId,
-                                   @RequestParam String userName){
-        GroupParticipant participant = repo.findParticipantOfUser(userName, chatId);
-
-        return participant;
-    }
 }

@@ -25,6 +25,10 @@ public class GroupMessage {
 
     private String message;
 
+    public GroupMessage(){
+
+    }
+
     public GroupMessage(String message){
         this.message = message;
     }
@@ -39,6 +43,10 @@ public class GroupMessage {
 
     public String getMessage() {
         return message;
+    }
+
+    public GroupParticipant getSender(){
+        return sender;
     }
 
     public void setTimestampSent(Timestamp timestampSent){
