@@ -69,6 +69,7 @@ public class GroupChat {
         return timeCreated;
     }
 
+    @JsonIgnore
     public List<GroupMessage> getGroupMessages(){
         return groupMessages;
     }

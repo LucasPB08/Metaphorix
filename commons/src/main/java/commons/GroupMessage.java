@@ -49,6 +49,10 @@ public class GroupMessage {
         return sender;
     }
 
+    public GroupChat getGroupChat(){
+        return groupChat;
+    }
+
     public void setTimestampSent(Timestamp timestampSent){
         this.timestampSent = timestampSent;
     }

@@ -7,6 +7,7 @@ import client.exceptions.HTTPException;
 import client.generics.*;
 import com.google.inject.Singleton;
 import commons.*;
+import jakarta.websocket.OnClose;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
@@ -24,6 +25,8 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.Consumer;
 
 @Singleton

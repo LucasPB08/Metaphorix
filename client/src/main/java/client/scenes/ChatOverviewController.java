@@ -57,9 +57,11 @@ public class ChatOverviewController extends OverviewParent{
             }
         } );
 
-        server.registerForWebsocketMessages("/topic/message", Message.class, m -> {
-            Platform.runLater(() -> handleWebsocketMessage(m));
-        });
+        server.registerForWebsocketMessages("/topic/message", Message.class,
+                m -> Platform.runLater(() -> handleWebsocketMessage(m)));
+
+        server.registerForWebsocketMessages("/topic/group-message", GroupMessage.class,
+                m -> Platform.runLater(() -> handleWebsocketGroupMessage(m)));
     }
 
     /**
@@ -104,6 +106,8 @@ public class ChatOverviewController extends OverviewParent{
             GroupMessage messageSaved = server.sendGroupMessage(selectedChat.getChatId(),
                     loggedInUser.getUserName() , message);
 
+            server.send("/topic/group-message", messageSaved);
+
             groupMessageHandler.displayGroupMessage(this.messages,
                     messageSaved, this.loggedInUser);
         } catch(Exception e){
@@ -140,6 +144,17 @@ public class ChatOverviewController extends OverviewParent{
             || message.getSender().equals(this.loggedInUser)) return;
 
         messageHandler.displayMessageWithTimestamp(this.messages, message, this.loggedInUser);
+    }
+
+    private void handleWebsocketGroupMessage(GroupMessage message) {
+        Long chatIdCurrentlyViewing = this.selectedChat.getChatId();
+
+        Long chatIdOfMessage = message.getGroupChat().getId();
+
+        if(!chatIdOfMessage.equals(chatIdCurrentlyViewing)
+                || message.getSender().getUserId().equals(this.loggedInUser)) return;
+
+        groupMessageHandler.displayGroupMessage(this.messages, message, this.loggedInUser);
     }
 
 }
