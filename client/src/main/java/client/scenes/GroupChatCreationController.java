@@ -7,6 +7,7 @@ import commons.ChatUser;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -32,6 +33,11 @@ public class GroupChatCreationController {
     public GroupChatCreationController(MainCtrl mainCtrl, ServerUtils server){
         this.mainCtrl = mainCtrl;
         this.server = server;
+    }
+
+    @FXML
+    public void initialize(){
+        availableUsers.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     public void setup(ChatUser creator){
