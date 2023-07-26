@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.sql.Timestamp;
 
+@Entity
 public class GroupMessage {
 
     @Id
