@@ -238,7 +238,7 @@ public class ServerUtils {
                 .queryParam("groupName", groupName);
 
         for(String participant: otherParticipants)
-            target.queryParam("addedUsersIds", participant);
+            target = target.queryParam("addedUsersIds", participant);
 
         Response response = target.request().accept(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(groupDesc));
 
