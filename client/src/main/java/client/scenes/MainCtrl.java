@@ -2,6 +2,7 @@ package client.scenes;
 
 import client.utils.ChatBox;
 import com.google.inject.Singleton;
+import commons.GroupChat;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -28,6 +29,9 @@ public class MainCtrl {
     private GroupChatCreationController groupCreationController;
     private Scene groupCreationScene;
 
+    private GroupChatOverviewController groupChatOverviewController;
+    private Scene groupChatOverviewScene;
+
     /**
      * Initialises controller
      * @param stage primary stage
@@ -40,7 +44,8 @@ public class MainCtrl {
                      Pair<SignUpCtrl, Scene> signUp,
                      Pair<ChatOverviewController, Scene> chatOverview,
                      Pair<UserOverviewController, Scene> userOverview,
-                     Pair<GroupChatCreationController, Scene> groupChatOverview){
+                     Pair<GroupChatCreationController, Scene> groupCreationOverview,
+                     Pair<GroupChatOverviewController, Scene> groupChatOverview){
         this.primaryStage = stage;
 
         this.signInCtrl = signIn.getKey();
@@ -55,8 +60,11 @@ public class MainCtrl {
         this.userOverviewController = userOverview.getKey();
         this.userOverviewScene = userOverview.getValue();
 
-        this.groupCreationController = groupChatOverview.getKey();
-        this.groupCreationScene = groupChatOverview.getValue();
+        this.groupCreationController = groupCreationOverview.getKey();
+        this.groupCreationScene = groupCreationOverview.getValue();
+
+        this.groupChatOverviewController = groupChatOverview.getKey();
+        this.groupChatOverviewScene = groupChatOverview.getValue();
 
         showSignIn();
         stage.show();
@@ -123,5 +131,17 @@ public class MainCtrl {
 
         primaryStage.setTitle("Group Chat Creation");
         primaryStage.setScene(groupCreationScene);
+    }
+
+    public void showGroupOverview(GroupChat clickedOnGroup){
+        groupChatOverviewController.setInfo(clickedOnGroup);
+
+        primaryStage.setTitle("Group chat");
+        primaryStage.setScene(groupChatOverviewScene);
+    }
+
+    public void showChatOverview(){
+        primaryStage.setScene(chatOverviewScene);
+        primaryStage.setTitle("Chats");
     }
 }

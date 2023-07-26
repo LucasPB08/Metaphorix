@@ -265,6 +265,13 @@ public class ServerUtils {
                 .get(new ListOfGroupMessagesGenericType());
     }
 
+    public GroupChat getGroupChatById(Long chatId){
+        return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/groups/chat").queryParam("chatId", chatId)
+                .request()
+                .get(GroupChat.class);
+    }
+
     public GroupMessage sendGroupMessage(Long groupChatId,
                                  String userName,
                                  String message) throws EntityNotFoundException {

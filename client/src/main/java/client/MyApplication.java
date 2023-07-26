@@ -45,9 +45,13 @@ public class MyApplication extends Application {
         Pair<GroupChatCreationController, Scene> groupChatCreationPair =
                 fxmlBuilder.buildPair("scenes/group-creation.fxml");
 
+        Pair<GroupChatOverviewController, Scene> groupOverviewPair = fxmlBuilder
+                .buildPair("scenes/groupchat-overview.fxml");
+
         MainCtrl mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
-        mainCtrl.init(stage, signInPair, signUpPair, chatOverviewPair, userOverviewPair, groupChatCreationPair);
+        mainCtrl.init(stage, signInPair, signUpPair, chatOverviewPair,
+                userOverviewPair, groupChatCreationPair, groupOverviewPair);
     }
 
     /**

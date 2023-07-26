@@ -110,6 +110,14 @@ public class GroupChatController {
         return ResponseEntity.ok(groupMessage);
     }
 
+    @GetMapping("/chat")
+    public GroupChat getGroupChatById(@RequestParam Long chatId){
+        Optional<GroupChat> optionalGroupChat = repo.findById(chatId);
+        if(optionalGroupChat.isEmpty()) return null;
+
+        return optionalGroupChat.get();
+    }
+
     private void addParticipantsToChat(GroupChat chat, String... userIds){
         Timestamp joined = clock.now();
 

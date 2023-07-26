@@ -95,7 +95,6 @@ public class GroupMessageHandler {
 
         if(dateLabel == null) return;
 
-
         HBox dateBox = new HBox();
         dateBox.getChildren().add(dateLabel);
 

@@ -4,6 +4,7 @@ import client.utils.ChatBox;
 import client.utils.ServerUtils;
 import commons.Chat;
 import commons.ChatUser;
+import commons.GroupChat;
 import commons.GroupChatDTO;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -106,6 +107,12 @@ public class OverviewParent {
             //Check whether the clicked user is the logged-in user
             if(profileBox.getChatId() == -1){
                 mainCtrl.showUserOverview();
+                return;
+            }
+
+            if(profileBox.isGroupChat() && event.getClickCount() == 2){
+                GroupChat groupChat = server.getGroupChatById(profileBox.getChatId());
+                mainCtrl.showGroupOverview(groupChat);
                 return;
             }
 

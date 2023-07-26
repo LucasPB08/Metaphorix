@@ -17,5 +17,6 @@ public class ControllerModule extends AbstractModule {
         bind(SignUpCtrl.class);
         bind(UserOverviewController.class);
         bind(GroupChatCreationController.class);
+        bind(GroupChatOverviewController.class);
     }
 }
