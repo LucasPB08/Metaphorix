@@ -263,11 +263,11 @@ public class ServerUtils {
     }
 
     public void sendGroupMessage(Long groupChatId,
-                                 Long participantId,
+                                 String userName,
                                  String message) throws EntityNotFoundException {
         Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/messages").queryParam("groupId", groupChatId)
-                .queryParam("participantId", participantId)
+                .queryParam("senderId", userName)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(message));
 

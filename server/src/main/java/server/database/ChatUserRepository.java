@@ -19,10 +19,4 @@ public interface ChatUserRepository extends JpaRepository<ChatUser, String> {
             "WHERE CU.userName = :user")
     List<GroupChatDTO> findAllGroupChats(@Param("user") String userId);
 
-    @Query("SELECT gp FROM GroupParticipant gp " +
-            "INNER JOIN ChatUser u ON gp.userId = u.userName " +
-            "WHERE u.userName = :userId AND " +
-            "gp.chatId.id = :chatId")
-    GroupParticipant findParticipantOfUser(@Param("userId") String userId,
-                                           @Param("chatId") Long groupChatId);
 }

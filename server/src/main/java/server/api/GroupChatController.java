@@ -87,10 +87,10 @@ public class GroupChatController {
 
     @PostMapping("/messages")
     public ResponseEntity<GroupMessage> sendMessage(@RequestParam Long groupId,
-                                                    @RequestParam Long senderId,
+                                                    @RequestParam String senderId,
                                                     @RequestBody String message){
         Optional<GroupChat> optionalGroupChat = repo.findById(groupId);
-        Optional<GroupParticipant> optionalSender = participantRepo.findById(senderId);
+        Optional<GroupParticipant> optionalSender = participantRepo.findParticipantOfUser(senderId, groupId);
 
         if(optionalGroupChat.isEmpty() ||
            optionalSender.isEmpty()) return ResponseEntity.badRequest().build();
