@@ -84,10 +84,28 @@ public class GroupMessageHandler {
         timeStampHandler.reset();
 
         for (GroupMessage message : messagesOfChat) {
-            //displayDate(messages, message);
+            displayDate(messages, message);
 
             displayGroupMessage(messages, message, loggedInUser);
         }
+    }
+
+    private void displayDate(VBox messages, GroupMessage message){
+        Label dateLabel = timeStampHandler.dateLabel(message);
+
+        if(dateLabel == null) return;
+
+
+        HBox dateBox = new HBox();
+        dateBox.getChildren().add(dateLabel);
+
+        HBox level = new HBox();
+        level.setAlignment(Pos.CENTER);
+        VBox.setMargin(level, VERTICAL_INSETS);
+
+        level.getChildren().add(dateBox);
+
+        messages.getChildren().add(level);
     }
 
     private boolean isReceiver(GroupMessage message, ChatUser loggedInUser){
