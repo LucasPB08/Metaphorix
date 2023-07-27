@@ -112,7 +112,7 @@ public class OverviewParent {
 
             if(profileBox.isGroupChat() && event.getClickCount() == 2){
                 GroupChat groupChat = server.getGroupChatById(profileBox.getChatId());
-                mainCtrl.showGroupOverview(groupChat);
+                mainCtrl.showGroupOverview(groupChat, this.loggedInUser);
                 return;
             }
 

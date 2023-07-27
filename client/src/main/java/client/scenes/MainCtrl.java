@@ -133,8 +133,8 @@ public class MainCtrl {
         primaryStage.setScene(groupCreationScene);
     }
 
-    public void showGroupOverview(GroupChat clickedOnGroup){
-        groupChatOverviewController.setInfo(clickedOnGroup);
+    public void showGroupOverview(GroupChat clickedOnGroup, ChatUser loggedInUser){
+        groupChatOverviewController.setInfo(clickedOnGroup, loggedInUser);
 
         primaryStage.setTitle("Group chat");
         primaryStage.setScene(groupChatOverviewScene);

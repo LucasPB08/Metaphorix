@@ -70,4 +70,9 @@ Text {
     -fx-text-fill: white;
 }
 
+ScrollPane{
+    -fx-background: #1C1C1C;
+    -fx-border-width: 0px;
+}
+
 

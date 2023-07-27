@@ -52,7 +52,7 @@ public class GroupChat {
         return id;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public List<GroupParticipant> getGroupParticipants() {
         return groupParticipants;
     }
