@@ -10,14 +10,13 @@ import commons.GroupChatDTO;
 import commons.GroupParticipant;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GroupChatOverviewController {
     private MainCtrl mainCtrl;
@@ -47,6 +46,9 @@ public class GroupChatOverviewController {
     @FXML
     private Button removeButton;
 
+    @FXML
+    private Button deleteButton;
+
     @Inject
     public GroupChatOverviewController(MainCtrl mainCtrl, ServerUtils server){
         this.mainCtrl = mainCtrl;
@@ -74,6 +76,7 @@ public class GroupChatOverviewController {
 
         this.backButton.setDisable(false);
         this.removeButton.setDisable(false);
+        this.deleteButton.setDisable(false);
 
         editDescButton.setOnAction(event -> editDesc());
         editDescButton.setText("EDIT");
@@ -94,6 +97,7 @@ public class GroupChatOverviewController {
 
         this.backButton.setDisable(true);
         this.removeButton.setDisable(true);
+        this.deleteButton.setDisable(true);
 
         groupDescEditable.setText(groupDescription.getText());
         groupDescEditable.requestFocus();
@@ -105,6 +109,7 @@ public class GroupChatOverviewController {
     public void setRemovableMode(){
         this.backButton.setDisable(true);
         this.editDescButton.setDisable(true);
+        this.deleteButton.setDisable(true);
 
         setRemovableParticipantsList();
 
@@ -115,6 +120,7 @@ public class GroupChatOverviewController {
     private void saveParticipants(){
         this.backButton.setDisable(false);
         this.editDescButton.setDisable(false);
+        this.deleteButton.setDisable(false);
 
         setParticipantsList();
 
@@ -124,6 +130,25 @@ public class GroupChatOverviewController {
 
     public void back(){
         mainCtrl.showChatOverview();
+    }
+
+    public void deleteGroup(){
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setContentText("Are you sure you want to delete: " +
+                displayedGroup.getGroupName());
+
+        Optional<ButtonType> button = confirmationAlert.showAndWait();
+
+        if(button.isEmpty() || button.get().equals(ButtonType.CANCEL))
+            return;
+
+        try{
+            server.deleteGroupChat(displayedGroup.getId());
+
+            mainCtrl.showUserOverview();
+        } catch (EntityNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
     private void setRemovableParticipantsList(){

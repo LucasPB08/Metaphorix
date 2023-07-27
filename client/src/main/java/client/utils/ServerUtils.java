@@ -313,4 +313,17 @@ public class ServerUtils {
 
         System.out.println(response);
     }
+
+    public void deleteGroupChat(Long groupId) throws EntityNotFoundException {
+        Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/groups/chat")
+                .queryParam("chatId", groupId)
+                .request()
+                .delete();
+
+        if(response.getStatus() != OK_STATUS)
+            throw new EntityNotFoundException("HTTP STATUS: " + response.getStatus());
+
+        System.out.println(response);
+    }
 }
