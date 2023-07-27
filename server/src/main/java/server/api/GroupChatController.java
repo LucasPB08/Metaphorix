@@ -133,6 +133,22 @@ public class GroupChatController {
         return ResponseEntity.ok(description);
     }
 
+    @PutMapping("/remove-participant")
+    public ResponseEntity<GroupParticipant> removeParticipant(@RequestParam Long chatId,
+                                                              @RequestBody String userName){
+        Optional<GroupParticipant> optionalGroupParticipant =
+                participantRepo.findParticipantOfUser(userName, chatId);
+
+        if(optionalGroupParticipant.isEmpty()) return ResponseEntity.badRequest().build();
+
+        GroupParticipant groupParticipant = optionalGroupParticipant.get();
+
+        groupParticipant.setChatId(null);
+        participantRepo.save(groupParticipant);
+
+        return ResponseEntity.ok(groupParticipant);
+    }
+
     private void addParticipantsToChat(GroupChat chat, String... userIds){
         Timestamp joined = clock.now();
 
