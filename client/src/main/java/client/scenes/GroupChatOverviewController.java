@@ -7,7 +7,9 @@ import commons.GroupChat;
 import commons.GroupParticipant;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -26,6 +28,12 @@ public class GroupChatOverviewController {
     @FXML
     private VBox participantsList;
 
+    @FXML
+    private TextArea groupDescEditable;
+
+    @FXML
+    private Button editDescButton;
+
     @Inject
     public GroupChatOverviewController(MainCtrl mainCtrl){
         this.mainCtrl = mainCtrl;
@@ -36,6 +44,29 @@ public class GroupChatOverviewController {
         groupDescription.setText(groupChat.getGroupDescription());
 
         setParticipantsList(groupChat.getGroupParticipants(), loggedInUser);
+    }
+
+    public void saveDesc(){
+        String newDesc = groupDescEditable.getText();
+
+        groupDescription.setText(newDesc);
+
+        groupDescEditable.setDisable(true);
+        groupDescEditable.setVisible(false);
+
+        editDescButton.setOnAction(event -> editDesc());
+        editDescButton.setText("EDIT");
+    }
+
+    public void editDesc(){
+        groupDescEditable.setDisable(false);
+        groupDescEditable.setVisible(true);
+
+        groupDescEditable.setText(groupDescription.getText());
+        groupDescEditable.requestFocus();
+
+        editDescButton.setOnAction(event -> saveDesc());
+        editDescButton.setText("SAVE");
     }
 
     private void setParticipantsList(List<GroupParticipant> participants,

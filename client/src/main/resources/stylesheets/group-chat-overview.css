@@ -1,0 +1,11 @@
+#groupDescEditable{
+    -fx-control-inner-background: #212121;
+    -fx-background-color: -fx-control-inner-background
+}
+
+#groupDescEditable .text{
+   -fx-font-size: 14px;
+   -fx-font-weight: bold;
+   -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 3, 0.0, 0, 1);
+   -fx-fill: #FFFFFF;
+}
