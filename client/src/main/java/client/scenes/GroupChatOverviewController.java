@@ -159,9 +159,11 @@ public class GroupChatOverviewController {
         for(GroupParticipant participant: participants){
             String userNameToDisplay = participant.getUserId().getUserName();
 
-            Button removeButton = new Button("-");
+            Button removeButton = new Button("X");
             removeButton.setOnAction(event -> removeParticipant(participant));
             removeButton.getStyleClass().add("remove-user-button");
+
+            HBox.setMargin(removeButton, new Insets(0, 4.0, 0, 4.0));
 
             if(userNameToDisplay.equals(loggedInUser.getUserName())) {
                 userNameToDisplay += " (you)";

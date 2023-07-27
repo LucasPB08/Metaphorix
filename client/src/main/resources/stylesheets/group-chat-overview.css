@@ -11,7 +11,7 @@
 }
 
 .remove-user-button{
-    -fx-font-size: 7px;
-    -fx-font-weight: 300;
-    -fx-padding: 3px 8px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 5px;
 }
