@@ -118,6 +118,21 @@ public class GroupChatController {
         return optionalGroupChat.get();
     }
 
+    @PutMapping("/description")
+    public ResponseEntity<String> editDescription(@RequestParam Long chatId,
+                                                  @RequestBody String description){
+        Optional<GroupChat> optionalGroupChat = repo.findById(chatId);
+
+        if(optionalGroupChat.isEmpty()) return ResponseEntity.badRequest().build();
+
+        GroupChat groupChat = optionalGroupChat.get();
+        groupChat.setGroupDescription(description);
+
+        repo.save(groupChat);
+
+        return ResponseEntity.ok(description);
+    }
+
     private void addParticipantsToChat(GroupChat chat, String... userIds){
         Timestamp joined = clock.now();
 
