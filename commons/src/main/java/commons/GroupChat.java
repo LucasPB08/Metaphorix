@@ -18,7 +18,7 @@ public class GroupChat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "chatId")
+    @OneToMany(mappedBy = "chatId", cascade = CascadeType.ALL)
     private List<GroupParticipant> groupParticipants;
 
     private String groupName;
@@ -27,7 +27,7 @@ public class GroupChat {
 
     private Timestamp timeCreated;
 
-    @OneToMany(mappedBy = "groupChat")
+    @OneToMany(mappedBy = "groupChat", cascade = CascadeType.ALL)
     private List<GroupMessage> groupMessages;
 
     public GroupChat(){

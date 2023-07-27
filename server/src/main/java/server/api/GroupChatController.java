@@ -133,6 +133,16 @@ public class GroupChatController {
         return ResponseEntity.ok(description);
     }
 
+    @DeleteMapping("/chat")
+    public ResponseEntity<Boolean> deleteGroupChat(@RequestParam Long chatId){
+        if(!repo.existsById(chatId))
+            return ResponseEntity.badRequest().build();
+
+        repo.deleteById(chatId);
+
+        return ResponseEntity.ok(true);
+    }
+
     @PutMapping("/remove-participant")
     public ResponseEntity<GroupParticipant> removeParticipant(@RequestParam Long chatId,
                                                               @RequestBody String userName){
