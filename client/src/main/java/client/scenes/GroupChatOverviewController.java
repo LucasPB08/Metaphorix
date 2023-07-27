@@ -67,12 +67,6 @@ public class GroupChatOverviewController {
     public void saveDesc(){
         String newDesc = groupDescEditable.getText();
 
-        try{
-            server.editGroupDescription(displayedGroup.getId(), newDesc);
-        } catch(EntityNotFoundException e){
-            e.printStackTrace();
-        }
-
         groupDescription.setText(newDesc);
 
         groupDescEditable.setDisable(true);
@@ -83,6 +77,15 @@ public class GroupChatOverviewController {
 
         editDescButton.setOnAction(event -> editDesc());
         editDescButton.setText("EDIT");
+
+        if(newDesc.equals(groupDescription.getText())) return;
+
+        try{
+            server.editGroupDescription(displayedGroup.getId(), newDesc);
+        } catch(EntityNotFoundException e){
+            e.printStackTrace();
+        }
+
     }
 
     public void editDesc(){

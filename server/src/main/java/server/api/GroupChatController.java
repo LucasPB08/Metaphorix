@@ -120,7 +120,7 @@ public class GroupChatController {
 
     @PutMapping("/description")
     public ResponseEntity<String> editDescription(@RequestParam Long chatId,
-                                                  @RequestBody String description){
+                                                  @RequestBody(required = false) String description){
         Optional<GroupChat> optionalGroupChat = repo.findById(chatId);
 
         if(optionalGroupChat.isEmpty()) return ResponseEntity.badRequest().build();
