@@ -288,4 +288,17 @@ public class ServerUtils {
 
         return response.readEntity(GroupMessage.class);
     }
+
+    public void editGroupDescription(Long chatId, String newDescription) throws EntityNotFoundException {
+        Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/groups/description")
+                .queryParam("chatId", chatId)
+                .request()
+                .put(Entity.json(newDescription));
+
+        if(response.getStatus() != OK_STATUS)
+            throw new EntityNotFoundException("HTTP STATUS: " + response.getStatus());
+
+        System.out.println(response);
+    }
 }

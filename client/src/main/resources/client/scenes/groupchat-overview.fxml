@@ -20,7 +20,7 @@
          </content></ScrollPane>
       <Text layoutX="678.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="readable" text="Participants" />
       <Button fx:id="editDescButton" layoutX="8.0" layoutY="116.0" mnemonicParsing="false" onAction="#editDesc" prefHeight="18.0" prefWidth="74.0" text="EDIT" />
-      <TextArea fx:id="groupDescEditable" disable="true" layoutX="95.0" layoutY="116.0" prefHeight="234.0" prefWidth="356.0" styleClass="edge-to-edge" visible="false" />
+      <TextArea fx:id="groupDescEditable" disable="true" layoutX="95.0" layoutY="116.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="234.0" prefWidth="356.0" styleClass="edge-to-edge" visible="false" />
    </children>
    <stylesheets>
       <URL value="@../../stylesheets/controls-styling.css" />

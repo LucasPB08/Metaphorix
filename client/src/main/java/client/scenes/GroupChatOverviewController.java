@@ -1,9 +1,12 @@
 package client.scenes;
 
+import client.exceptions.EntityNotFoundException;
+import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import com.sun.javafx.binding.StringFormatter;
 import commons.ChatUser;
 import commons.GroupChat;
+import commons.GroupChatDTO;
 import commons.GroupParticipant;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -18,6 +21,9 @@ import java.util.List;
 
 public class GroupChatOverviewController {
     private MainCtrl mainCtrl;
+    private ServerUtils server;
+
+    private GroupChat displayedGroup;
 
     @FXML
     private Text title;
@@ -35,11 +41,14 @@ public class GroupChatOverviewController {
     private Button editDescButton;
 
     @Inject
-    public GroupChatOverviewController(MainCtrl mainCtrl){
+    public GroupChatOverviewController(MainCtrl mainCtrl, ServerUtils server){
         this.mainCtrl = mainCtrl;
+        this.server = server;
     }
 
     public void setInfo(GroupChat groupChat, ChatUser loggedInUser){
+        this.displayedGroup = groupChat;
+
         title.setText(groupChat.getGroupName());
         groupDescription.setText(groupChat.getGroupDescription());
 
@@ -48,6 +57,12 @@ public class GroupChatOverviewController {
 
     public void saveDesc(){
         String newDesc = groupDescEditable.getText();
+
+        try{
+            server.editGroupDescription(displayedGroup.getId(), newDesc);
+        } catch(EntityNotFoundException e){
+            e.printStackTrace();
+        }
 
         groupDescription.setText(newDesc);
 
