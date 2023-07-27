@@ -13,7 +13,7 @@
       <Text fx:id="title" layoutX="335.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" textAlignment="CENTER" wrappingWidth="236.385986328125" />
       <Text layoutX="73.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="readable" text="Description:" />
       <Text fx:id="groupDescription" layoutX="95.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="readable" text="Desc" wrappingWidth="356.1679992675781" />
-      <Button layoutX="21.0" layoutY="29.0" mnemonicParsing="false" onAction="#back" styleClass="readable" text="BACK" />
+      <Button fx:id="backButton" layoutX="21.0" layoutY="29.0" mnemonicParsing="false" onAction="#back" styleClass="readable" text="BACK" />
       <ScrollPane hbarPolicy="NEVER" layoutX="581.0" layoutY="129.0" prefHeight="331.0" prefWidth="291.0" styleClass="edge-to-edge" vbarPolicy="NEVER">
          <content>
             <VBox fx:id="participantsList" prefHeight="326.0" prefWidth="289.0" />
@@ -21,6 +21,7 @@
       <Text layoutX="678.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="readable" text="Participants" />
       <Button fx:id="editDescButton" layoutX="8.0" layoutY="116.0" mnemonicParsing="false" onAction="#editDesc" prefHeight="18.0" prefWidth="74.0" text="EDIT" />
       <TextArea fx:id="groupDescEditable" disable="true" layoutX="95.0" layoutY="116.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="234.0" prefWidth="356.0" styleClass="edge-to-edge" visible="false" />
+      <Button fx:id="removeButton" layoutX="770.0" layoutY="471.0" mnemonicParsing="false" onAction="#setRemovableMode" text="REMOVE" />
    </children>
    <stylesheets>
       <URL value="@../../stylesheets/controls-styling.css" />

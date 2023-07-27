@@ -301,4 +301,16 @@ public class ServerUtils {
 
         System.out.println(response);
     }
+
+    public void removeUserFromGroup(Long groupId, String userName) throws EntityNotFoundException {
+        Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/groups/remove-participant").queryParam("chatId", groupId)
+                .request()
+                .put(Entity.json(userName));
+
+        if(response.getStatus() != OK_STATUS)
+            throw new EntityNotFoundException("HTTP STATUS: " + response.getStatus());
+
+        System.out.println(response);
+    }
 }
