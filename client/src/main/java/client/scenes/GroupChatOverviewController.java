@@ -47,6 +47,8 @@ public class GroupChatOverviewController {
     }
 
     public void setInfo(GroupChat groupChat, ChatUser loggedInUser){
+        participantsList.getChildren().clear();
+
         this.displayedGroup = groupChat;
 
         title.setText(groupChat.getGroupName());
