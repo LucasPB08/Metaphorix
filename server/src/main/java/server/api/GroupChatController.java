@@ -53,7 +53,7 @@ public class GroupChatController {
         GroupChat savedGroupChat = repo.save(new GroupChat(timeCreated,groupName));
         savedGroupChat.setGroupDescription(groupDesc);
 
-        GroupParticipant creatorOfGroup = new GroupParticipant(new Timestamp(System.currentTimeMillis()));
+        GroupParticipant creatorOfGroup = new GroupParticipant(clock.now());
         creatorOfGroup.setChatId(savedGroupChat);
         creatorOfGroup.setUserId(creator.get());
         participantRepo.save(creatorOfGroup);
@@ -157,6 +157,21 @@ public class GroupChatController {
         participantRepo.save(groupParticipant);
 
         return ResponseEntity.ok(groupParticipant);
+    }
+
+    @PostMapping("/participants")
+    public ResponseEntity<GroupChat> addParticipants(@RequestParam Long chatId,
+                                                     @RequestParam String... userIds){
+        Optional<GroupChat> optionalGroupChat = repo.findById(chatId);
+
+        if(optionalGroupChat.isEmpty())
+            return ResponseEntity.badRequest().build();
+
+        GroupChat groupChat = optionalGroupChat.get();
+
+        addParticipantsToChat(groupChat, userIds);
+
+        return ResponseEntity.ok(groupChat);
     }
 
     private void addParticipantsToChat(GroupChat chat, String... userIds){
