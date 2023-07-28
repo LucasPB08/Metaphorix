@@ -23,6 +23,7 @@
       <TextArea fx:id="groupDescEditable" disable="true" layoutX="95.0" layoutY="116.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="234.0" prefWidth="356.0" styleClass="edge-to-edge" visible="false" />
       <Button fx:id="removeButton" layoutX="770.0" layoutY="471.0" mnemonicParsing="false" onAction="#setRemovableMode" text="REMOVE" />
       <Button fx:id="deleteButton" layoutX="39.0" layoutY="471.0" mnemonicParsing="false" onAction="#deleteGroup" text="DELETE GROUP" />
+      <Button fx:id="addButton" layoutX="592.0" layoutY="471.0" mnemonicParsing="false" onAction="#addParticipant" prefHeight="30.0" prefWidth="94.0" text="ADD" />
    </children>
    <stylesheets>
       <URL value="@../../stylesheets/controls-styling.css" />

@@ -7,11 +7,11 @@
 <?import javafx.scene.text.Text?>
 
 
-<DialogPane prefHeight="437.0" prefWidth="454.0" stylesheets="@../../stylesheets/controls-styling.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddParticipantController">
+<DialogPane prefHeight="450.0" prefWidth="436.0" stylesheets="@../../stylesheets/controls-styling.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddParticipantController">
    <content>
-      <AnchorPane prefHeight="390.0" prefWidth="454.0">
+      <AnchorPane prefHeight="396.0" prefWidth="412.0">
          <children>
-            <ListView fx:id="availableUsers" layoutX="83.0" layoutY="64.0" prefHeight="281.0" prefWidth="280.0" />
+            <ListView fx:id="availableUsers" layoutX="101.0" layoutY="58.0" prefHeight="325.0" prefWidth="243.0" />
             <Text fx:id="title" layoutX="160.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Users" />
          </children>
       </AnchorPane>

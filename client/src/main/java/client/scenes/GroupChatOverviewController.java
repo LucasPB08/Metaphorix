@@ -1,5 +1,7 @@
 package client.scenes;
 
+import client.FXMLBuilder;
+import client.MyApplication;
 import client.exceptions.EntityNotFoundException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
@@ -14,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +52,9 @@ public class GroupChatOverviewController {
     @FXML
     private Button deleteButton;
 
+    @FXML
+    private Button addButton;
+
     @Inject
     public GroupChatOverviewController(MainCtrl mainCtrl, ServerUtils server){
         this.mainCtrl = mainCtrl;
@@ -77,6 +83,7 @@ public class GroupChatOverviewController {
         this.backButton.setDisable(false);
         this.removeButton.setDisable(false);
         this.deleteButton.setDisable(false);
+        this.addButton.setDisable(false);
 
         editDescButton.setOnAction(event -> editDesc());
         editDescButton.setText("EDIT");
@@ -98,6 +105,7 @@ public class GroupChatOverviewController {
         this.backButton.setDisable(true);
         this.removeButton.setDisable(true);
         this.deleteButton.setDisable(true);
+        this.addButton.setDisable(true);
 
         groupDescEditable.setText(groupDescription.getText());
         groupDescEditable.requestFocus();
@@ -110,6 +118,7 @@ public class GroupChatOverviewController {
         this.backButton.setDisable(true);
         this.editDescButton.setDisable(true);
         this.deleteButton.setDisable(true);
+        this.addButton.setDisable(true);
 
         setRemovableParticipantsList();
 
@@ -121,6 +130,7 @@ public class GroupChatOverviewController {
         this.backButton.setDisable(false);
         this.editDescButton.setDisable(false);
         this.deleteButton.setDisable(false);
+        this.addButton.setDisable(false);
 
         setParticipantsList();
 
@@ -149,6 +159,21 @@ public class GroupChatOverviewController {
         } catch (EntityNotFoundException e){
             e.printStackTrace();
         }
+    }
+
+    public void addParticipant(){
+        Pair<AddParticipantController, Dialog<ButtonType>> pair =
+                new FXMLBuilder(MyApplication.getInjector())
+                        .buildDialogPane("scenes/add-participant-dialog.fxml");
+
+        if(pair == null) return;
+
+        AddParticipantController controller = pair.getKey();
+
+        Dialog<ButtonType> addDialog = pair.getValue();
+        addDialog.showAndWait();
+
+
     }
 
     private void setRemovableParticipantsList(){
