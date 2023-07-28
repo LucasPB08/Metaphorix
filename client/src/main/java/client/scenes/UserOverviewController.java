@@ -2,8 +2,8 @@ package client.scenes;
 
 import client.FXMLBuilder;
 import client.MyApplication;
-import client.utils.ChatUserBox;
-import client.utils.HTTPException;
+import client.utils.ChatBox;
+import client.exceptions.HTTPException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.scene.Node;
@@ -55,6 +55,13 @@ public class UserOverviewController extends OverviewParent{
     }
 
     /**
+     * Shows the group creation scene.
+     */
+    public void createNewGroupChat(){
+        mainCtrl.showGroupCreation(this.loggedInUser);
+    }
+
+    /**
      * Gets the names of the users who have a chat with the logged-in user.
      * @return the list of names.
      */
@@ -65,7 +72,7 @@ public class UserOverviewController extends OverviewParent{
 
         for(Node n: chats){
 
-            List<Node> children = ((ChatUserBox) n).getChildren();
+            List<Node> children = ((ChatBox) n).getChildren();
 
             for(Node child: children){
                 if(child.getClass() != Text.class) continue;
@@ -85,7 +92,7 @@ public class UserOverviewController extends OverviewParent{
         try {
             Long chatId = server.createChat(this.loggedInUser.getUserName(), userId);
 
-            ChatUserBox pair = createProfileBox(userId, chatId);
+            ChatBox pair = createProfileBox(userId, chatId, false);
 
             chats.getChildren().add(pair);
         } catch(HTTPException e){

@@ -14,6 +14,13 @@ Text {
     -fx-fill: #FFFFFF;
 }
 
+.readable{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 3, 0.0, 0, 1);
+    -fx-fill: #FFFFFF;
+}
+
 .root {
     -fx-background-color: #212121;
 }
@@ -61,6 +68,11 @@ Text {
     -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.1), 2, 0.0, 0, 1);
     -fx-font-family: "DM Sans";
     -fx-text-fill: white;
+}
+
+ScrollPane{
+    -fx-background: #1C1C1C;
+    -fx-border-width: 0px;
 }
 
 

@@ -1,11 +1,10 @@
 package server.api;
 
-import commons.Chat;
-import commons.ChatUser;
-import commons.Message;
+import commons.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import server.database.ChatUserRepository;
+import commons.GroupChatDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -105,7 +104,7 @@ public class ChatUserController {
 
     /**
      * Gets the chats that a certain user participates in
-     * @param userId Id of the user
+     * @param userId ID of the user
      * @return the chats that the user participates in
      */
     @GetMapping("/chats")
@@ -118,4 +117,21 @@ public class ChatUserController {
 
         return user.allChats();
     }
+
+    /**
+     * Endpoint to retrieve all group chats that this
+     * user is a part of.
+     * @param userId The username of the user
+     * @return List of all the groups that this user
+     * is a part of.
+     */
+    @GetMapping("/groups")
+    public List<GroupChatDTO> getGroups(@RequestParam String userId){
+        Optional<ChatUser> optionalChatUser = repo.findById(userId);
+
+        if(optionalChatUser.isEmpty()) return null;
+
+        return repo.findAllGroupChats(userId);
+    }
+
 }

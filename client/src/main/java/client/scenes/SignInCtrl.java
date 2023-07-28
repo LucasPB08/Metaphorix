@@ -38,7 +38,7 @@ public class SignInCtrl {
      */
     @FXML
     public void initialize(){
-        userName.setText("LucasPB");
+        userName.setText("Lucas PB");
         password.setText("R");
 
         userName.setOnKeyPressed(key -> {

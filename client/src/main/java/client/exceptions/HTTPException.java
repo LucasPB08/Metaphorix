@@ -1,4 +1,4 @@
-package client.utils;
+package client.exceptions;
 
 public class HTTPException extends Exception{
     /**

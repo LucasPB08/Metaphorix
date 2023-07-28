@@ -1,7 +1,7 @@
-package client.utils;
+package client.generics;
 
-import jakarta.ws.rs.core.GenericType;
 import commons.Chat;
+import jakarta.ws.rs.core.GenericType;
 
 import java.util.List;
 

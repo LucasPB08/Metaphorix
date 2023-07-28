@@ -1,7 +1,8 @@
 package client.scenes;
 
-import client.utils.ChatUserBox;
+import client.utils.ChatBox;
 import com.google.inject.Singleton;
+import commons.GroupChat;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -25,6 +26,12 @@ public class MainCtrl {
     private UserOverviewController userOverviewController;
     private Scene userOverviewScene;
 
+    private GroupChatCreationController groupCreationController;
+    private Scene groupCreationScene;
+
+    private GroupChatOverviewController groupChatOverviewController;
+    private Scene groupChatOverviewScene;
+
     /**
      * Initialises controller
      * @param stage primary stage
@@ -32,11 +39,15 @@ public class MainCtrl {
      * @param signUp signUp pair
      * @param chatOverview chat overview pair
      * @param userOverview user overview pair
+     * @param groupChatOverview group overview pair
+     * @param groupCreationOverview group creation pair
      */
     public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
                      Pair<SignUpCtrl, Scene> signUp,
                      Pair<ChatOverviewController, Scene> chatOverview,
-                     Pair<UserOverviewController, Scene> userOverview){
+                     Pair<UserOverviewController, Scene> userOverview,
+                     Pair<GroupChatCreationController, Scene> groupCreationOverview,
+                     Pair<GroupChatOverviewController, Scene> groupChatOverview){
         this.primaryStage = stage;
 
         this.signInCtrl = signIn.getKey();
@@ -50,6 +61,12 @@ public class MainCtrl {
 
         this.userOverviewController = userOverview.getKey();
         this.userOverviewScene = userOverview.getValue();
+
+        this.groupCreationController = groupCreationOverview.getKey();
+        this.groupCreationScene = groupCreationOverview.getValue();
+
+        this.groupChatOverviewController = groupChatOverview.getKey();
+        this.groupChatOverviewScene = groupChatOverview.getValue();
 
         showSignIn();
         stage.show();
@@ -95,7 +112,7 @@ public class MainCtrl {
      * Processes the click on a profile box when in the user overview.
      * @param profileBox
      */
-    public void clickOnChat(ChatUserBox profileBox){
+    public void clickOnChat(ChatBox profileBox){
         this.chatOverviewController.sync();
         this.chatOverviewController.clickOnChat(profileBox);
 
@@ -111,5 +128,34 @@ public class MainCtrl {
         return userOverviewController.getNamesOfChatters();
     }
 
+    /**
+     * Shows group creation scene.
+     * @param creator The user creating a group chat.
+     */
+    public void showGroupCreation(ChatUser creator){
+        groupCreationController.setup(creator);
 
+        primaryStage.setTitle("Group Chat Creation");
+        primaryStage.setScene(groupCreationScene);
+    }
+
+    /**
+     * Shows the overview of a certain group chat
+     * @param clickedOnGroup The group chat to view
+     * @param loggedInUser The logged-in user.
+     */
+    public void showGroupOverview(GroupChat clickedOnGroup, ChatUser loggedInUser){
+        groupChatOverviewController.setInfo(clickedOnGroup, loggedInUser);
+
+        primaryStage.setTitle("Group chat");
+        primaryStage.setScene(groupChatOverviewScene);
+    }
+
+    /**
+     * Shows the chat overview.
+     */
+    public void showChatOverview(){
+        primaryStage.setScene(chatOverviewScene);
+        primaryStage.setTitle("Chats");
+    }
 }

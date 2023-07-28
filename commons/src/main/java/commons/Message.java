@@ -33,6 +33,14 @@ public class Message {
     }
 
     /**
+     * Constructor for tests only
+     * @param cont content
+     */
+    public Message(String cont){
+        this.message = cont;
+    }
+
+    /**
      * Constructor for message
      * @param message String context of the message.
      * @param timestampSent Timestamp of the creation of the message.
