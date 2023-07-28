@@ -326,4 +326,21 @@ public class ServerUtils {
 
         System.out.println(response);
     }
+
+    public GroupChat addParticipantsToGroup(Long groupId, List<String> usersToAdd) throws EntityNotFoundException {
+        WebTarget target = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
+                .path("/groups/participants").queryParam("chatId", groupId);
+
+        for(String user: usersToAdd)
+            target = target.queryParam("userIds", user);
+
+        Response response = target.request().post(null);
+
+        if(response.getStatus() != OK_STATUS)
+            throw new EntityNotFoundException("HTTP STATUS: " + response.getStatus());
+
+        System.out.println(response);
+
+        return response.readEntity(GroupChat.class);
+    }
 }

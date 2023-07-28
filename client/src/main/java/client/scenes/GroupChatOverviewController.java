@@ -169,11 +169,28 @@ public class GroupChatOverviewController {
         if(pair == null) return;
 
         AddParticipantController controller = pair.getKey();
+        controller.setup(displayedGroup);
 
         Dialog<ButtonType> addDialog = pair.getValue();
-        addDialog.showAndWait();
+        addDialog.setTitle("Available Users");
 
+        Optional<ButtonType> buttonPressed = addDialog.showAndWait();
 
+        if(buttonPressed.isEmpty() ||
+           buttonPressed.get().equals(ButtonType.CANCEL))
+            return;
+
+        List<String> usersToAdd = controller.ok();
+        if(usersToAdd.isEmpty()) return;
+
+        try{
+
+            this.displayedGroup = server.addParticipantsToGroup(displayedGroup.getId(), usersToAdd);
+            setParticipantsList();
+
+        } catch(EntityNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
     private void setRemovableParticipantsList(){

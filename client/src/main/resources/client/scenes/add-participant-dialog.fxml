@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
 <DialogPane prefHeight="450.0" prefWidth="436.0" stylesheets="@../../stylesheets/controls-styling.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddParticipantController">
    <content>
       <AnchorPane prefHeight="396.0" prefWidth="412.0">
