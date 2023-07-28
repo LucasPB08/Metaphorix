@@ -118,6 +118,13 @@ public class ChatUserController {
         return user.allChats();
     }
 
+    /**
+     * Endpoint to retrieve all group chats that this
+     * user is a part of.
+     * @param userId The username of the user
+     * @return List of all the groups that this user
+     * is a part of.
+     */
     @GetMapping("/groups")
     public List<GroupChatDTO> getGroups(@RequestParam String userId){
         Optional<ChatUser> optionalChatUser = repo.findById(userId);

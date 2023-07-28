@@ -34,6 +34,7 @@ public class ChatOverviewController extends OverviewParent{
      * @param mainCtrl The main controller of the client
      * @param server The server to communicate with
      * @param messageHandler Class that handles the creation of messages.
+     * @param groupMessageHandler Class that handles group messages.
      */
     @Inject
     public ChatOverviewController(MainCtrl mainCtrl,

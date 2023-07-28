@@ -5,10 +5,8 @@ import client.MyApplication;
 import client.exceptions.EntityNotFoundException;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import com.sun.javafx.binding.StringFormatter;
 import commons.ChatUser;
 import commons.GroupChat;
-import commons.GroupChatDTO;
 import commons.GroupParticipant;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -55,12 +53,23 @@ public class GroupChatOverviewController {
     @FXML
     private Button addButton;
 
+    /**
+     * Constructor
+     * @param mainCtrl The main controller of the application
+     * @param server Class to communicate with the server
+     */
     @Inject
     public GroupChatOverviewController(MainCtrl mainCtrl, ServerUtils server){
         this.mainCtrl = mainCtrl;
         this.server = server;
     }
 
+    /**
+     * Sets the information fields with the
+     * appropriate information of the group.
+     * @param groupChat The group chat being viewed.
+     * @param loggedInUser The logged-in user.
+     */
     public void setInfo(GroupChat groupChat, ChatUser loggedInUser){
 
         this.displayedGroup = groupChat;
@@ -72,6 +81,9 @@ public class GroupChatOverviewController {
         setParticipantsList();
     }
 
+    /**
+     * Saves the new description
+     */
     public void saveDesc(){
         String newDesc = groupDescEditable.getText();
 
@@ -98,6 +110,9 @@ public class GroupChatOverviewController {
 
     }
 
+    /**
+     * Makes the description editable, and disables the other buttons.
+     */
     public void editDesc(){
         groupDescEditable.setDisable(false);
         groupDescEditable.setVisible(true);
@@ -114,6 +129,10 @@ public class GroupChatOverviewController {
         editDescButton.setText("SAVE");
     }
 
+    /**
+     * Makes the participants removable,
+     * also disables the other buttons.
+     */
     public void setRemovableMode(){
         this.backButton.setDisable(true);
         this.editDescButton.setDisable(true);
@@ -138,10 +157,17 @@ public class GroupChatOverviewController {
         this.removeButton.setOnAction(event -> setRemovableMode());
     }
 
+    /**
+     * Called when user presses the "BACK" button.
+     * Goes back to the chat overview.
+     */
     public void back(){
         mainCtrl.showChatOverview();
     }
 
+    /**
+     * Deletes the group being viewed.
+     */
     public void deleteGroup(){
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setContentText("Are you sure you want to delete: " +
@@ -161,6 +187,9 @@ public class GroupChatOverviewController {
         }
     }
 
+    /**
+     * Shows a dialog to add new participants to the group.
+     */
     public void addParticipant(){
         Pair<AddParticipantController, Dialog<ButtonType>> pair =
                 new FXMLBuilder(MyApplication.getInjector())
@@ -177,7 +206,7 @@ public class GroupChatOverviewController {
         Optional<ButtonType> buttonPressed = addDialog.showAndWait();
 
         if(buttonPressed.isEmpty() ||
-           buttonPressed.get().equals(ButtonType.CANCEL))
+                buttonPressed.get().equals(ButtonType.CANCEL))
             return;
 
         List<String> usersToAdd = controller.ok();

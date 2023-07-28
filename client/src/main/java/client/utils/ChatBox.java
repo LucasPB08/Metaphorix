@@ -18,6 +18,11 @@ public class ChatBox extends VBox {
         this.isGroupChat = false;
     }
 
+    /**
+     * Constructor
+     * @param id The id of the chat
+     * @param isGroupChat Whether the box is used to display a group chat.
+     */
     public ChatBox(Long id, boolean isGroupChat){
         this.chatId = id;
         this.getStyleClass().add("user-box");
@@ -33,6 +38,11 @@ public class ChatBox extends VBox {
         return chatId;
     }
 
+    /**
+     * Whether this box is used for a group chat
+     * @return True if this is used for a group chat,
+     * false otherwise.
+     */
     public boolean isGroupChat(){
         return isGroupChat;
     }

@@ -39,6 +39,8 @@ public class MainCtrl {
      * @param signUp signUp pair
      * @param chatOverview chat overview pair
      * @param userOverview user overview pair
+     * @param groupChatOverview group overview pair
+     * @param groupCreationOverview group creation pair
      */
     public void init(Stage stage, Pair<SignInCtrl, Scene> signIn,
                      Pair<SignUpCtrl, Scene> signUp,
@@ -126,6 +128,10 @@ public class MainCtrl {
         return userOverviewController.getNamesOfChatters();
     }
 
+    /**
+     * Shows group creation scene.
+     * @param creator The user creating a group chat.
+     */
     public void showGroupCreation(ChatUser creator){
         groupCreationController.setup(creator);
 
@@ -133,6 +139,11 @@ public class MainCtrl {
         primaryStage.setScene(groupCreationScene);
     }
 
+    /**
+     * Shows the overview of a certain group chat
+     * @param clickedOnGroup The group chat to view
+     * @param loggedInUser The logged-in user.
+     */
     public void showGroupOverview(GroupChat clickedOnGroup, ChatUser loggedInUser){
         groupChatOverviewController.setInfo(clickedOnGroup, loggedInUser);
 
@@ -140,6 +151,9 @@ public class MainCtrl {
         primaryStage.setScene(groupChatOverviewScene);
     }
 
+    /**
+     * Shows the chat overview.
+     */
     public void showChatOverview(){
         primaryStage.setScene(chatOverviewScene);
         primaryStage.setTitle("Chats");

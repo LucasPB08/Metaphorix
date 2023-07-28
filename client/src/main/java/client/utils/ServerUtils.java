@@ -7,13 +7,11 @@ import client.exceptions.HTTPException;
 import client.generics.*;
 import com.google.inject.Singleton;
 import commons.*;
-import jakarta.websocket.OnClose;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.checkerframework.checker.units.qual.C;
 import org.glassfish.jersey.client.ClientConfig;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -25,8 +23,6 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.function.Consumer;
 
 @Singleton
@@ -235,7 +231,19 @@ public class ServerUtils {
                 .get(new ListOfMessagesGenericType());
     }
 
-    public void createGroupChat(String creatorId, String groupName, String groupDesc, List<String> otherParticipants) throws CreatorNotFoundException {
+    /**
+     * Sends a HTTP post to create a new group chat.
+     * @param creatorId The username of the creation
+     * @param groupName The name of the group
+     * @param groupDesc The description of the group, may be empty
+     * @param otherParticipants The additional participants of the group,
+     *                          may be empty.
+     * @throws CreatorNotFoundException If the creator was not found in the database.
+     */
+    public void createGroupChat(String creatorId,
+                                String groupName,
+                                String groupDesc,
+                                List<String> otherParticipants) throws CreatorNotFoundException {
         WebTarget target = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/groups/create").queryParam("creatorId", creatorId)
                 .queryParam("groupName", groupName);
@@ -243,13 +251,22 @@ public class ServerUtils {
         for(String participant: otherParticipants)
             target = target.queryParam("addedUsersIds", participant);
 
-        Response response = target.request().accept(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(groupDesc));
+        Response response = target.request()
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.json(groupDesc));
 
-        if(response.getStatus() != OK_STATUS) throw new CreatorNotFoundException("HTTP STATUS: " + response.getStatus());
+        if(response.getStatus() != OK_STATUS)
+            throw new CreatorNotFoundException("HTTP STATUS: " + response.getStatus());
 
         System.out.println(response);
     }
 
+    /**
+     * Sends an HTTP GET request to retrieve all the group chats
+     * a certain user is part of.
+     * @param userName The username
+     * @return All the group chats.
+     */
     public List<GroupChatDTO> getGroupChatsOfUser(String userName){
         return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/users/groups")
@@ -258,6 +275,12 @@ public class ServerUtils {
                 .get(new ListOfGroupGenericType());
     }
 
+    /**
+     * Sends an HTTP GET request to retrieve all the messages
+     * sent to a group chat.
+     * @param groupId The id of the group chat
+     * @return All the messages sent.
+     */
     public List<GroupMessage> getGroupChatMessages(Long groupId){
         return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/groups/messages").queryParam("groupId", groupId)
@@ -265,6 +288,11 @@ public class ServerUtils {
                 .get(new ListOfGroupMessagesGenericType());
     }
 
+    /**
+     * Sends an HTTP GET request to retrieve a group chat.
+     * @param chatId The id of the group chat
+     * @return The group chat.
+     */
     public GroupChat getGroupChatById(Long chatId){
         return ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/groups/chat").queryParam("chatId", chatId)
@@ -272,6 +300,15 @@ public class ServerUtils {
                 .get(GroupChat.class);
     }
 
+    /**
+     * Sends an HTTP POST request to save a message sent to a group chat.
+     * @param groupChatId The id of the group chat.
+     * @param userName The username of the sender.
+     * @param message The content of the message.
+     * @return The saved group message.
+     * @throws EntityNotFoundException If the group chat or user was not found
+     * in the database.
+     */
     public GroupMessage sendGroupMessage(Long groupChatId,
                                  String userName,
                                  String message) throws EntityNotFoundException {
@@ -289,7 +326,16 @@ public class ServerUtils {
         return response.readEntity(GroupMessage.class);
     }
 
-    public void editGroupDescription(Long chatId, String newDescription) throws EntityNotFoundException {
+    /**
+     * Sends an HTTP PUT request to edit the description of
+     * a group chat.
+     * @param chatId The id of the group chat.
+     * @param newDescription The new description
+     * @throws EntityNotFoundException If the group chat could not be found
+     * in the database.
+     */
+    public void editGroupDescription(Long chatId,
+                                     String newDescription) throws EntityNotFoundException {
         Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/groups/description")
                 .queryParam("chatId", chatId)
@@ -302,6 +348,13 @@ public class ServerUtils {
         System.out.println(response);
     }
 
+    /**
+     * Sends an HTTP PUT request to remove a user from the group.
+     * @param groupId The id of the group.
+     * @param userName The username of the user to be removed.
+     * @throws EntityNotFoundException If the user could not be found
+     *  in the database.
+     */
     public void removeUserFromGroup(Long groupId, String userName) throws EntityNotFoundException {
         Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/groups/remove-participant").queryParam("chatId", groupId)
@@ -314,6 +367,12 @@ public class ServerUtils {
         System.out.println(response);
     }
 
+    /**
+     * Sends an HTTP DELETE request to delete a group chat
+     * @param groupId The id of the group chat
+     * @throws EntityNotFoundException if the group chat could not be found
+     *  in the database.
+     */
     public void deleteGroupChat(Long groupId) throws EntityNotFoundException {
         Response response = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/groups/chat")
@@ -327,7 +386,15 @@ public class ServerUtils {
         System.out.println(response);
     }
 
-    public GroupChat addParticipantsToGroup(Long groupId, List<String> usersToAdd) throws EntityNotFoundException {
+    /**
+     * Sends an HTTP POST request to add users to a group chat.
+     * @param groupId The id of the group chat.
+     * @param usersToAdd The usernames of the users to add.
+     * @return The group chat
+     * @throws EntityNotFoundException If the group chat could not be found.
+     */
+    public GroupChat addParticipantsToGroup(Long groupId,
+                                            List<String> usersToAdd) throws EntityNotFoundException{
         WebTarget target = ClientBuilder.newClient(new ClientConfig()).target(SERVER)
                 .path("/groups/participants").queryParam("chatId", groupId);
 

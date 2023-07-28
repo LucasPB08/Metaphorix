@@ -18,16 +18,28 @@ public class AddParticipantController {
     @FXML
     private ListView<String> availableUsers;
 
+    /**
+     * Initialises controller
+     */
     @FXML
     public void initialize(){
         availableUsers.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
+    /**
+     * Constructor
+     * @param server The server to communicate with
+     */
     @Inject
     public AddParticipantController(ServerUtils server){
         this.server = server;
     }
 
+    /**
+     * Sets up the listview to only display users that
+     * are not yet part of the group chat.
+     * @param groupChat The group chat to add users to.
+     */
     public void setup(GroupChat groupChat){
         List<GroupParticipant> participantList = groupChat.getGroupParticipants();
 
@@ -42,6 +54,10 @@ public class AddParticipantController {
         availableUsers.setItems(FXCollections.observableList(usersNotInGroup));
     }
 
+    /**
+     * Used to get the selected users.
+     * @return The selected users.
+     */
     public List<String> ok(){
         return availableUsers.getSelectionModel().getSelectedItems();
     }

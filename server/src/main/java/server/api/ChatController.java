@@ -27,6 +27,7 @@ public class ChatController {
      * @param repo repository of chat entities
      * @param userRepo repository of user entities
      * @param messageRepo repository of message entities
+     * @param clock Clock for timestamps
      */
     public ChatController(ChatRepository repo,
                           ChatUserRepository userRepo,

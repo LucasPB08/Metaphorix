@@ -140,6 +140,10 @@ public class ChatUser {
         this.messages.add(message);
     }
 
+    /**
+     * Gets all the group participants of this user.
+     * @return All group participants.
+     */
     @JsonIgnore
     public List<GroupParticipant> getParticipants(){
         return this.groupParticipants;

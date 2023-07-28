@@ -54,6 +54,9 @@ public class UserOverviewController extends OverviewParent{
         }
     }
 
+    /**
+     * Shows the group creation scene.
+     */
     public void createNewGroupChat(){
         mainCtrl.showGroupCreation(this.loggedInUser);
     }

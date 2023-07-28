@@ -3,7 +3,6 @@ package client.utils;
 import com.google.inject.Inject;
 import commons.ChatUser;
 import commons.GroupMessage;
-import commons.Message;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -29,6 +28,12 @@ public class GroupMessageHandler {
         this.timeStampHandler = timeStampHandler;
     }
 
+    /**
+     * Displays a message in the group chat.
+     * @param messages UI element where the messages will be displayed.
+     * @param message The message sent.
+     * @param loggedInUser The logged-in user.
+     */
     public void displayGroupMessage(VBox messages, GroupMessage message, ChatUser loggedInUser){
         Label messageLabel = new Label(message.getMessage());
         messageLabel.getStyleClass().add("content");

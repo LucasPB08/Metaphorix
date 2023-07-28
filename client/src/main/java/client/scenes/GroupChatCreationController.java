@@ -29,17 +29,29 @@ public class GroupChatCreationController {
     @FXML
     private ListView<String> availableUsers;
 
+    /**
+     * Constructor
+     * @param mainCtrl Main controller of application
+     * @param server Class to communicate with the server.
+     */
     @Inject
     public GroupChatCreationController(MainCtrl mainCtrl, ServerUtils server){
         this.mainCtrl = mainCtrl;
         this.server = server;
     }
 
+    /**
+     * Initialises controller.
+     */
     @FXML
     public void initialize(){
         availableUsers.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
+    /**
+     * Sets up the available users list
+     * @param creator The creator of this group.
+     */
     public void setup(ChatUser creator){
         this.creator = creator;
 
@@ -50,6 +62,9 @@ public class GroupChatCreationController {
         availableUsers.setItems(FXCollections.observableList(users));
     }
 
+    /**
+     * Gets the input from the fields, and creates a group.
+     */
     public void createGroup(){
         String groupName = this.groupName.getText();
         String groupDesc = this.groupDescription.getText();
@@ -66,6 +81,9 @@ public class GroupChatCreationController {
         }
     }
 
+    /**
+     * Cancels the creation of a group.
+     */
     public void cancel(){
         groupName.clear();
         groupDescription.clear();
