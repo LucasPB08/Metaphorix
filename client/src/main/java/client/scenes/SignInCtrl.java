@@ -3,6 +3,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
@@ -17,7 +18,7 @@ public class SignInCtrl {
     private TextField userName;
 
     @FXML
-    private TextField password;
+    private PasswordField password;
 
     @FXML
     private Text errorMessage;
