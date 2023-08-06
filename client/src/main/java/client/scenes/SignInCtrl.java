@@ -2,11 +2,16 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import commons.ChatUser;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class SignInCtrl {
@@ -17,7 +22,7 @@ public class SignInCtrl {
     private TextField userName;
 
     @FXML
-    private TextField password;
+    private PasswordField password;
 
     @FXML
     private Text errorMessage;
@@ -58,7 +63,6 @@ public class SignInCtrl {
      * the user gets logged in.
      */
     public void login(){
-        errorMessage.setText("");
         if(!validateUserName() || !validatePassword()) {
             setErrorMessage();
             return;
@@ -66,14 +70,24 @@ public class SignInCtrl {
 
         ChatUser user = server.getUserById(userName.getText());
 
-        //commons.ChatUser user = new commons.ChatUser("User", "Lucas", "Ronnye");
-
         mainCtrl.login(user);
         mainCtrl.showUserOverview();
     }
 
     private void setErrorMessage(){
         errorMessage.setText("User name or password incorrect");
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                clearErrorMessage();
+            }
+        }, 2000);
+    }
+
+    private void clearErrorMessage(){
+        Platform.runLater(() -> errorMessage.setText(""));
     }
 
     private boolean validatePassword(){
