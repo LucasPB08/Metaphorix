@@ -26,6 +26,11 @@ dependencies {
     implementation project(':commons')
 }
 
+task runServer(type: JavaExec){
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'server.Main'
+}
+
 test {
     useJUnitPlatform()
 }
