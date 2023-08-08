@@ -43,9 +43,6 @@ public class SignInCtrl {
      */
     @FXML
     public void initialize(){
-        userName.setText("Lucas PB");
-        password.setText("R");
-
         userName.setOnKeyPressed(key -> {
             if(key.getCode() == KeyCode.ENTER)
                 password.requestFocus();
