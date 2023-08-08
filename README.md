@@ -31,18 +31,35 @@ The motivation for this project was to build something using Java and Spring to 
 ## Application Images
 
   - Sign In Screen
+
+
     ![image](https://github.com/LucasPB08/Metaphorix/assets/122779825/02a46f19-21f0-4bf2-8086-f0b299a802b5)
 
+    
+
   - Sign Up Screen
+
+    
     ![image](https://github.com/LucasPB08/Metaphorix/assets/122779825/c9e321a9-94ce-4aed-b6d6-786cdaf29655)
 
+    
+
   - User Overview
+
+    
     ![image](https://github.com/LucasPB08/Metaphorix/assets/122779825/56d9c637-2489-4c24-9432-11fe1b83c134)
 
+
+
   - Chat Overview
+
+    
     ![image](https://github.com/LucasPB08/Metaphorix/assets/122779825/ce053af2-5941-4ddf-9f7f-eaa6434553b6)
 
+
   - Group Chat Overview
+
+    
     ![image](https://github.com/LucasPB08/Metaphorix/assets/122779825/bf9847be-0e00-4085-a569-e48e027a3b2b)
 
 
