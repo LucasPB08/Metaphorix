@@ -1,5 +1,6 @@
 package api.fakes;
 
+import commons.GroupChatDTO;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -193,6 +194,11 @@ public class ChatUserRepoFake implements ChatUserRepository {
 
     @Override
     public Page<ChatUser> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public List<GroupChatDTO> findAllGroupChats(String userId) {
         return null;
     }
 }

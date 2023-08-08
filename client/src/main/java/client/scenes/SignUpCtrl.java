@@ -1,13 +1,16 @@
 package client.scenes;
 
-import client.MyApplication;
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUpCtrl {
     private MainCtrl mainCtrl;
@@ -23,21 +26,23 @@ public class SignUpCtrl {
     private TextField userName;
 
     @FXML
-    private TextField password;
+    private PasswordField password;
 
     @FXML
-    private TextField rePassword;
+    private PasswordField rePassword;
 
     @FXML
     private Text errorMessages;
 
     /**
-     * Initialises controller
+     * Constructor
+     * @param mainCtrl The main controller of the application
+     * @param server The server to communicate with.
      */
-    @FXML
-    public void initialize(){
-        mainCtrl = MyApplication.getMainCtrl();
-        server = MyApplication.getServer();
+    @Inject
+    public SignUpCtrl(MainCtrl mainCtrl, ServerUtils server){
+        this.mainCtrl = mainCtrl;
+        this.server = server;
     }
 
     /**
@@ -61,6 +66,12 @@ public class SignUpCtrl {
 
         if(password.getText().isBlank()) {
             errorMessages.setText("Please fill in a password.");
+            return;
+        }
+
+        String passwordRequirements = validatePassword();
+        if(passwordRequirements != null){
+            errorMessages.setText(passwordRequirements);
             return;
         }
 
@@ -89,6 +100,43 @@ public class SignUpCtrl {
         }
 
         back();
+    }
+
+    private String validatePassword(){
+        String password =  this.password.getText();
+
+        List<String> errors = new ArrayList<>();
+
+        Pattern letter = Pattern.compile("[a-zA-z]");
+        Pattern digit = Pattern.compile("[0-9]");
+        Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+
+        Matcher hasLetter = letter.matcher(password);
+        Matcher hasDigit = digit.matcher(password);
+        Matcher hasSpecial = special.matcher(password);
+
+        if(password.length() < 8)
+            errors.add("At least eight characters");
+
+        if(!hasLetter.find())
+            errors.add("At least one alphabetical letter");
+
+        if(!hasDigit.find())
+            errors.add("At least one digit");
+
+        if(!hasSpecial.find())
+            errors.add("At least one special character");
+
+        if(errors.isEmpty())
+            return null;
+
+        StringBuilder errorMessage = new StringBuilder("Your password should contain: \n");
+
+        for(String error: errors){
+            errorMessage.append("-").append(error).append("\n");
+        }
+
+        return errorMessage.toString();
     }
 
     private void showNameErrors(){

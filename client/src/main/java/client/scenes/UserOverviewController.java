@@ -2,31 +2,38 @@ package client.scenes;
 
 import client.FXMLBuilder;
 import client.MyApplication;
-import client.utils.ChatUserBox;
-import client.utils.HTTPException;
-import javafx.fxml.FXML;
+import client.utils.ChatBox;
+import client.exceptions.HTTPException;
+import client.utils.ServerUtils;
+import com.google.inject.Inject;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserOverviewController extends OverviewParent{
 
     /**
-     * Initialises the controller
+     * Constructor
+     * @param mainCtrl The main controller of the application
+     * @param server The server to communicate with.
      */
-    @FXML
-    public void initialize(){
-        mainCtrl = MyApplication.getMainCtrl();
-        server = MyApplication.getServer();
+    @Inject
+    public UserOverviewController(MainCtrl mainCtrl, ServerUtils server){
+        this.mainCtrl = mainCtrl;
+        this.server = server;
     }
 
     /**
      * Adds a chat
      */
     public void addChat(){
-        Pair<AddChatsCtrl, Dialog<ButtonType>> pair = new FXMLBuilder()
+        Pair<AddChatsCtrl, Dialog<ButtonType>> pair = new FXMLBuilder(MyApplication.getInjector())
                 .buildDialogPane("scenes/add-user-dialog.fxml");
         if(pair == null) return;
 
@@ -47,17 +54,51 @@ public class UserOverviewController extends OverviewParent{
         }
     }
 
-    public void logOut(){
+    public void logOut() {
         this.loggedInUser = null;
 
         mainCtrl.showSignIn();
+    }
+
+    /**
+     * Shows the group creation scene.
+     */
+    public void createNewGroupChat(){
+        mainCtrl.showGroupCreation(this.loggedInUser);
+    }
+
+    /**
+     * Gets the names of the users who have a chat with the logged-in user.
+     * @return the list of names.
+     */
+    public List<String> getNamesOfChatters(){
+        List<Node> chats = this.chats.getChildren();
+
+        List<String> usersChatting = new ArrayList<>();
+
+        for(Node n: chats){
+
+            List<Node> children = ((ChatBox) n).getChildren();
+
+            for(Node child: children){
+                if(child.getClass() != Text.class) continue;
+
+                String userNameInBox = ((Text)child).getText();
+
+                usersChatting.add(userNameInBox);
+            }
+        }
+
+        usersChatting.add(this.loggedInUser.getUserName());
+
+        return usersChatting;
     }
 
     private void addUser(String userId){
         try {
             Long chatId = server.createChat(this.loggedInUser.getUserName(), userId);
 
-            ChatUserBox pair = createProfileBox(userId, chatId);
+            ChatBox pair = createProfileBox(userId, chatId, false);
 
             chats.getChildren().add(pair);
         } catch(HTTPException e){

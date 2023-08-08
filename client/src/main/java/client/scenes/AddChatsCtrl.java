@@ -1,7 +1,7 @@
 package client.scenes;
 
-import client.MyApplication;
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,16 +13,27 @@ import java.util.List;
 
 public class AddChatsCtrl {
     private ServerUtils server;
+    private MainCtrl mainCtrl;
 
     @FXML
     private ListView<String> users;
+
+    /**
+     * Constructor
+     * @param server the server to communicate with.
+     * @param mainCtrl the main controller of the application.
+     */
+    @Inject
+    public AddChatsCtrl(ServerUtils server, MainCtrl mainCtrl){
+        this.server = server;
+        this.mainCtrl = mainCtrl;
+    }
 
     /**
      * Initialises controller
      */
     @FXML
     public void initialize(){
-        server = MyApplication.getServer();
         users.setItems(getUsers());
     }
 
@@ -37,7 +48,11 @@ public class AddChatsCtrl {
     }
 
     private ObservableList<String> getUsers(){
-        List<String> users = server.getUsers().stream().map(ChatUser::getUserName).toList();
+        List<String> usersAlreadyChatting = mainCtrl.getListOfChattingUsers();
+
+        List<String> users = server.getUsers().stream().map(ChatUser::getUserName)
+                .filter(s -> !usersAlreadyChatting.contains(s)).toList();
+
         return FXCollections.observableArrayList(users);
     }
 }

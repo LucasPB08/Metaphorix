@@ -1,10 +1,13 @@
 package client.scenes;
 
-import client.utils.ChatUserBox;
+import client.utils.ChatBox;
 import client.utils.ServerUtils;
 import commons.Chat;
 import commons.ChatUser;
+import commons.GroupChat;
+import commons.GroupChatDTO;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -31,10 +34,8 @@ public class OverviewParent {
      * Loads the overview.
      */
     public void loadProfile(){
-        ChatUserBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L);
+        ChatBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L, false);
         userSection.getChildren().add(userToLoad);
-
-        loadChats();
     }
 
     /**
@@ -45,32 +46,47 @@ public class OverviewParent {
         this.loggedInUser = loggedInUser;
     }
 
-    void loadChats(){
+    /**
+     * Loads the chat section of the UI with the chats that this user
+     * takes part in.
+     */
+    public void loadChats(){
         this.chats.getChildren().clear();
-        List<Chat> userChats = server.getChatsOfUser(this.loggedInUser.getUserName());
+
+        String userName = this.loggedInUser.getUserName();
+
+        List<Chat> userChats = server.getChatsOfUser(userName);
+        List<GroupChatDTO> groupChats = server.getGroupChatsOfUser(userName);
+
         for(Chat chat: userChats){
             String initiator = chat.getInitiator().getUserName();
             String receiver = chat.getReceiver().getUserName();
-            String myUserName = this.loggedInUser.getUserName();
 
             // if the initiator's username equals the username of the user that
             // is logged in, then we should create the profile box with the receiver's
             // username, and vice versa.
 
-            ChatUserBox toAdd = initiator.equals(myUserName) ?
-                    createProfileBox(receiver, chat.getId()):
-                    createProfileBox(initiator, chat.getId());
+            ChatBox toAdd = initiator.equals(userName) ?
+                    createProfileBox(receiver, chat.getId(), false):
+                    createProfileBox(initiator, chat.getId(), false);
 
             chats.getChildren().add(toAdd);
         }
+
+        for(GroupChatDTO groupChat: groupChats){
+            ChatBox box = createProfileBox(groupChat.getGroupName(), groupChat.getId(), true);
+
+            chats.getChildren().add(box);
+        }
     }
 
-    ChatUserBox createProfileBox(String user, Long chatId){
-        ChatUserBox profileBox = new ChatUserBox(chatId);
+    ChatBox createProfileBox(String user, Long chatId, boolean isGroupChat){
+        ChatBox profileBox = new ChatBox(chatId, isGroupChat);
+        HBox.setMargin(profileBox, new Insets(0, 2.0, 0, 2.0));
 
         Circle profilePicture = new Circle();
         profilePicture.setRadius(profilePictureRadius);
-        profilePicture.setFill(loadImage());
+        profilePicture.setFill(loadImage(isGroupChat));
 
         profileBox.getChildren().addAll(profilePicture, new Text(user));
 
@@ -78,18 +94,25 @@ public class OverviewParent {
         return profileBox;
     }
 
-    private ImagePattern loadImage(){
-        Image pic = new Image("images/profile-pic.jpg");
+    private ImagePattern loadImage(boolean isGroupChat){
+        Image pic = isGroupChat ?
+                new Image("images/group-icon.jpg") : new Image("images/profile-pic.jpg");
 
         return new ImagePattern(pic);
     }
 
-    private void makeSelectable(ChatUserBox profileBox) {
+    private void makeSelectable(ChatBox profileBox) {
         profileBox.setOnMouseClicked(event -> {
 
             //Check whether the clicked user is the logged-in user
             if(profileBox.getChatId() == -1){
                 mainCtrl.showUserOverview();
+                return;
+            }
+
+            if(profileBox.isGroupChat() && event.getClickCount() == 2){
+                GroupChat groupChat = server.getGroupChatById(profileBox.getChatId());
+                mainCtrl.showGroupOverview(groupChat, this.loggedInUser);
                 return;
             }
 

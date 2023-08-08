@@ -1,0 +1,11 @@
+
+
+.user-box {
+    -fx-background-color: transparent;
+    -fx-spacing: 5px;
+}
+
+.user-box Text {
+      -fx-fill: white;
+      -fx-text-alignment: center;
+  }

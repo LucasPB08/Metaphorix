@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<DialogPane prefHeight="450.0" prefWidth="436.0" stylesheets="@../../stylesheets/controls-styling.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AddParticipantController">
+   <content>
+      <AnchorPane prefHeight="396.0" prefWidth="412.0">
+         <children>
+            <ListView fx:id="availableUsers" layoutX="101.0" layoutY="58.0" prefHeight="325.0" prefWidth="243.0" />
+            <Text fx:id="title" layoutX="160.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Users" />
+         </children>
+      </AnchorPane>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

@@ -2,18 +2,19 @@ package client.utils;
 
 import com.google.inject.Inject;
 import commons.ChatUser;
-import commons.Message;
+import commons.GroupMessage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class MessageHandler {
-    private TimeStampHandler timeStampHandler;
+public class GroupMessageHandler {
+    private final TimeStampHandler timeStampHandler;
 
-    private final static Insets HBOX_INSETS = new Insets(7.0);
+    private final static Insets HORIZONTAL_INSETS = new Insets(0, 0, 0, 5.0);
     private final static Insets VERTICAL_INSETS = new Insets(3.0);
     private final static Insets TIMESTAMP_INSETS = new Insets(8.0, 0, 0, 7.0);
 
@@ -23,17 +24,17 @@ public class MessageHandler {
      *                         the display of the date of messages sent.
      */
     @Inject
-    public MessageHandler(TimeStampHandler timeStampHandler){
+    public GroupMessageHandler(TimeStampHandler timeStampHandler){
         this.timeStampHandler = timeStampHandler;
     }
 
     /**
-     * Displays message with its timestamp in the client ui.
-     * @param messages The container that holds the messages in the ui.
-     * @param message The message to display.
+     * Displays a message in the group chat.
+     * @param messages UI element where the messages will be displayed.
+     * @param message The message sent.
      * @param loggedInUser The logged-in user.
      */
-    public void displayMessageWithTimestamp(VBox messages, Message message, ChatUser loggedInUser){
+    public void displayGroupMessage(VBox messages, GroupMessage message, ChatUser loggedInUser){
         Label messageLabel = new Label(message.getMessage());
         messageLabel.getStyleClass().add("content");
 
@@ -41,9 +42,13 @@ public class MessageHandler {
         HBox.setMargin(timeSentLabel, TIMESTAMP_INSETS);
         timeSentLabel.getStyleClass().add("timestamp");
 
-        HBox messageBox = new HBox();
-        messageBox.getChildren().addAll(messageLabel, timeSentLabel);
+        VBox messageBox = new VBox();
         messageBox.getStyleClass().add("messageBox");
+
+        HBox contentTimestampBox = new HBox();
+        contentTimestampBox.getChildren().addAll(messageLabel, timeSentLabel);
+
+        messageBox.getChildren().add(contentTimestampBox);
 
         HBox messageLevel = new HBox();
         messageLevel.getChildren().add(messageBox);
@@ -51,12 +56,22 @@ public class MessageHandler {
         if (isReceiver(message, loggedInUser)) {
             messageLevel.setAlignment(Pos.BASELINE_LEFT);
             messageBox.getStyleClass().add("receiver");
+
+            String senderUsername = message.getSender().getUserId().getUserName();
+            Label senderLabel = new Label(senderUsername);
+
+            // The name of the sender is only included
+            // if the sender isn't the one logged-in
+            messageBox.getChildren().add(0, senderLabel);
+
+            // Slight offset for the content and timestamp
+            // in comparison to the name of the sender
+            VBox.setMargin(contentTimestampBox, HORIZONTAL_INSETS);
         } else {
             messageLevel.setAlignment(Pos.BASELINE_RIGHT);
             messageBox.getStyleClass().add("sender");
         }
 
-        HBox.setMargin(messageBox, HBOX_INSETS);
         VBox.setMargin(messageLevel, VERTICAL_INSETS);
 
         messages.getChildren().add(messageLevel);
@@ -69,22 +84,21 @@ public class MessageHandler {
      * @param loggedInUser The logged-in user.
      */
     public void loadMessagesOfChat(VBox messages,
-                                   List<Message> messagesOfChat,
+                                   List<GroupMessage> messagesOfChat,
                                    ChatUser loggedInUser) {
         timeStampHandler.reset();
 
-        for (Message message : messagesOfChat) {
+        for (GroupMessage message : messagesOfChat) {
             displayDate(messages, message);
 
-            displayMessageWithTimestamp(messages, message, loggedInUser);
+            displayGroupMessage(messages, message, loggedInUser);
         }
     }
 
-    private void displayDate(VBox messages, Message message){
+    private void displayDate(VBox messages, GroupMessage message){
         Label dateLabel = timeStampHandler.dateLabel(message);
 
         if(dateLabel == null) return;
-
 
         HBox dateBox = new HBox();
         dateBox.getChildren().add(dateLabel);
@@ -98,8 +112,7 @@ public class MessageHandler {
         messages.getChildren().add(level);
     }
 
-    private boolean isReceiver(Message message, ChatUser loggedInUser){
-        return !message.getSender().getUserName().equals(loggedInUser.getUserName());
+    private boolean isReceiver(GroupMessage message, ChatUser loggedInUser){
+        return !message.getSender().getUserId().getUserName().equals(loggedInUser.getUserName());
     }
-
 }

@@ -1,5 +1,6 @@
 package client;
 
+import com.google.inject.Injector;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
@@ -11,6 +12,16 @@ import java.io.IOException;
 
 public class FXMLBuilder {
 
+    private final Injector injector;
+
+    /**
+     * Constructor
+     * @param injector Guice Injector
+     */
+    public FXMLBuilder(Injector injector){
+        this.injector = injector;
+    }
+
     /**
      *  Creates a dialog pane.
      * @param resource path to fxml file of the dialog.
@@ -20,7 +31,9 @@ public class FXMLBuilder {
     public <T> Pair<T, Dialog<ButtonType>> buildDialogPane(String resource){
         try {
             FXMLLoader loader = new FXMLLoader(MyApplication.class.
-                    getResource("scenes/add-user-dialog.fxml"));
+                    getResource(resource));
+
+            loader.setControllerFactory(injector::getInstance);
 
             DialogPane pane = loader.load();
 
@@ -44,6 +57,9 @@ public class FXMLBuilder {
      */
     public <T> Pair<T, Scene> buildPair(String resource) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
+
+        loader.setControllerFactory(injector::getInstance);
+
         Scene scene = new Scene(loader.load());
         T controller = loader.getController();
         return new Pair<>(controller, scene);
