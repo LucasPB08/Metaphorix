@@ -34,6 +34,8 @@ public class OverviewParent {
      * Loads the overview.
      */
     public void loadProfile(){
+        userSection.getChildren().clear();
+
         ChatBox userToLoad = createProfileBox(loggedInUser.getUserName(), -1L, false);
         userSection.getChildren().add(userToLoad);
     }

@@ -55,6 +55,15 @@ public class UserOverviewController extends OverviewParent{
     }
 
     /**
+     * Logs out the user, shows the sign in screen.
+     */
+    public void logOut() {
+        this.loggedInUser = null;
+
+        mainCtrl.showSignIn();
+    }
+
+    /**
      * Shows the group creation scene.
      */
     public void createNewGroupChat(){
