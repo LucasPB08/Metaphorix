@@ -7,6 +7,7 @@ The project has been fully written in Java. The server side uses the Spring Boot
 
 The motivation for this project was to build something using Java and Spring to get more familiar with the Spring Framework while building experience with Java. 
 
+
 ## Technology Used
   - (Google) Guice
   - Spring Boot
@@ -23,6 +24,17 @@ The motivation for this project was to build something using Java and Spring to 
   - Admin rights in group chats
   - Non-text messages (e.g. picture sending)
   - Indication of new message from a chat.
+
+## Installation For Windows
+
+1. Fork the repositor. Alternatively, download the zip file and extract the folder.
+2. Open a command prompt and go to the root folder of the project.
+3. Use the following command: gradlew runServer
+4. Wait till the server is running (when the server is running, you will see server.Main started)
+5. Open another command prompt and go to the root folder of the project.
+6. Use the following command: gradlew runClient
+7. Wait for the client to start
+
 
 ## Relational Schema
 
@@ -57,9 +69,13 @@ The motivation for this project was to build something using Java and Spring to 
     ![image](https://github.com/LucasPB08/Metaphorix/assets/122779825/ce053af2-5941-4ddf-9f7f-eaa6434553b6)
 
 
-  - Group Chat Overview
+  - Group Chat
 
     
     ![image](https://github.com/LucasPB08/Metaphorix/assets/122779825/bf9847be-0e00-4085-a569-e48e027a3b2b)
+
+  - Group Chat Overview
+
+    ![image](https://github.com/LucasPB08/Metaphorix/assets/122779825/677a7e8c-9f1c-4a25-96a3-c4bd8c51dac1)
 
 
